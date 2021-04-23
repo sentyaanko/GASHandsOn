@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GHOGameModeBase.h"
-#include "GHOHeroCharacterBase.h"
-#include "GHOPlayerController.h"
-#include "GHOGameStateBase.h"
-#include "GHOPlayerState.h"
+#include "Game/GHOGameModeBase.h"
+#include "Characters/GHOHeroCharacterBase.h"
+#include "Player/GHOPlayerController.h"
+#include "Game/GHOGameStateBase.h"
+#include "Player/GHOPlayerState.h"
 
 AGHOGameModeBase::AGHOGameModeBase()
 {

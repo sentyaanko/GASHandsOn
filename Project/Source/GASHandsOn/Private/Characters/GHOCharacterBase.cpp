@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GHOCharacterBase.h"
+#include "Characters/GHOCharacterBase.h"
 
 // Sets default values
 AGHOCharacterBase::AGHOCharacterBase()
