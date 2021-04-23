@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (C) Sentya Anko 2021
 
 #pragma once
 
@@ -14,4 +14,10 @@ class GASHANDSON_API AGHOPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+	// AController interface
+protected:
+	virtual void OnRep_PlayerState() override;
+	virtual void OnPossess(APawn* aPawn) override;
+
+	// End of AController interface
 };
