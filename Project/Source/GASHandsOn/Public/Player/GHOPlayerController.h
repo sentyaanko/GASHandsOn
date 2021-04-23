@@ -14,4 +14,10 @@ class GASHANDSON_API AGHOPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+	// AController interface
+protected:
+	virtual void OnRep_PlayerState() override;
+	virtual void OnPossess(APawn* aPawn) override;
+
+	// End of AController interface
 };

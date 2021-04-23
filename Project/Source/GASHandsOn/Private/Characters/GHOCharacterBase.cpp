@@ -7,28 +7,50 @@
 AGHOCharacterBase::AGHOCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	bAlwaysRelevant = true;
+}
+
+//// Called when the game starts or when spawned
+//void AGHOCharacterBase::BeginPlay()
+//{
+//	Super::BeginPlay();
+//	
+//}
+
+//// Called every frame
+//void AGHOCharacterBase::Tick(float DeltaTime)
+//{
+//	Super::Tick(DeltaTime);
+//
+//}
+
+//// Called to bind functionality to input
+//void AGHOCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+//{
+//	Super::SetupPlayerInputComponent(PlayerInputComponent);
+//
+//}
+
+UAbilitySystemComponent* AGHOCharacterBase::GetAbilitySystemComponent() const
+{
+	unimplemented();
+	return nullptr;
+}
+
+void AGHOCharacterBase::InitializeAttributes()
+{
 
 }
 
-// Called when the game starts or when spawned
-void AGHOCharacterBase::BeginPlay()
+void AGHOCharacterBase::AddStartupEffects()
 {
-	Super::BeginPlay();
-	
+	//for server
 }
 
-// Called every frame
-void AGHOCharacterBase::Tick(float DeltaTime)
+void AGHOCharacterBase::AddCharacterAbilities()
 {
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AGHOCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	//for server
 }
 
