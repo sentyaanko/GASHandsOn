@@ -2,6 +2,9 @@
 
 
 #include "Characters/GHOCharacterBase.h"
+#include "AbilitySystemComponent.h"
+#include "Characters/Abilities/GHOGameplayAbility.h"
+
 
 // Sets default values
 AGHOCharacterBase::AGHOCharacterBase()
@@ -39,6 +42,14 @@ UAbilitySystemComponent* AGHOCharacterBase::GetAbilitySystemComponent() const
 	return nullptr;
 }
 
+void AGHOCharacterBase::Die()
+{
+	// Only runs on Server
+	RemoveCharacterAbilities();
+
+	//todo:We need to complete this function when we implement health.
+}
+
 void AGHOCharacterBase::InitializeAttributes()
 {
 
@@ -52,5 +63,53 @@ void AGHOCharacterBase::AddStartupEffects()
 void AGHOCharacterBase::AddCharacterAbilities()
 {
 	//for server
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+
+	// Grant abilities, but only on the server	
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent || bCharacterAbilitiesGiven)
+	{
+		return;
+	}
+
+	for (TSubclassOf<UGHOGameplayAbility>& StartupAbility : CharacterAbilities)
+	{
+		AbilitySystemComponent->GiveAbility(
+			FGameplayAbilitySpec(StartupAbility, GetAbilityLevel(StartupAbility.GetDefaultObject()->AbilityID), static_cast<int32>(StartupAbility.GetDefaultObject()->AbilityInputID), this));
+	}
+
+	bCharacterAbilitiesGiven = true;
 }
 
+void AGHOCharacterBase::RemoveCharacterAbilities()
+{
+	//for server
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+	
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent || !bCharacterAbilitiesGiven)
+	{
+		return;
+	}
+
+	// Remove any abilities added from a previous call. This checks to make sure the ability is in the startup 'CharacterAbilities' array.
+	TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove;
+	for (const FGameplayAbilitySpec& Spec : AbilitySystemComponent->GetActivatableAbilities())
+	{
+		if ((Spec.SourceObject == this) && CharacterAbilities.Contains(Spec.Ability->GetClass()))
+		{
+			AbilitiesToRemove.Add(Spec.Handle);
+		}
+	}
+
+	// Do in two passes so the removal happens after we have the full list
+	for (int32 i = 0; i < AbilitiesToRemove.Num(); i++)
+	{
+		AbilitySystemComponent->ClearAbility(AbilitiesToRemove[i]);
+	}
+
+	bCharacterAbilitiesGiven = false;
+}
+
+int32 AGHOCharacterBase::GetAbilityLevel(EGHOAbilityInputID AbilityID) const
+{
+	return 1;
+}
