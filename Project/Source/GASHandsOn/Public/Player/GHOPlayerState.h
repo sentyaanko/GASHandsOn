@@ -18,13 +18,14 @@ class GASHANDSON_API AGHOPlayerState : public APlayerState, public IAbilitySyste
 public:
 	AGHOPlayerState();
 
-	// override from IAbilitySystemInterface begin
+	// IAbilitySystemInterface begin
 public:
 	/** Returns the ability system component to use for this actor. It may live on another actor, such as a Pawn using the PlayerState's component */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	// override from IAbilitySystemInterface end
+	// End of IAbilitySystemInterface interface
 
+public:
 	class UGHOAttributeSetBase* GetAttributeSetBase()const;
 
 

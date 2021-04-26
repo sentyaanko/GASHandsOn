@@ -17,8 +17,8 @@ class GASHANDSON_API AGHOHeroCharacterBase : public AGHOCharacterBase
 public:
 	AGHOHeroCharacterBase();
 
-public:
 	// APawn interface
+public:
 	virtual void OnRep_PlayerState()override;
 	virtual void PossessedBy(AController* NewController) override;
 
@@ -27,8 +27,8 @@ protected:
 	// End of APawn interface
 
 
-public:
 	// IAbilitySystemInterface interface
+public:
 	/** Returns the ability system component to use for this actor. It may live on another actor, such as a Pawn using the PlayerState's component */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
@@ -93,6 +93,6 @@ private:
 	TWeakObjectPtr<class UGHOAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UGHOAttributeSetBase> AttributeSetBase;
 
-	bool ASCInputBound = false;
+	bool bASCInputBound = false;
 
 };
