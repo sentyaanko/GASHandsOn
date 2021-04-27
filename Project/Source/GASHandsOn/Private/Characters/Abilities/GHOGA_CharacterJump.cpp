@@ -4,6 +4,8 @@
 #include "Characters/Abilities/GHOGA_CharacterJump.h"
 #include "GameFramework/Character.h"
 
+// This code is based on Engine\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Private\Abilities\GameplayAbility_CharacterJump.cpp
+
 UGHOGA_CharacterJump::UGHOGA_CharacterJump()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::NonInstanced;
@@ -27,6 +29,17 @@ bool UGHOGA_CharacterJump::CanActivateAbility(const FGameplayAbilitySpecHandle H
 	return false;
 }
 
+/**
+Canceling an non instanced ability is tricky. 
+Right now this works for Jump since there is nothing that can go wrong by calling StopJumping() if you aren't already jumping. 
+If we had a montage playing non instanced ability, it would need to make sure the Montage that *it* played was still playing, and if so, to cancel it. 
+If this is something we need to support, we may need some light weight data structure to represent 'non intanced abilities in action' with a way to cancel/end them.
+
+インスタンスではないアビリティをキャンセルするのは厄介です。
+今のところ、ジャンプについては、すでにジャンプしていない場合にStopJumping()を呼び出しても何の問題もないので、これは有効です。
+もしインスタンス化されていないアビリティを再生するモンタージュがあった場合、 **それ** が再生したモンタージュがまだ再生されているかどうかを確認し、もしそうであればそれをキャンセルする必要があります。
+もしこれをサポートする必要があるなら、「インスタンス化されていないアビリティの動作」を表す軽量のデータ構造と、それをキャンセル／終了する方法が必要になるかもしれません。
+*/
 void UGHOGA_CharacterJump::CancelAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateCancelAbility)
 {
 	if (ScopeLockCount > 0)
@@ -58,6 +71,10 @@ void UGHOGA_CharacterJump::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 		if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 		{
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
+			//TODO:
+			// why not return? 
+			// We need to change it so that it costs more and see how it behaves when CommitAbility fails.
+			// If there is a problem, report it to the author.
 		}
 
 		if (ACharacter * Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get()))

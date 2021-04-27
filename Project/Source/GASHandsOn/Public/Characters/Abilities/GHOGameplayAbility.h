@@ -23,6 +23,10 @@ public:
 //	/** Called when the avatar actor is set/changes */
 //	// If an ability is marked as 'ActivateAbilityOnGranted', activate them immediately when given here
 //	// Epic's comment: Projects may want to initiate passives or do other "BeginPlay" type of logic here.
+//	/*
+//		アビリティに「ActivateAbilityOnGranted」が設定されている場合は、ここで与えられたときにすぐに起動する。
+//		エピックのコメント : プロジェクトでは、パッシブを開始したり、その他の「BeginPlay」タイプのロジックをここで行うことができます。
+//	*/
 //	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 //
 //	// End of UGameplayAbility interface
