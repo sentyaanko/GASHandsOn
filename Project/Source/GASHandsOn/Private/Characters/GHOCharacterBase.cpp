@@ -2,7 +2,8 @@
 
 
 #include "Characters/GHOCharacterBase.h"
-#include "AbilitySystemComponent.h"
+//#include "AbilitySystemComponent.h"
+#include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
 
 
@@ -63,6 +64,7 @@ void AGHOCharacterBase::AddStartupEffects()
 void AGHOCharacterBase::AddCharacterAbilities()
 {
 	//for server
+#if 0
 	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
 
 	// Grant abilities, but only on the server	
@@ -78,11 +80,24 @@ void AGHOCharacterBase::AddCharacterAbilities()
 	}
 
 	bCharacterAbilitiesGiven = true;
+#else
+	// Grant abilities, but only on the server	
+	if (GetLocalRole() != ROLE_Authority)
+	{
+		return;
+	}
+	if (UGHOAbilitySystemComponent* AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		AbilitySystemComponent->AddCharacterAbilities(this);
+	}
+
+#endif
 }
 
 void AGHOCharacterBase::RemoveCharacterAbilities()
 {
 	//for server
+#if 0
 	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
 	
 	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent || !bCharacterAbilitiesGiven)
@@ -107,6 +122,16 @@ void AGHOCharacterBase::RemoveCharacterAbilities()
 	}
 
 	bCharacterAbilitiesGiven = false;
+#else
+	if (GetLocalRole() != ROLE_Authority)
+	{
+		return;
+	}
+	if (UGHOAbilitySystemComponent* AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		AbilitySystemComponent->RemoveCharacterAbilities(this);
+	}
+#endif
 }
 
 int32 AGHOCharacterBase::GetAbilityLevel(EGHOAbilityInputID AbilityID) const

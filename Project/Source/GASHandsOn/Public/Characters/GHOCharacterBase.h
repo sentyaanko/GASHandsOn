@@ -45,6 +45,12 @@ public:
 public:
 	void Die();
 
+	// Switch on AbilityID to return individual ability levels. Hardcoded to 1 for every ability in this project.
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
+	virtual int32 GetAbilityLevel(EGHOAbilityInputID AbilityID) const;
+
+	const TArray<TSubclassOf<class UGHOGameplayAbility>>& GetCharacterAbilities()const { return CharacterAbilities; }
+
 protected:
 	// Initialize the Character's attributes. Must run on Server but we run it on Client too
 	// so that we don't have to wait. The Server's replication to the Client won't matter since
@@ -62,16 +68,9 @@ private:
 	// Removes all CharacterAbilities. Can only be called by the Server. Removing on the Server will remove from Client too.
 	void RemoveCharacterAbilities();
 
-	// Switch on AbilityID to return individual ability levels. Hardcoded to 1 for every ability in this project.
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
-	virtual int32 GetAbilityLevel(EGHOAbilityInputID AbilityID) const;
-
 
 protected:
 	// Default abilities for this Character. These will be removed on Character death and regiven if Character respawns.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
 	TArray<TSubclassOf<class UGHOGameplayAbility>> CharacterAbilities;
-
-private:
-	bool bCharacterAbilitiesGiven = false;
 };
