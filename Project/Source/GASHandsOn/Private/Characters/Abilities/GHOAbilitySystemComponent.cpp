@@ -75,6 +75,12 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 
 }
 
+void UGHOAbilitySystemComponent::ClearDead()
+{
+	// Forcibly set the DeadTag count to 0
+	SetTagMapCount(DeadTag, 0);
+}
+
 bool UGHOAbilitySystemComponent::IsDead() const
 {
 	return HasMatchingGameplayTag(DeadTag);

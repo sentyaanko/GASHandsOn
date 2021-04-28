@@ -45,6 +45,7 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 
 void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
 {
+	// Set Health/Mana/Stamina to their max. This is only necessary for *Respawn*.
 	SetHealth(GetMaxHealth());
 }
 

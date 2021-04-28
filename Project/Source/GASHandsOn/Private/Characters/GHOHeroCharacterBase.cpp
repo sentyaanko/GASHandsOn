@@ -206,6 +206,10 @@ void AGHOHeroCharacterBase::InitializeAbilitySystemWeakObjects(class AGHOPlayerS
 
 void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 {
+	if (AbilitySystemComponent.IsValid())
+	{
+		AbilitySystemComponent->ClearDead();
+	}
 	if (AttributeSetBase.IsValid())
 	{
 		AttributeSetBase->InitializeAttributesOnSpawned();

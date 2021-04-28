@@ -22,6 +22,7 @@ public:
 	void AddCharacterAbilities(class AGHOCharacterBase* InSourceObject);
 	void RemoveCharacterAbilities(class AGHOCharacterBase* InSourceObject);
 
+	void ClearDead();
 	bool IsDead() const;
 	void Die();
 
