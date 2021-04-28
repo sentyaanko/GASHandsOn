@@ -34,6 +34,9 @@ public:
 
 	// End of IAbilitySystemInterface interface
 
+public:
+	virtual class UGHOAttributeSetBase* GetAttributeSet() override;
+
 
 protected:
 	/** Called for forwards/backward input */

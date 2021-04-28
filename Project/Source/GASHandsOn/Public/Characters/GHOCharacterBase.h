@@ -8,6 +8,8 @@
 #include "GASHandsOn.h"
 #include "GHOCharacterBase.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDiedDelegate, AGHOCharacterBase*, Character);
+
 UCLASS()
 class GASHANDSON_API AGHOCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
@@ -41,15 +43,22 @@ public:
 
 	// End of IAbilitySystemInterface interface
 
+public:
+	virtual class UGHOAttributeSetBase* GetAttributeSet();
 
 public:
 	void Die();
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
+	void FinishDying();
 
 	// Switch on AbilityID to return individual ability levels. Hardcoded to 1 for every ability in this project.
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
 	virtual int32 GetAbilityLevel(EGHOAbilityInputID AbilityID) const;
 
 	const TArray<TSubclassOf<class UGHOGameplayAbility>>& GetCharacterAbilities()const { return CharacterAbilities; }
+
+	TSubclassOf<class UGameplayEffect>& GetDefaultAttributes() { return DefaultAttributes; }
 
 protected:
 	// Initialize the Character's attributes. Must run on Server but we run it on Client too
@@ -70,7 +79,20 @@ private:
 
 
 protected:
+	//// Death Animation
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Animation")
+	//UAnimMontage* DeathMontage;
+
+	// Default attributes for a character for initializing on spawn/respawn.
+	// This is an instant GE that overrides the values for attributes that get reset on spawn/respawn.
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
+	TSubclassOf<class UGameplayEffect> DefaultAttributes;
+
 	// Default abilities for this Character. These will be removed on Character death and regiven if Character respawns.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
 	TArray<TSubclassOf<class UGHOGameplayAbility>> CharacterAbilities;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASHandsOn|GDCharacter")
+	FCharacterDiedDelegate OnCharacterDied;
+
 };

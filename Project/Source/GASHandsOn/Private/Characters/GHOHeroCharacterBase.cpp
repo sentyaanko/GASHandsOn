@@ -150,6 +150,11 @@ UAbilitySystemComponent* AGHOHeroCharacterBase::GetAbilitySystemComponent() cons
 	return AbilitySystemComponent.Get();
 }
 
+UGHOAttributeSetBase* AGHOHeroCharacterBase::GetAttributeSet()
+{
+	return AttributeSetBase.Get();
+}
+
 void AGHOHeroCharacterBase::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
@@ -201,6 +206,10 @@ void AGHOHeroCharacterBase::InitializeAbilitySystemWeakObjects(class AGHOPlayerS
 
 void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 {
+	if (AttributeSetBase.IsValid())
+	{
+		AttributeSetBase->InitializeAttributesOnSpawned();
+	}
 }
 
 void AGHOHeroCharacterBase::BindASCInput()

@@ -2,6 +2,8 @@
 
 
 #include "Characters/GHOCharacterBase.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 //#include "AbilitySystemComponent.h"
 #include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
@@ -43,17 +45,78 @@ UAbilitySystemComponent* AGHOCharacterBase::GetAbilitySystemComponent() const
 	return nullptr;
 }
 
+UGHOAttributeSetBase* AGHOCharacterBase::GetAttributeSet()
+{
+	unimplemented();
+	return nullptr;
+}
+
 void AGHOCharacterBase::Die()
 {
 	// Only runs on Server
 	RemoveCharacterAbilities();
 
-	//todo:We need to complete this function when we implement health.
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCharacterMovement()->GravityScale = 0;
+	GetCharacterMovement()->Velocity = FVector(0);
+
+	OnCharacterDied.Broadcast(this);
+
+	if (UGHOAbilitySystemComponent* AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		AbilitySystemComponent->Die();
+	}
+
+	//TODO: We need to complete this function when we implement DeathMontage.
+	//if (DeathMontage)
+	//{
+	//	PlayAnimMontage(DeathMontage);
+	//}
+	//else
+	//{
+		FinishDying();
+	//}
+}
+void AGHOCharacterBase::FinishDying()
+{
+	Destroy();
 }
 
 void AGHOCharacterBase::InitializeAttributes()
 {
+#if 0
+	if (!AbilitySystemComponent.IsValid())
+	{
+		return;
+	}
 
+	if (!DefaultAttributes)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing DefaultAttributes for %s. Please fill in the character's Blueprint."), *FString(__FUNCTION__), *GetName());
+		return;
+	}
+
+	// Can run on Server and Client
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributes, GetCharacterLevel(), EffectContext);
+	if (NewHandle.IsValid())
+	{
+		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
+	}
+#else
+	if (!DefaultAttributes)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing DefaultAttributes for %s. Please fill in the character's Blueprint."), *FString(__FUNCTION__), *GetName());
+		return;
+	}
+	if (UGHOAbilitySystemComponent* AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		AbilitySystemComponent->InitializeAttributes(this);
+	}
+
+#endif
 }
 
 void AGHOCharacterBase::AddStartupEffects()
