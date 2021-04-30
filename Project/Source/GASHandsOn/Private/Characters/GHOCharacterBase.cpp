@@ -7,10 +7,12 @@
 //#include "AbilitySystemComponent.h"
 #include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
+#include "Characters/GHOCharacterMovementComponent.h"
 
 
 // Sets default values
-AGHOCharacterBase::AGHOCharacterBase()
+AGHOCharacterBase::AGHOCharacterBase(const FObjectInitializer& ObjectInitializer)
+	:Super(ObjectInitializer.SetDefaultSubobjectClass<UGHOCharacterMovementComponent>(TEXT("CharMoveComp")))
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;

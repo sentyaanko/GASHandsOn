@@ -17,7 +17,7 @@ class GASHANDSON_API AGHOCharacterBase : public ACharacter, public IAbilitySyste
 
 public:
 	// Sets default values for this character's properties
-	AGHOCharacterBase();
+	AGHOCharacterBase(const FObjectInitializer& ObjectInitializer);
 
 //	// AActor interface
 //public:
