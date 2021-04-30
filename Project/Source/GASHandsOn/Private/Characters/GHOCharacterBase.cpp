@@ -5,7 +5,7 @@
 //#include "AbilitySystemComponent.h"
 #include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
-#include "Character/GHOCharacterMovementComponent.h"
+#include "Characters/GHOCharacterMovementComponent.h"
 
 
 // Sets default values
