@@ -10,6 +10,7 @@ UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 {
 	// Cache tags
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
+	StunTag = FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun"));
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
 }
 
@@ -55,7 +56,14 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 	}
 	const TArray<TSubclassOf<class UGHOGameplayAbility>>& CharacterAbilities = InSourceObject->GetCharacterAbilities();
 
-	// Remove any abilities added from a previous call. This checks to make sure the ability is in the startup 'CharacterAbilities' array.
+	/*
+	by GASDocumentation
+		Remove any abilities added from a previous call.
+		This checks to make sure the ability is in the startup 'CharacterAbilities' array.
+	和訳
+		以前の呼び出しで追加されたアビリティを削除する。
+		起動した 'CharacterAbilities' 配列にアビリティがあるかどうか確認します。
+	*/
 	TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove;
 	for (const FGameplayAbilitySpec& Spec : GetActivatableAbilities())
 	{
@@ -65,7 +73,12 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 		}
 	}
 
-	// Do in two passes so the removal happens after we have the full list
+	/*
+	by GASDocumentation
+		Do in two passes so the removal happens after we have the full list
+	和訳
+		2つのパスを実行し、完全なリストを手に入れたあとに削除を行います。
+	*/
 	for (int32 i = 0; i < AbilitiesToRemove.Num(); i++)
 	{
 		ClearAbility(AbilitiesToRemove[i]);
@@ -77,7 +90,12 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 
 void UGHOAbilitySystemComponent::ClearDead()
 {
-	// Forcibly set the DeadTag count to 0
+	/*
+	by GASDocumentation
+		Forcibly set the DeadTag count to 0
+	和訳
+		DeadTag のカウントを強制的に 0 に設定します。
+	*/
 	SetTagMapCount(DeadTag, 0);
 }
 
@@ -96,5 +114,10 @@ void UGHOAbilitySystemComponent::Die()
 
 	AddLooseGameplayTag(DeadTag);
 
+}
+
+bool UGHOAbilitySystemComponent::IsStun() const
+{
+	return HasMatchingGameplayTag(StunTag);
 }
 

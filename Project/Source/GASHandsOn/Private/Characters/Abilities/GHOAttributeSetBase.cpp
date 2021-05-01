@@ -25,19 +25,37 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
-		// Handle other health changes.
-		// Health loss should go through Damage.
+		/*
+		by GASDocumentation
+			Handle other health changes.
+			Health loss should go through Damage.
+		和訳
+			他の Health の変更を扱う。
+			Health の減少は Damage を経由する必要があります。
+		*/
 		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
 	} // Health
 }
 
 void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
-	// This is called whenever attributes change, so for max health/mana we want to scale the current totals to match
+	/*
+	by GASDocumentation
+		This is called whenever attributes change, so for max health/mana we want to scale the current totals to match
+	和訳
+		アチルビュートが変更する度に呼び出されるので、 health/mana の最大値が変更される場合は現在の合計値をスケーリングさせて一致させます。
+	*/
 	Super::PreAttributeChange(Attribute, NewValue);
 
-	// If a Max value changes, adjust current to keep Current % of Current to Max
-	if (Attribute == GetMaxHealthAttribute()) // GetMaxHealthAttribute comes from the Macros defined at the top of the header
+	/*
+	by GASDocumentation
+		If a Max value changes, adjust current to keep Current % of Current to Max
+		GetMaxHealthAttribute comes from the Macros defined at the top of the header
+	和訳
+		Max 値が変更された場合、 Current の Max に対する % を保つように Current を調整する。
+		GetMaxHealthAttribute() はヘッダの先頭で定義されたマクロから来ています。
+	*/
+	if (Attribute == GetMaxHealthAttribute())
 	{
 		AdjustAttributeForMaxChange(Health, MaxHealth, NewValue, GetHealthAttribute());
 	}
@@ -47,6 +65,11 @@ void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
 {
 	// Set Health/Mana/Stamina to their max. This is only necessary for *Respawn*.
 	SetHealth(GetMaxHealth());
+}
+
+bool UGHOAttributeSetBase::IsAlive()const
+{
+	return GetHealth() > 0.f;
 }
 
 void UGHOAttributeSetBase::AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty)
