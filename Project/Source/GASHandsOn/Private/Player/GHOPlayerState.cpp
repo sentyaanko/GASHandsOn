@@ -45,10 +45,13 @@ AGHOPlayerState::AGHOPlayerState()
 
 	/*
 	by GASDocumentation
+		Set PlayerState's NetUpdateFrequency to the same as the Character.
+		Default is very low for PlayerStates and introduces perceived lag in the ability system.
+		100 is probably way too high for a shipping game, you can adjust to fit your needs.
+	和訳
 		PlayerState の NetUpdateFrequency を Character と同じに設定します。
 		PlayerStates のデフォルト値は非常に低く、 AbilitySystem に知覚可能なラグをもたらします。
 		100 はおそらく出荷ゲームには高すぎるので、ニーズに合わせて調整することが出来ます。
-	和訳
 	*/
 	NetUpdateFrequency = 100.f;
 }
