@@ -59,7 +59,7 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 	{
 		// TODO:Update floating status bar
 
-		if ((AttributeSetBase->GetHealth() <= 0.f) && AbilitySystemComponent->IsDead())
+		if ((AttributeSetBase->GetHealth() <= 0.f) && !AbilitySystemComponent->IsDead())
 		{
 			Hero->Die();
 		}
