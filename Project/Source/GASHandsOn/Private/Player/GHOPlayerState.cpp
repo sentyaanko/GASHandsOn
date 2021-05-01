@@ -59,7 +59,7 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 	{
 		// TODO:Update floating status bar
 
-		if ((AttributeSetBase->GetHealth() <= 0.f) && AbilitySystemComponent->IsDead())
+		if ((Health <= 0.f) && !AbilitySystemComponent->IsDead())
 		{
 			Hero->Die();
 		}
@@ -69,6 +69,7 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 void AGHOPlayerState::MaxHealthChanged(const struct FOnAttributeChangeData& Data)
 {
 	float MaxHealth = Data.NewValue;
+
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
 		// TODO: Update floating status bar
