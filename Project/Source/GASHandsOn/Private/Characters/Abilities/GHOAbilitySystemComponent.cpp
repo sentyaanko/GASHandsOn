@@ -10,7 +10,7 @@ UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 {
 	// Cache tags
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
-	StunTag = FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun"));
+	StunTag = FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun"));
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
 }
 

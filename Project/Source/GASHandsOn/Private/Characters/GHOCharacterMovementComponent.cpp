@@ -63,7 +63,7 @@ float UGHOCharacterMovementComponent::GetMaxSpeed() const
 		return 0.0f;
 	}
 
-	if (Owner->GetAbilitySystemComponent()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun"))))
+	if (Owner->GetAbilitySystemComponent()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun"))))
 	{
 	return 0.0f;
 	}
