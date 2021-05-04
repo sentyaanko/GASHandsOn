@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (C) Sentya Anko 2021
 
 
 #include "Characters/GHOHeroCharacterBase.h"
@@ -8,6 +8,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Characters/Abilities/GHOAbilitySystemComponent.h"
+#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Player/GHOPlayerState.h"
+
 
 AGHOHeroCharacterBase::AGHOHeroCharacterBase()
 {
@@ -42,11 +46,77 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	// Makes sure that the animations play on the Server so that we can use bone and socket transforms
+	// to do things like spawning projectiles and other FX.
+	GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->SetCollisionProfileName(FName("NoCollision"));
+
 }
 
+//Client only
+void AGHOHeroCharacterBase::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	if (AGHOPlayerState* playerState = GetPlayerState<AGHOPlayerState>())
+	{
+		InitializeAbilitySystemWeakObjects(playerState);
+
+		//client only
+		if (true)
+		{
+			// Bind player input to the AbilitySystemComponent. Also called in SetupPlayerInputComponent because of a potential race condition.
+			BindASCInput();
+		}
+
+		InitializeAttributes();
+
+		////server only
+		//if (true)
+		//{
+		//	AddStartupEffects();
+		//	AddCharacterAbilities();
+		//}
+
+		InitializeAfterAbilitySystem();
+	}
+}
+
+//Server only
+void AGHOHeroCharacterBase::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (AGHOPlayerState* playerState = GetPlayerState<AGHOPlayerState>())
+	{
+		InitializeAbilitySystemWeakObjects(playerState);
+
+		////client only
+		//if (true)
+		//{
+		//	// Bind player input to the AbilitySystemComponent. Also called in SetupPlayerInputComponent because of a potential race condition.
+		//	BindASCInput();
+		//}
+
+		InitializeAttributes();
+
+		//server only
+		if(true)
+		{
+			AddStartupEffects();
+			AddCharacterAbilities();
+		}
+
+		InitializeAfterAbilitySystem();
+	}
+}
 
 void AGHOHeroCharacterBase::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 //	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
@@ -69,6 +139,15 @@ void AGHOHeroCharacterBase::SetupPlayerInputComponent(class UInputComponent* Pla
 
 	// VR headset functionality
 //	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AGHOHeroCharacterBase::OnResetVR);
+
+	// Bind player input to the AbilitySystemComponent. Also called in OnRep_PlayerState because of a potential race condition.
+	BindASCInput();
+}
+
+UAbilitySystemComponent* AGHOHeroCharacterBase::GetAbilitySystemComponent() const
+{
+	// Only called on the Server. Calls before Server's AcknowledgePossession.
+	return AbilitySystemComponent.Get();
 }
 
 void AGHOHeroCharacterBase::TurnAtRate(float Rate)
@@ -109,5 +188,28 @@ void AGHOHeroCharacterBase::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+	}
+}
+
+void AGHOHeroCharacterBase::InitializeAbilitySystemWeakObjects(class AGHOPlayerState* playerState)
+{
+	AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(playerState->GetAbilitySystemComponent());
+	AbilitySystemComponent->InitAbilityActorInfo(playerState, this);
+
+	AttributeSetBase = playerState->GetAttributeSetBase();
+}
+
+void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
+{
+}
+
+void AGHOHeroCharacterBase::BindASCInput()
+{
+	if (!bASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
+	{
+//		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"), FString("CancelTarget"), FString("EGHOAbilityInputID"), static_cast<int32>(EGHOAbilityInputID::Confirm), static_Cast<int32>(EGHOAbilityInputID::Cancel)));
+		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString(), FString(), FString("EGHOAbilityInputID")));
+
+		bASCInputBound = true;
 	}
 }
