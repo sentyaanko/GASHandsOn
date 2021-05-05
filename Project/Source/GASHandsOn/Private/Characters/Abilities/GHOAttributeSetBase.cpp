@@ -44,7 +44,7 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	by GASDocumentation
 		This is called whenever attributes change, so for max health/mana we want to scale the current totals to match
 	和訳
-		アチルビュートが変更する度に呼び出されるので、 health/mana の最大値が変更される場合は現在の合計値をスケーリングさせて一致させます。
+		アトリビュートが変更する度に呼び出されるので、 health/mana の最大値が変更される場合は現在の合計値をスケーリングさせて一致させます。
 	*/
 	Super::PreAttributeChange(Attribute, NewValue);
 
