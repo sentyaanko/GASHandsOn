@@ -26,8 +26,11 @@ public:
 	bool IsDead() const;
 	void Die();
 
+	bool IsStun() const;
+
 private:
 	FGameplayTag DeadTag;
+	FGameplayTag StunTag;
 	FGameplayTag EffectRemoveOnDeathTag;
 
 	bool bCharacterAbilitiesGiven = false;

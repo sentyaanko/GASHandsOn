@@ -28,7 +28,6 @@ protected:
 
 	// IAbilitySystemInterface interface
 public:
-	/** Returns the ability system component to use for this actor. It may live on another actor, such as a Pawn using the PlayerState's component */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	// End of IAbilitySystemInterface interface

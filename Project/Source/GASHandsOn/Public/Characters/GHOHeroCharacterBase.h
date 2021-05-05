@@ -20,6 +20,21 @@ public:
 	// APawn interface
 public:
 	virtual void OnRep_PlayerState()override;
+	
+	/*
+	by Epic
+		Called when this Pawn is possessed. Only called on the server (or in standalone).
+		@param NewController The controller possessing this pawn
+	by GASDocumentation
+		Only called on the Server. 
+		Calls before Server's AcknowledgePossession.
+	和訳
+		このポーンが週されたときに呼び出されます。
+		サーバー上（またはスタンドアローン）でのみ呼び出されます。
+		@param NewController このポーンを周遊するコントローラー
+		サーバー上のみで呼び出されます。
+		AcknowledgePossession の前に呼び出されます。
+	*/
 	virtual void PossessedBy(AController* NewController) override;
 
 protected:
@@ -29,13 +44,13 @@ protected:
 
 	// IAbilitySystemInterface interface
 public:
-	/** Returns the ability system component to use for this actor. It may live on another actor, such as a Pawn using the PlayerState's component */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	// End of IAbilitySystemInterface interface
 
 public:
 	virtual class UGHOAttributeSetBase* GetAttributeSet() override;
+	virtual const class UGHOAttributeSetBase* GetAttributeSet() const override;
 
 
 protected:
@@ -88,11 +103,29 @@ public:
 	float BaseLookUpRate;
 
 private:
-	// Instead of TWeakObjectPtrs, you could just have UPROPERTY() hard references or no references at all and just call
-	// GetAbilitySystem() and make a GetAttributeSetBase() that can read from the PlayerState or from child classes.
-	// Just make sure you test if the pointer is valid before using.
-	// I opted for TWeakObjectPtrs because I didn't want a shared hard reference here and I didn't want an extra function call of getting
-	// the ASC/AttributeSet from the PlayerState or child classes every time I referenced them in this base class.
+	/*
+	by GASDocumentation
+		Instead of TWeakObjectPtrs, you could just have UPROPERTY() hard references or no references at all and just call
+		GetAbilitySystem() and make a GetAttributeSetBase() that can read from the PlayerState or from child classes.
+		Just make sure you test if the pointer is valid before using.
+		I opted for TWeakObjectPtrs because I didn't want a shared hard reference here and I didn't want an extra function call of getting
+		the ASC/AttributeSet from the PlayerState or child classes every time I referenced them in this base class.
+	和訳
+		TWeakObjectPtrs の代わりに、 UPROPERTY() を使用してハードリファレンスを用意するか、
+		もしくはリファレンスを全く用意せず、 GetAbilitySystem() を呼び出して、
+		PlayerState や子クラスから読み取れる GetAttributeSetBase() を作ることが出来ます。
+		ただ、使用する前にポインタが有効かどうかをテストするいつようがあります。
+		TWeakObjectPtrs を選択したのは、ここでハードリファレンスを共有したくなかったのと、このベースクラスで参照する度に 
+		PlayerState や子クラスから ASC/AttributeSet を取得する余分な関数呼び出しをしたくなかったからです。
+	補足
+		GASDocumentation では、この変数はこのクラスの基底である AGHOCharacterBase で所持していました。
+		私的には以下のルールにしたほうが自然と感じたため、ここに移動しています。
+			AGHOCharacterBase から使用する場合は仮想関数経由で取得する
+				nullptr チェックを行うのは、何れにせよ必須な為、何を利用しても変わらない。
+				基底クラスで用意する GetHealth() などが仮想関数呼び出し一回分の関数コールが増えることにはなる。
+			プレイヤーが操作するキャラクターは PlayerState が所持するハードリファレンスの弱参照をここで保持する
+			AI が操作するキャラクターは ミニオン派生の基底クラスでハードリファレンスを保持する
+	*/
 	TWeakObjectPtr<class UGHOAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UGHOAttributeSetBase> AttributeSetBase;
 
