@@ -4,8 +4,32 @@
 #include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/GHOCharacterBase.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
+#include "Characters/Abilities/GHOAttributeSetBase.h"
 
+UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
+{
+	// Cache tags
+	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
+	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
+}
 
+void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* InSourceObject)
+{
+	UGHOAttributeSetBase* AttributeSet = InSourceObject->GetAttributeSet();
+
+	TSubclassOf<class UGameplayEffect>& DefaultAttributes = InSourceObject->GetDefaultAttributes();
+
+	// Can run on Server and Client
+	FGameplayEffectContextHandle EffectContext = MakeEffectContext();
+	EffectContext.AddSourceObject(InSourceObject);
+
+	FGameplayEffectSpecHandle NewHandle = MakeOutgoingSpec(DefaultAttributes, AttributeSet->GetCharacterLevel(), EffectContext);
+	if (NewHandle.IsValid())
+	{
+		FActiveGameplayEffectHandle ActiveGEHandle = ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), this);
+	}
+
+}
 
 void UGHOAbilitySystemComponent::AddCharacterAbilities(class AGHOCharacterBase* InSourceObject)
 {
@@ -50,3 +74,27 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 	bCharacterAbilitiesGiven = false;
 
 }
+
+void UGHOAbilitySystemComponent::ClearDead()
+{
+	// Forcibly set the DeadTag count to 0
+	SetTagMapCount(DeadTag, 0);
+}
+
+bool UGHOAbilitySystemComponent::IsDead() const
+{
+	return HasMatchingGameplayTag(DeadTag);
+}
+
+void UGHOAbilitySystemComponent::Die()
+{
+	CancelAllAbilities();
+
+	FGameplayTagContainer EffectTagsToRemove;
+	EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+	const int32 NumEffectsRemoved = RemoveActiveEffectsWithTags(EffectTagsToRemove);
+
+	AddLooseGameplayTag(DeadTag);
+
+}
+
