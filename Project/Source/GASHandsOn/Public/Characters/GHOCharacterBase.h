@@ -75,6 +75,9 @@ public:
 	virtual int32 GetAbilityLevel(EGHOAbilityInputID AbilityID) const;
 
 
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
+	virtual bool IsAlive() const;
+
 
 	const TArray<TSubclassOf<class UGHOGameplayAbility>>& GetCharacterAbilities()const { return CharacterAbilities; }
 

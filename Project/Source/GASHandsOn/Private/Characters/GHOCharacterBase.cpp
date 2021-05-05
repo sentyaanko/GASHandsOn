@@ -93,6 +93,15 @@ int32 AGHOCharacterBase::GetAbilityLevel(EGHOAbilityInputID AbilityID) const
 	return 1;
 }
 
+bool AGHOCharacterBase::IsAlive() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->IsAlive();
+	}
+	return false;
+}
+
 bool AGHOCharacterBase::IsMovable()const
 {
 	if (const auto attr = GetAttributeSet())
