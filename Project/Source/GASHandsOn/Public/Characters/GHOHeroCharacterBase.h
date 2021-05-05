@@ -15,7 +15,7 @@ class GASHANDSON_API AGHOHeroCharacterBase : public AGHOCharacterBase
 	GENERATED_BODY()
 	
 public:
-	AGHOHeroCharacterBase();
+	AGHOHeroCharacterBase(const FObjectInitializer& ObjectInitializer);
 
 	// APawn interface
 public:
