@@ -26,12 +26,15 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.5
 	* Character に Health の Attribute 組み込み
 	* 詳細は [./Documents/Add-CharacterHealth.md](./Documents/Add-CharacterHealth.md) を参照
-* v0.0.7
+* v0.0.6
 	* Character に Jump の Ability 組み込み
 	* 詳細は [./Documents/Add-CharacterJump.md](./Documents/Add-CharacterJump.md) を参照
-* v0.0.8
+* v0.0.7
 	* Character に AimDownSights の Ability 組み込み
 	* 詳細は [./Documents/Add-AimDownSights.md](./Documents/Add-AimDownSights.md) を参照
+* v0.0.8
+	* Character に MoveSpeed の Attribute 組み込み
+	* 詳細は [./Documents/Add-MoveSpeed-Attribute.md](./Documents/Add-MoveSpeed-Attribute.md) を参照
 
 -----
 おしまい。
