@@ -16,8 +16,8 @@ enum class EGHOAbilityInputID : uint8
 	//Cancel			UMETA(DisplayName = "Cancel"),
 	//// 3 LMB
 	//Ability1		UMETA(DisplayName = "Ability1"),
-	//// 4 RMB
-	//Ability2		UMETA(DisplayName = "Ability2"),
+	// 4 RMB
+	Ability2		UMETA(DisplayName = "Ability2"),
 	//// 5 Q
 	//Ability3		UMETA(DisplayName = "Ability3"),
 	//// 6 E

@@ -48,8 +48,15 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-	// Makes sure that the animations play on the Server so that we can use bone and socket transforms
-	// to do things like spawning projectiles and other FX.
+	/*
+	by GASDocumentation
+		Makes sure that the animations play on the Server so that we can use bone and socket transforms
+		to do things like spawning projectiles and other FX.
+	和訳
+		アニメーションがサーバー上で再生されるようにして、
+		ボーンとソケットのトランスフォームを使用して
+		発射物やその他の FX をスポーンすることができるようにします。
+	*/
 	GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionProfileName(FName("NoCollision"));
@@ -68,7 +75,14 @@ void AGHOHeroCharacterBase::OnRep_PlayerState()
 		//client only
 		if (true)
 		{
-			// Bind player input to the AbilitySystemComponent. Also called in SetupPlayerInputComponent because of a potential race condition.
+			/*
+			by GASDocumentation
+				Bind player input to the AbilitySystemComponent. 
+				Also called in SetupPlayerInputComponent because of a potential race condition.
+			和訳
+				プレイヤーの入力を AbilitySystemComponent にバインドします。
+				レースコンディションの可能性があるため、 SetupPlayerInputComponent でも呼び出されます。
+			*/
 			BindASCInput();
 		}
 
@@ -97,7 +111,14 @@ void AGHOHeroCharacterBase::PossessedBy(AController* NewController)
 		////client only
 		//if (true)
 		//{
-		//	// Bind player input to the AbilitySystemComponent. Also called in SetupPlayerInputComponent because of a potential race condition.
+		//	/*
+		//	by GASDocumentation
+		//		Bind player input to the AbilitySystemComponent. 
+		//		Also called in SetupPlayerInputComponent because of a potential race condition.
+		//	和訳
+		//		プレイヤーの入力を AbilitySystemComponent にバインドします。
+		//		レースコンディションの可能性があるため、 SetupPlayerInputComponent でも呼び出されます。
+		//	*/
 		//	BindASCInput();
 		//}
 
@@ -147,11 +168,15 @@ void AGHOHeroCharacterBase::SetupPlayerInputComponent(class UInputComponent* Pla
 
 UAbilitySystemComponent* AGHOHeroCharacterBase::GetAbilitySystemComponent() const
 {
-	// Only called on the Server. Calls before Server's AcknowledgePossession.
 	return AbilitySystemComponent.Get();
 }
 
 UGHOAttributeSetBase* AGHOHeroCharacterBase::GetAttributeSet()
+{
+	return AttributeSetBase.Get();
+}
+
+const UGHOAttributeSetBase* AGHOHeroCharacterBase::GetAttributeSet()const
 {
 	return AttributeSetBase.Get();
 }

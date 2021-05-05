@@ -7,14 +7,13 @@
 //#include "AbilitySystemComponent.h"
 #include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
+#include "Characters/Abilities/GHOAttributeSetBase.h"
 #include "Characters/GHOCharacterMovementComponent.h"
 
 
-// Sets default values
 AGHOCharacterBase::AGHOCharacterBase(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer.SetDefaultSubobjectClass<UGHOCharacterMovementComponent>(TEXT("CharMoveComp")))
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
 	bAlwaysRelevant = true;
@@ -52,6 +51,11 @@ UGHOAttributeSetBase* AGHOCharacterBase::GetAttributeSet()
 	unimplemented();
 	return nullptr;
 }
+const UGHOAttributeSetBase* AGHOCharacterBase::GetAttributeSet()const
+{
+	unimplemented();
+	return nullptr;
+}
 
 void AGHOCharacterBase::Die()
 {
@@ -82,6 +86,38 @@ void AGHOCharacterBase::Die()
 void AGHOCharacterBase::FinishDying()
 {
 	Destroy();
+}
+
+int32 AGHOCharacterBase::GetAbilityLevel(EGHOAbilityInputID AbilityID) const
+{
+	return 1;
+}
+
+bool AGHOCharacterBase::IsMovable()const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		if (!attr->IsAlive())
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	if (const auto asc = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		if (asc->IsStun())
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
 }
 
 void AGHOCharacterBase::InitializeAttributes()
@@ -199,7 +235,3 @@ void AGHOCharacterBase::RemoveCharacterAbilities()
 #endif
 }
 
-int32 AGHOCharacterBase::GetAbilityLevel(EGHOAbilityInputID AbilityID) const
-{
-	return 1;
-}
