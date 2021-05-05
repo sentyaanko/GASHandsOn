@@ -3,6 +3,7 @@
 
 #include "Characters/GHOCharacterMovementComponent.h"
 #include "Characters/GHOCharacterBase.h"
+#include "Characters/Abilities/GHOAttributeSetBase.h"
 
 UGHOCharacterMovementComponent::UGHOCharacterMovementComponent()
 {
@@ -57,41 +58,11 @@ float UGHOCharacterMovementComponent::GetMaxSpeed() const
 		return Super::GetMaxSpeed();
 	}
 
-#if 0
-	if (!Owner->IsAlive())
-	{
-		return 0.0f;
-	}
-
-	if (Owner->GetAbilitySystemComponent()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun"))))
-	{
-	return 0.0f;
-	}
-#else
 	if(!Owner->IsMovable())
 	{
 		return 0.f;
 	}
-
-#endif
-#if 0
-#if 0
-	if (RequestToStartSprinting)
-	{
-		return Owner->GetMoveSpeed() * SprintSpeedMultiplier;
-	}
-	#endif
-	if (RequestToStartADS)
-	{
-		return Owner->GetMoveSpeed() * AimDownSightsSpeedMultiplier;
-	}
-
-	return Owner->GetMoveSpeed();
-#else
-	//TODO: Fix after MoveSpeed Attribute implemented.
-	//return Owner->GetMoveSpeed() * GetSpeedMultiplier(MoveFlag);
-	return 600.f * GetSpeedMultiplier();
-#endif
+	return Owner->GetAttributeSet()->GetMoveSpeed() * GetSpeedMultiplier();
 }
 
 void UGHOCharacterMovementComponent::UpdateFromCompressedFlags(uint8 Flags)
@@ -174,17 +145,6 @@ bool UGHOCharacterMovementComponent::FGHOSavedMove::CanCombineWith(const FSavedM
 		どの動きを結合できるかを設定します。
 		これは使用されているビットフラグによって異なります。
 	*/
-#if 0
-	if (SavedRequestToStartSprinting != ((FGHOSavedMove*)&NewMove)->SavedRequestToStartSprinting)
-	{
-		return false;
-	}
-
-	if (SavedRequestToStartADS != ((FGHOSavedMove*)&NewMove)->SavedRequestToStartADS)
-	{
-		return false;
-	}
-#else
 	/*
 		基本的に MoveFlag の状態が異なる場合は結合することが出来ないため、単純に MoveFlag をそのまま比較しています。
 	*/
@@ -192,7 +152,6 @@ bool UGHOCharacterMovementComponent::FGHOSavedMove::CanCombineWith(const FSavedM
 	{
 		return false;
 	}
-#endif
 	return Super::CanCombineWith(NewMove, Character, MaxDelta);
 }
 
@@ -210,20 +169,8 @@ uint8 UGHOCharacterMovementComponent::FGHOSavedMove::GetCompressedFlags() const
 {
 	uint8 Result = Super::GetCompressedFlags();
 
-#if 0
-	if (SavedRequestToStartSprinting)
-	{
-		Result |= FLAG_Custom_0;
-	}
-
-	if (SavedRequestToStartADS)
-	{
-		Result |= FLAG_Custom_1;
-	}
-#else
 	if(IsAimDownSights())
 		Result |= FLAG_Custom_AimDownSights;
-#endif
 	return Result;
 
 }

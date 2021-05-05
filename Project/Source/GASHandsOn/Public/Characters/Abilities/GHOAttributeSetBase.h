@@ -108,6 +108,18 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, MaxHealth)
 
+	/*
+	by GASDocumentation
+		MoveSpeed affects how fast characters can move.
+	和訳
+		MoveSpeed は キャラクターの移動速度に影響を与えます。
+	*/
+	// 
+	UPROPERTY(BlueprintReadOnly, Category = "MoveSpeed", ReplicatedUsing = OnRep_MoveSpeed)
+	FGameplayAttributeData MoveSpeed;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, MoveSpeed)
+
+
 public:
 	void InitializeAttributesOnSpawned();
 
@@ -136,4 +148,7 @@ protected:
 
 	UFUNCTION()
 	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+
+	UFUNCTION()
+	virtual void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
 };

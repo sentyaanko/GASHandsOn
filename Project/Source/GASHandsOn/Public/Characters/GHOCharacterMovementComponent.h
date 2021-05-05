@@ -85,13 +85,6 @@ private:
 		*/
 		virtual uint8 GetCompressedFlags() const override;
 
-#if 0
-		// Sprint
-		uint8 SavedRequestToStartSprinting : 1;
-
-		// Aim Down Sights
-		uint8 SavedRequestToStartADS : 1;
-#else
 		bool IsAimDownSights()const;
 
 		/*
@@ -103,7 +96,6 @@ private:
 			FLAG_Custom_AimDownSights	= FSavedMove_Character::FLAG_Custom_1,
 		};
 		EGHOMoveFlag MoveFlag;
-#endif
 	};
 
 	class FGHONetworkPredictionData_Client : public FNetworkPredictionData_Client_Character
@@ -201,10 +193,5 @@ protected:
 	float AimDownSightsSpeedMultiplier;
 
 private:
-#if 0
-	uint8 RequestToStartSprinting : 1;
-	uint8 RequestToStartADS : 1;
-#else
 	EGHOMoveFlag MoveFlag;
-#endif
 };
