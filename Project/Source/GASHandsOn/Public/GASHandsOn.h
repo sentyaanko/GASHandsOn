@@ -26,7 +26,7 @@ enum class EGHOAbilityInputID : uint8
 	//Ability5		UMETA(DisplayName = "Ability5"),
 	//// 8 Sprint
 	//Sprint			UMETA(DisplayName = "Sprint"),
-	//// 9 Jump
-	//Jump			UMETA(DisplayName = "Jump")
+	// 9 Jump
+	Jump			UMETA(DisplayName = "Jump")
 };
 
