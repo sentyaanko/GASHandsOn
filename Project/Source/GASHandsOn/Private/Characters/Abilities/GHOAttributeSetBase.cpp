@@ -17,6 +17,7 @@ void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimePro
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MaxHealth, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
 }
 
 void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data)
@@ -59,6 +60,16 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	{
 		AdjustAttributeForMaxChange(Health, MaxHealth, NewValue, GetHealthAttribute());
 	}
+	else if (Attribute == GetMoveSpeedAttribute())
+	{
+		/*
+		by GASDocumentation
+			Cannot slow less than 150 units/s and cannot boost more than 1000 units/s
+		和訳
+			150 units/s 以下の減速と 1000 units/s 以上の加速を制限する。
+		*/
+		NewValue = FMath::Clamp<float>(NewValue, 150.f, 1000.f);
+	}
 }
 
 void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
@@ -98,5 +109,12 @@ void UGHOAttributeSetBase::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxH
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, MaxHealth, OldMaxHealth);
 
 	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMaxHealth.GetCurrentValue(), MaxHealth.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, MoveSpeed, OldMoveSpeed);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMoveSpeed.GetCurrentValue(), MoveSpeed.GetCurrentValue());
 }
 
