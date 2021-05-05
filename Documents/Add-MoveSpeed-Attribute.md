@@ -33,7 +33,7 @@ Editor での設定類。
 BP 類。
 
 1. `GE_HeroAttributes` を更新
-	* `GameplayEffects` の `Modifiers` に要素を追加死、以下を指定
+	* `GameplayEffects` の `Modifiers` に要素を追加し、以下を指定
 		* `Attribute` に `GHOAttributeSetBase.MoveSpeed`
 		* `Modifier Op` に `Override`
 		* `Modifier Magnitude/Magnitude Calculation Type` に `ScalableFloat`
