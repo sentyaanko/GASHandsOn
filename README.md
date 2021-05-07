@@ -38,6 +38,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.9
 	* Character の MoveSpeed にバフをかける GameplayEffect の組み込み
 	* 詳細は [./Documents/Add-BuffMoveSpeed-Effect.md](./Documents/Add-BuffMoveSpeed-Effect.md) を参照
+* v0.0.10
+	* Character に起動時に一度だけ GameplayEffect を適用する仕組みの組み込み
+	* 詳細は [./Documents/Add-StartupEffects-System.md](./Documents/Add-StartupEffects-System.md) を参照
 
 -----
 おしまい。
