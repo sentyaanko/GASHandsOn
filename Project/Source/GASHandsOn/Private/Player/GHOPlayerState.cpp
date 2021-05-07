@@ -65,6 +65,7 @@ void AGHOPlayerState::BeginPlay()
 		// Attribute change callbacks
 		HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthAttribute()).AddUObject(this, &AGHOPlayerState::HealthChanged);
 		MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxHealthAttribute()).AddUObject(this, &AGHOPlayerState::MaxHealthChanged);
+		HealthRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::HealthRegenRateChanged);
 	}
 }
 
@@ -84,7 +85,12 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
-		// TODO:Update floating status bar
+		//TODO
+		//	FloatingStatusBar の実装の際に対応すること。
+		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		//{
+		//	HeroFloatingStatusBar->SetHealthPercentage(Health / GetMaxHealth());
+		//}
 
 		if ((Health <= 0.f) && !AbilitySystemComponent->IsDead())
 		{
@@ -95,14 +101,42 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 
 void AGHOPlayerState::MaxHealthChanged(const struct FOnAttributeChangeData& Data)
 {
-	float MaxHealth = Data.NewValue;
+	const float MaxHealth = Data.NewValue;
 
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
-		// TODO: Update floating status bar
+		//TODO
+		//	FloatingStatusBar の実装の際に対応すること。
+		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		//{
+		//	HeroFloatingStatusBar->SetHealthPercentage(GetHealth() / MaxHealth);
+		//}
 	}
+	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		// TODO:Update the HUD
+		//TODO
+		//	HUD の実装の際に対応すること。
+		//if (UGDHUDWidget* HUD = PC->GetHUD())
+		//{
+		//	HUD->SetMaxHealth(MaxHealth);
+		//}
 	}
 }
+
+void AGHOPlayerState::HealthRegenRateChanged(const struct FOnAttributeChangeData & Data)
+{
+	const float HealthRegenRate = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		//TODO
+		//	HUD の実装の際に対応すること。
+		//if (UGDHUDWidget* HUD = PC->GetHUD())
+		//{
+		//	HUD->SetHealthRegenRate(HealthRegenRate);
+		//}
+	}
+}
+

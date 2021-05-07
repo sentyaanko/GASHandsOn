@@ -40,6 +40,7 @@ private:
 	// Attribute changed callbacks
 	void HealthChanged(const struct FOnAttributeChangeData& Data);
 	void MaxHealthChanged(const struct FOnAttributeChangeData& Data);
+	void HealthRegenRateChanged(const struct FOnAttributeChangeData& Data);
 
 private:
 	UPROPERTY()
@@ -50,5 +51,6 @@ private:
 
 	FDelegateHandle HealthChangedDelegateHandle;
 	FDelegateHandle MaxHealthChangedDelegateHandle;
+	FDelegateHandle HealthRegenRateChangedDelegateHandle;
 
 };
