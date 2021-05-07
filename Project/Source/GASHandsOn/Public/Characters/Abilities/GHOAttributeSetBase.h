@@ -120,6 +120,36 @@ public:
 
 	/*
 	by GASDocumentation
+		Current Mana, used to execute special abilities. Capped by ManaMax.
+	和訳
+		現在のマナ、特別なアビリティを実行するために使われる。 ManaMax が上限です。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_Mana)
+	FGameplayAttributeData Mana;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Mana)
+
+	/*
+	by GASDocumentation
+		ManaMax is its own attribute since GameplayEffects may modify it
+	和訳
+		ManaMax は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_ManaMax)
+	FGameplayAttributeData ManaMax;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ManaMax)
+
+	/*
+	by GASDocumentation
+		Mana regen rate will passively increase Mana every second
+	和訳
+		ManaRegenRate は毎秒パッシブにマナを増加します。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_ManaRegenRate)
+	FGameplayAttributeData ManaRegenRate;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ManaRegenRate)
+
+	/*
+	by GASDocumentation
 		MoveSpeed affects how fast characters can move.
 	和訳
 		MoveSpeed は キャラクターの移動速度に影響を与えます。
@@ -160,6 +190,15 @@ protected:
 
 	UFUNCTION()
 	void OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate);
+
+	UFUNCTION()
+	void OnRep_Mana(const FGameplayAttributeData& OldMana);
+
+	UFUNCTION()
+	void OnRep_ManaMax(const FGameplayAttributeData& OldManaMax);
+
+	UFUNCTION()
+	void OnRep_ManaRegenRate(const FGameplayAttributeData& OldManaRegenRate);
 
 	UFUNCTION()
 	void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
