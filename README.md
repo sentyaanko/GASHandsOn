@@ -41,6 +41,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.10
 	* Character に起動時に一度だけ GameplayEffect を適用する仕組みの組み込み
 	* 詳細は [./Documents/Add-StartupEffects-System.md](./Documents/Add-StartupEffects-System.md) を参照
+* v0.0.11
+	* Character に HealthRegenRate の Attribute 組み込み
+	* 詳細は [./Documents/Add-HealthRegenRate-Attribute.md](./Documents/Add-HealthRegenRate-Attribute.md) を参照
 
 -----
 おしまい。

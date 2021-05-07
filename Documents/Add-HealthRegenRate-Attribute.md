@@ -1,5 +1,5 @@
-# Add-HealthRegen-Attribute
-`Character` に定期的に `Health` を増加させる `HealthRegen` アトリビュートを追加する
+# Add-HealthRegenRate-Attribute
+`Character` に定期的に `Health` を増加させる `HealthRegenRate` アトリビュートを追加する
 
 # 方法
 
