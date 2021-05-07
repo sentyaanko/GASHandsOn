@@ -64,7 +64,7 @@ void AGHOPlayerState::BeginPlay()
 	{
 		// Attribute change callbacks
 		HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthAttribute()).AddUObject(this, &AGHOPlayerState::HealthChanged);
-		MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxHealthAttribute()).AddUObject(this, &AGHOPlayerState::MaxHealthChanged);
+		HealthMaxChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthMaxAttribute()).AddUObject(this, &AGHOPlayerState::HealthMaxChanged);
 		HealthRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::HealthRegenRateChanged);
 	}
 }
@@ -89,7 +89,7 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 		//	FloatingStatusBar の実装の際に対応すること。
 		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
 		//{
-		//	HeroFloatingStatusBar->SetHealthPercentage(Health / GetMaxHealth());
+		//	HeroFloatingStatusBar->SetHealthPercentage(Health / GetHealthMax());
 		//}
 
 		if ((Health <= 0.f) && !AbilitySystemComponent->IsDead())
@@ -99,9 +99,9 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 	}
 }
 
-void AGHOPlayerState::MaxHealthChanged(const struct FOnAttributeChangeData& Data)
+void AGHOPlayerState::HealthMaxChanged(const struct FOnAttributeChangeData& Data)
 {
-	const float MaxHealth = Data.NewValue;
+	const float HealthMax = Data.NewValue;
 
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
@@ -109,7 +109,7 @@ void AGHOPlayerState::MaxHealthChanged(const struct FOnAttributeChangeData& Data
 		//	FloatingStatusBar の実装の際に対応すること。
 		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
 		//{
-		//	HeroFloatingStatusBar->SetHealthPercentage(GetHealth() / MaxHealth);
+		//	HeroFloatingStatusBar->SetHealthPercentage(GetHealth() / HealthMax);
 		//}
 	}
 	// Update the HUD
@@ -119,7 +119,7 @@ void AGHOPlayerState::MaxHealthChanged(const struct FOnAttributeChangeData& Data
 		//	HUD の実装の際に対応すること。
 		//if (UGDHUDWidget* HUD = PC->GetHUD())
 		//{
-		//	HUD->SetMaxHealth(MaxHealth);
+		//	HUD->SetHealthMax(HealthMax);
 		//}
 	}
 }

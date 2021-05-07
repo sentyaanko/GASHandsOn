@@ -39,7 +39,7 @@ public:
 private:
 	// Attribute changed callbacks
 	void HealthChanged(const struct FOnAttributeChangeData& Data);
-	void MaxHealthChanged(const struct FOnAttributeChangeData& Data);
+	void HealthMaxChanged(const struct FOnAttributeChangeData& Data);
 	void HealthRegenRateChanged(const struct FOnAttributeChangeData& Data);
 
 private:
@@ -50,7 +50,7 @@ private:
 	class UGHOAttributeSetBase* AttributeSetBase;
 
 	FDelegateHandle HealthChangedDelegateHandle;
-	FDelegateHandle MaxHealthChangedDelegateHandle;
+	FDelegateHandle HealthMaxChangedDelegateHandle;
 	FDelegateHandle HealthRegenRateChangedDelegateHandle;
 
 };

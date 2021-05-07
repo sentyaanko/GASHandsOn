@@ -61,7 +61,7 @@ public:
 		This is lower level than PreAttributeModify/PostAttribute modify.
 		There is no additional context provided here since anything can trigger this. 
 		Executed effects, duration based effects, effects being removed, immunity being applied, stacking rules changing, etc.
-		This function is meant to enforce things like "Health = Clamp(Health, 0, MaxHealth)" 
+		This function is meant to enforce things like "Health = Clamp(Health, 0, HealthMax)" 
 		and NOT things like "trigger this extra thing if damage is applied, etc".
 	
 		NewValue is a mutable reference so you are able to clamp the newly applied value as well.
@@ -70,7 +70,7 @@ public:
 		これは PreAttributeModify/PostAttribute modify よりも低レベルです。
 		何が起こってもおかしくないため、ここでは追加のコンテキストは提供されません。
 		実行されたエフェクト、持続時間に基づくエフェクト、エフェクトの除去、免疫の適用、スタッキングルールの変更などです。
-		この関数は「 Health = Clamp(Health, 0, MaxHealth) 」 のようなことを強制するためのものであり、 
+		この関数は「 Health = Clamp(Health, 0, HealthMax) 」 のようなことを強制するためのものであり、 
 		「ダメージが適用された際にこの追加事項をトリガーする」などを行うものではありません。
 
 		NewValue は変更可能な参照なので、新しく適用された値もクランプすることが出来ます。
@@ -86,11 +86,11 @@ public:
 
 	/*
 	by GASDocumentation
-		Current Health, when 0 we expect owner to die unless prevented by an ability. Capped by MaxHealth.
+		Current Health, when 0 we expect owner to die unless prevented by an ability. Capped by HealthMax.
 		Positive changes can directly use this.
 		Negative changes to Health should go through Damage meta attribute.
 	和訳
-		現在のヘルス、0 のときは、アビリティで防がれない限り、オーナーは死ぬと思われる。 MaxHealth が上限です。
+		現在のヘルス、0 のときは、アビリティで防がれない限り、オーナーは死ぬと思われる。 HealthMax が上限です。
 		ポジティブな変更は直接使用することが出来ます。
 		ネガティブな変更は Damage メタ Attribute を使用するべきです。
 	*/
@@ -100,13 +100,13 @@ public:
 
 	/*
 	by GASDocumentation
-		MaxHealth is its own attribute since GameplayEffects may modify it
+		HealthMax is its own attribute since GameplayEffects may modify it
 	和訳
-		MaxHealth は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
+		HealthMax は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_MaxHealth)
-	FGameplayAttributeData MaxHealth;
-	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, MaxHealth)
+	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_HealthMax)
+	FGameplayAttributeData HealthMax;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, HealthMax)
 
 	/*
 	by GASDocumentation
@@ -138,10 +138,10 @@ protected:
 	/*
 	by GASDocumentation
 		Helper function to proportionally adjust the value of an attribute when it's associated max attribute changes.
-		(i.e. When MaxHealth increases, Health increases by an amount that maintains the same percentage as before)
+		(i.e. When HealthMax increases, Health increases by an amount that maintains the same percentage as before)
 	和訳
 		関連する最大属性が変更されたときに、属性の値を比例的に調整するヘルパー関数です。
-		（例： MaxHealth が増加すると、 Health は以前と同じ割合を維持する量だけ増加します。）
+		（例： HealthMax が増加すると、 Health は以前と同じ割合を維持する量だけ増加します。）
 	*/
 	void AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty);
 
@@ -153,14 +153,14 @@ protected:
 	*/
 
 	UFUNCTION()
-	virtual void OnRep_Health(const FGameplayAttributeData& OldHealth);
+	void OnRep_Health(const FGameplayAttributeData& OldHealth);
 
 	UFUNCTION()
-	virtual void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+	void OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax);
 
 	UFUNCTION()
-	virtual void OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate);
+	void OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate);
 
 	UFUNCTION()
-	virtual void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
+	void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
 };
