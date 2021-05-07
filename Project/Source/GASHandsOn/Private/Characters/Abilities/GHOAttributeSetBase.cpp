@@ -17,6 +17,7 @@ void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimePro
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MaxHealth, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, HealthRegenRate, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
 }
 
@@ -109,6 +110,13 @@ void UGHOAttributeSetBase::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxH
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, MaxHealth, OldMaxHealth);
 
 	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMaxHealth.GetCurrentValue(), MaxHealth.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, HealthRegenRate, OldHealthRegenRate);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealthRegenRate.GetCurrentValue(), HealthRegenRate.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed)
