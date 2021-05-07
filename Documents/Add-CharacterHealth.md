@@ -102,19 +102,13 @@
 			* `OnCharacterDied` のブロードキャスト
 			* `UGHOAbilitySystemComponent::Die()` の呼び出し
 			* `FinishDying()` の呼び出し
-1. `` に以下を追加
+1. `AGHOHeroCharacterBase` に以下を追加
 	* 関数
 		* `AGHOCharacterBase::GetAttributeSet()` (override)
 			* `PlayerState` から取得しておいた `AttributeSet` を返す
 		* `InitializeAfterAbilitySystem()`
 			* `UGHOAbilitySystemComponent::ClearDead()` の呼び出し
 			* `UGHOAttributeSetBase::InitializeAttributesOnSpawned()` の呼び出し
-1. `` に以下を追加
-	* プロパティ
-	* 関数
-1. `` に以下を追加
-	* プロパティ
-	* 関数
 1. `GE_HeroAttributes` を新規作成
 	* `GameplayEffects` の `Modifiers` に要素を追加死、以下を指定
 		* `Attribute` に `GHOAttributeSetBase.MaxHealth`

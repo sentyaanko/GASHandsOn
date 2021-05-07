@@ -110,11 +110,20 @@ public:
 
 	/*
 	by GASDocumentation
+		Health regen rate will passively increase Health every second
+	和訳
+		HealthRegenRate は毎秒パッシブにヘルスを増加します。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_HealthRegenRate)
+	FGameplayAttributeData HealthRegenRate;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, HealthRegenRate)
+
+	/*
+	by GASDocumentation
 		MoveSpeed affects how fast characters can move.
 	和訳
 		MoveSpeed は キャラクターの移動速度に影響を与えます。
 	*/
-	// 
 	UPROPERTY(BlueprintReadOnly, Category = "MoveSpeed", ReplicatedUsing = OnRep_MoveSpeed)
 	FGameplayAttributeData MoveSpeed;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, MoveSpeed)
@@ -144,10 +153,13 @@ protected:
 	*/
 
 	UFUNCTION()
-	void OnRep_Health(const FGameplayAttributeData& OldHealth);
+	virtual void OnRep_Health(const FGameplayAttributeData& OldHealth);
 
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+	virtual void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+
+	UFUNCTION()
+	virtual void OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate);
 
 	UFUNCTION()
 	virtual void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
