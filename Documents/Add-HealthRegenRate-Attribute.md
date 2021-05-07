@@ -46,7 +46,7 @@ BP 類。
 	* `GameplayEffects > Modifiers` に要素を追加し、以下を指定
 		* `Attribute` に `GHOAttributeSetBase.Health`
 		* `Magnitude Calculation Type` に `Attribute Based`
-		* `Backing Attribute > Attribute to Capture` に `GHOAttributeSetBase.Health`
+		* `Backing Attribute > Attribute to Capture` に `GHOAttributeSetBase.HealthRegenRate`
 	* `Period > Period` に `1.0` （これが加算する頻度になります。）
 	* `タグ > Ongoing Tag Requirements > Ignore Tags` に `State.Dead`
 1. `BP_HeroCharacterBase` の変更

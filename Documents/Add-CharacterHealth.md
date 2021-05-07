@@ -17,43 +17,43 @@
 		* `ATTRIBUTE_ACCESSORS()` （アクセサ定義用）
 	* プロパティ
 		* `Health`
-		* `MaxHealth`
+		* `HealthMax`
 	* 関数
 		* コンストラクタ
 			* 今回は用意のみ
 		* `UObject::GetLifetimeReplicatedProps()` (override)
-			* 追加した `Health` `MaxHealth` プロパティのレプリケーション設定用のマクロ呼び出し
+			* 追加した `Health` `HealthMax` プロパティのレプリケーション設定用のマクロ呼び出し
 		* `UAttributeSet::PostGameplayEffectExecute()` (override)
-			* `Health` の変更を 0 から `MaxHealth` になるようにクランプ処理
+			* `Health` の変更を 0 から `HealthMax` になるようにクランプ処理
 		* `UAttributeSet::PreAttributeChange()` (override)
-			* `MaxHealth` が変更された場合に `AdjustAttributeForMaxChange()` を利用して `Health` の調整
+			* `HealthMax` が変更された場合に `AdjustAttributeForMaxChange()` を利用して `Health` の調整
 		* `GetCharacterLevel()`
 			* 仮で常に 0 を返すようにしておく。 `CharacterLevel` の実装の際に対応する
     	* `InitializeAttributesOnSpawned()`
 			* スポーン時のアトリビュートの初期化。
-			* 具体的には `Health` を `MaxHealth` で初期化している。
+			* 具体的には `Health` を `HealthMax` で初期化している。
     	* `AdjustAttributeForMaxChange()`
 			* 現在地と最大値を持つプロパティの最大値を変更したときに、現在値が以前の最大値との比と変わらないように調整する
     	* `OnRep_Health()`
 			* `GAMEPLAYATTRIBUTE_REPNOTIFY()` マクロを利用する
-    	* `OnRep_MaxHealth()`
+    	* `OnRep_HealthMax()`
 			* `GAMEPLAYATTRIBUTE_REPNOTIFY()` マクロを利用する
 1. `AGHOPlayerState` に以下を追加
 	* プロパティ
 		* `HealthChangedDelegateHandle`
 			* `Health` 変更時のデリゲートハンドル
-		* `MaxHealthChangedDelegateHandle`
-			* `MaxHealth` 変更時のデリゲートハンドル
+		* `HealthMaxChangedDelegateHandle`
+			* `HealthMax` 変更時のデリゲートハンドル
 	* 関数
 		* `AActor::BeginPlay()` (override)
 			* `HealthChangedDelegateHandle` の初期化
-			* `MaxHealthChangedDelegateHandle` の初期化
+			* `HealthMaxChangedDelegateHandle` の初期化
 		* `HealthChanged()`
 			* `Health` 変更時のデリゲートの実体
 			* `Health` 変更の結果死亡した場合、 `Pawn` に死亡を通知
 			* 変更結果を UI に反映するのもここで行うが、今回は省略
-		* `MaxHealthChanged()`
-			* `MaxHealth` 変更時のデリゲートの実体
+		* `HealthMaxChanged()`
+			* `HealthMax` 変更時のデリゲートの実体
 			* 変更結果を UI に反映するのもここで行うが、今回は省略
 1. `UGHOAbilitySystemComponent` に以下を追加
 	* プロパティ
@@ -110,8 +110,8 @@
 			* `UGHOAbilitySystemComponent::ClearDead()` の呼び出し
 			* `UGHOAttributeSetBase::InitializeAttributesOnSpawned()` の呼び出し
 1. `GE_HeroAttributes` を新規作成
-	* `GameplayEffects` の `Modifiers` に要素を追加死、以下を指定
-		* `Attribute` に `GHOAttributeSetBase.MaxHealth`
+	* `GameplayEffects` の `Modifiers` に要素を追加し、以下を指定
+		* `Attribute` に `GHOAttributeSetBase.HealthMax`
 		* `Modifier Op` に `Override`
 		* `Modifier Magnitude/Magnitude Calculation Type` に `ScalableFloat`
 		* `Modifier Magnitude/Scalable Float Magnitude` に `100`
