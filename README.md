@@ -48,6 +48,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* MaxHealth を HealthMax に変更（ドロップダウンリストの並びの利便性のため）
 	* Character に Mana 関連の Attribute 組み込み
 	* 詳細は [./Documents/Add-Mana-Attribute.md](./Documents/Add-Mana-Attribute.md) を参照
+* v0.0.13
+	* Character に Stamina 関連の Attribute 組み込み
+	* 詳細は [./Documents/Add-Stamina-Attribute.md](./Documents/Add-Stamina-Attribute.md) を参照
 
 -----
 おしまい。

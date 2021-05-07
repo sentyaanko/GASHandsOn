@@ -69,6 +69,9 @@ void AGHOPlayerState::BeginPlay()
 		ManaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaAttribute()).AddUObject(this, &AGHOPlayerState::ManaChanged);
 		ManaMaxChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaMaxAttribute()).AddUObject(this, &AGHOPlayerState::ManaMaxChanged);
 		ManaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::ManaRegenRateChanged);
+		StaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaAttribute()).AddUObject(this, &AGHOPlayerState::StaminaChanged);
+		StaminaMaxChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaMaxAttribute()).AddUObject(this, &AGHOPlayerState::StaminaMaxChanged);
+		StaminaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::StaminaRegenRateChanged);
 	}
 }
 
@@ -82,7 +85,7 @@ UGHOAttributeSetBase* AGHOPlayerState::GetAttributeSetBase()const
 	return AttributeSetBase;
 }
 
-void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
+void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 {
 	const float Health = Data.NewValue;
 
@@ -102,7 +105,7 @@ void AGHOPlayerState::HealthChanged(const struct FOnAttributeChangeData& Data)
 	}
 }
 
-void AGHOPlayerState::HealthMaxChanged(const struct FOnAttributeChangeData& Data)
+void AGHOPlayerState::HealthMaxChanged(const FOnAttributeChangeData& Data)
 {
 	const float HealthMax = Data.NewValue;
 
@@ -127,7 +130,7 @@ void AGHOPlayerState::HealthMaxChanged(const struct FOnAttributeChangeData& Data
 	}
 }
 
-void AGHOPlayerState::HealthRegenRateChanged(const struct FOnAttributeChangeData & Data)
+void AGHOPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData & Data)
 {
 	const float HealthRegenRate = Data.NewValue;
 
@@ -158,8 +161,16 @@ void AGHOPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 		//}
 	}
 
-	// Update the HUD
-	// Handled in the UI itself using the AsyncTaskAttributeChanged node as an example how to do it in Blueprint
+	/*
+	by GASDocumentation
+		Update the HUD
+		Handled in the UI itself using the AsyncTaskAttributeChanged node as an example how to do it in Blueprint
+	和訳
+		HUD の更新
+		AsyncTaskAttributeChanged ノードを使用して UI 自体で処理する。
+	TODO
+		HUD 及び AsyncTaskAttributeChanged の実装を行うこと。（ここで行うことは特に無いです。）
+	*/
 }
 
 void AGHOPlayerState::ManaMaxChanged(const FOnAttributeChangeData & Data)
@@ -201,6 +212,56 @@ void AGHOPlayerState::ManaRegenRateChanged(const FOnAttributeChangeData & Data)
 		//if (UGDHUDWidget* HUD = PC->GetHUD())
 		//{
 		//	HUD->SetManaRegenRate(ManaRegenRate);
+		//}
+	}
+}
+
+void AGHOPlayerState::StaminaChanged(const FOnAttributeChangeData& Data)
+{
+	const float Stamina = Data.NewValue;
+
+	/*
+	by GASDocumentation
+		Update the HUD
+		Handled in the UI itself using the AsyncTaskAttributeChanged node as an example how to do it in Blueprint
+	和訳
+		HUD の更新
+		AsyncTaskAttributeChanged ノードを使用して UI 自体で処理する。
+	TODO
+		HUD 及び AsyncTaskAttributeChanged の実装を行うこと。（ここで行うことは特に無いです。）
+	*/
+}
+
+void AGHOPlayerState::StaminaMaxChanged(const FOnAttributeChangeData& Data)
+{
+	const float StaminaMax = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		//TODO
+		//	HUD の実装の際に対応すること。
+		//UGDHUDWidget* HUD = PC->GetHUD();
+		//if (HUD)
+		//{
+		//	HUD->SetStaminaMax(StaminaMax);
+		//}
+	}
+}
+
+void AGHOPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData& Data)
+{
+	const float StaminaRegenRate = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		//TODO
+		//	HUD の実装の際に対応すること。
+		//UGDHUDWidget* HUD = PC->GetHUD();
+		//if (HUD)
+		//{
+		//	HUD->SetStaminaRegenRate(StaminaRegenRate);
 		//}
 	}
 }

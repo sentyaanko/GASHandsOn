@@ -21,6 +21,9 @@ void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimePro
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Mana, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, ManaMax, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, ManaRegenRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Stamina, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, StaminaMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, StaminaRegenRate, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
 }
 
@@ -50,6 +53,17 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 		*/
 		SetMana(FMath::Clamp(GetMana(), 0.0f, GetManaMax()));
 	} // Mana
+	else if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
+	{
+		/*
+		by GASDocumentation
+			Handle stamina changes.
+		和訳
+			Stamina の変更を扱う。
+		*/
+		// 
+		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetStaminaMax()));
+	}
 }
 
 void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -95,6 +109,7 @@ void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
 	// Set Health/Mana/Stamina to their max. This is only necessary for *Respawn*.
 	SetHealth(GetHealthMax());
 	SetMana(GetManaMax());
+	SetStamina(GetStaminaMax());
 }
 
 bool UGHOAttributeSetBase::IsAlive()const
@@ -156,6 +171,27 @@ void UGHOAttributeSetBase::OnRep_ManaRegenRate(const FGameplayAttributeData& Old
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ManaRegenRate, OldManaRegenRate);
 
 	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldManaRegenRate.GetCurrentValue(), ManaRegenRate.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_Stamina(const FGameplayAttributeData& OldStamina)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Stamina, OldStamina);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldStamina.GetCurrentValue(), Stamina.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_StaminaMax(const FGameplayAttributeData& OldStaminaMax)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, StaminaMax, OldStaminaMax);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldStaminaMax.GetCurrentValue(), StaminaMax.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, StaminaRegenRate, OldStaminaRegenRate);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldStaminaRegenRate.GetCurrentValue(), StaminaRegenRate.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed)
