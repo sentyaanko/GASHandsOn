@@ -90,7 +90,7 @@ public:
 		Positive changes can directly use this.
 		Negative changes to Health should go through Damage meta attribute.
 	和訳
-		現在のヘルス、0 のときは、アビリティで防がれない限り、オーナーは死ぬと思われる。 HealthMax が上限です。
+		現在の Health で、0 のときは、アビリティで防がれない限り、オーナーは死ぬと思われる。 HealthMax が上限です。
 		ポジティブな変更は直接使用することが出来ます。
 		ネガティブな変更は Damage メタ Attribute を使用するべきです。
 	*/
@@ -112,7 +112,7 @@ public:
 	by GASDocumentation
 		Health regen rate will passively increase Health every second
 	和訳
-		HealthRegenRate は毎秒パッシブにヘルスを増加します。
+		HealthRegenRate は毎秒パッシブに Health を増加します。
 	*/
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_HealthRegenRate)
 	FGameplayAttributeData HealthRegenRate;
@@ -122,7 +122,7 @@ public:
 	by GASDocumentation
 		Current Mana, used to execute special abilities. Capped by ManaMax.
 	和訳
-		現在のマナ、特別なアビリティを実行するために使われる。 ManaMax が上限です。
+		現在の Mana で、特別なアビリティを実行する際に使用します。 ManaMax が上限です。
 	*/
 	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_Mana)
 	FGameplayAttributeData Mana;
@@ -142,11 +142,41 @@ public:
 	by GASDocumentation
 		Mana regen rate will passively increase Mana every second
 	和訳
-		ManaRegenRate は毎秒パッシブにマナを増加します。
+		ManaRegenRate は毎秒パッシブに Mana を増加します。
 	*/
 	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_ManaRegenRate)
 	FGameplayAttributeData ManaRegenRate;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ManaRegenRate)
+
+	/*
+	by GASDocumentation
+		Current stamina, used to execute special abilities. Capped by StaminaMax.
+	和訳
+		現在の Stamina で、特別なアビリティを実行する際に使用します。 StaminaMax が上限です。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Stamina", ReplicatedUsing = OnRep_Stamina)
+	FGameplayAttributeData Stamina;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Stamina)
+
+	/*
+	by GASDocumentation
+		StaminaMax is its own attribute since GameplayEffects may modify it
+	和訳
+		StaminaMax は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Stamina", ReplicatedUsing = OnRep_StaminaMax)
+	FGameplayAttributeData StaminaMax;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, StaminaMax)
+
+	/*
+	by GASDocumentation
+		Stamina regen rate will passively increase Stamina every second
+	和訳
+		StaminaRegenRate は毎秒パッシブに Stamina を増加します。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Stamina", ReplicatedUsing = OnRep_StaminaRegenRate)
+	FGameplayAttributeData StaminaRegenRate;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, StaminaRegenRate)
 
 	/*
 	by GASDocumentation
@@ -199,6 +229,15 @@ protected:
 
 	UFUNCTION()
 	void OnRep_ManaRegenRate(const FGameplayAttributeData& OldManaRegenRate);
+
+	UFUNCTION()
+	void OnRep_Stamina(const FGameplayAttributeData& OldStamina);
+
+	UFUNCTION()
+	void OnRep_StaminaMax(const FGameplayAttributeData& OldStaminaMax);
+
+	UFUNCTION()
+	void OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate);
 
 	UFUNCTION()
 	void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);

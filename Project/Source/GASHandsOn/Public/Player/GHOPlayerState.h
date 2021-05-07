@@ -44,6 +44,9 @@ private:
 	void ManaChanged(const struct FOnAttributeChangeData& Data);
 	void ManaMaxChanged(const struct FOnAttributeChangeData& Data);
 	void ManaRegenRateChanged(const struct FOnAttributeChangeData& Data);
+	void StaminaChanged(const struct FOnAttributeChangeData& Data);
+	void StaminaMaxChanged(const struct FOnAttributeChangeData& Data);
+	void StaminaRegenRateChanged(const struct FOnAttributeChangeData& Data);
 
 private:
 	UPROPERTY()
@@ -58,5 +61,8 @@ private:
 	FDelegateHandle ManaChangedDelegateHandle;
 	FDelegateHandle ManaMaxChangedDelegateHandle;
 	FDelegateHandle ManaRegenRateChangedDelegateHandle;
+	FDelegateHandle StaminaChangedDelegateHandle;
+	FDelegateHandle StaminaMaxChangedDelegateHandle;
+	FDelegateHandle StaminaRegenRateChangedDelegateHandle;
 
 };
