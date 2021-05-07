@@ -16,8 +16,11 @@ void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimePro
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Health, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MaxHealth, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, HealthMax, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, HealthRegenRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Mana, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, ManaMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, ManaRegenRate, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
 }
 
@@ -35,8 +38,18 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 			他の Health の変更を扱う。
 			Health の減少は Damage を経由する必要があります。
 		*/
-		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
+		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetHealthMax()));
 	} // Health
+	else if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		/*
+		by GASDocumentation
+			Handle mana changes.
+		和訳
+			Mana の変更を扱う。
+		*/
+		SetMana(FMath::Clamp(GetMana(), 0.0f, GetManaMax()));
+	} // Mana
 }
 
 void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -52,14 +65,18 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	/*
 	by GASDocumentation
 		If a Max value changes, adjust current to keep Current % of Current to Max
-		GetMaxHealthAttribute comes from the Macros defined at the top of the header
+		GetHealthMaxAttribute comes from the Macros defined at the top of the header
 	和訳
 		Max 値が変更された場合、 Current の Max に対する % を保つように Current を調整する。
-		GetMaxHealthAttribute() はヘッダの先頭で定義されたマクロから来ています。
+		GetHealthMaxAttribute() はヘッダの先頭で定義されたマクロから来ています。
 	*/
-	if (Attribute == GetMaxHealthAttribute())
+	if (Attribute == GetHealthMaxAttribute())
 	{
-		AdjustAttributeForMaxChange(Health, MaxHealth, NewValue, GetHealthAttribute());
+		AdjustAttributeForMaxChange(Health, HealthMax, NewValue, GetHealthAttribute());
+	}
+	else if (Attribute == GetManaMaxAttribute())
+	{
+		AdjustAttributeForMaxChange(Mana, ManaMax, NewValue, GetManaAttribute());
 	}
 	else if (Attribute == GetMoveSpeedAttribute())
 	{
@@ -76,7 +93,8 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
 {
 	// Set Health/Mana/Stamina to their max. This is only necessary for *Respawn*.
-	SetHealth(GetMaxHealth());
+	SetHealth(GetHealthMax());
+	SetMana(GetManaMax());
 }
 
 bool UGHOAttributeSetBase::IsAlive()const
@@ -105,11 +123,11 @@ void UGHOAttributeSetBase::OnRep_Health(const FGameplayAttributeData& OldHealth)
 	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealth.GetCurrentValue(), Health.GetCurrentValue());
 }
 
-void UGHOAttributeSetBase::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth)
+void UGHOAttributeSetBase::OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, MaxHealth, OldMaxHealth);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, HealthMax, OldHealthMax);
 
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMaxHealth.GetCurrentValue(), MaxHealth.GetCurrentValue());
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealthMax.GetCurrentValue(), HealthMax.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate)
@@ -117,6 +135,27 @@ void UGHOAttributeSetBase::OnRep_HealthRegenRate(const FGameplayAttributeData& O
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, HealthRegenRate, OldHealthRegenRate);
 
 	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealthRegenRate.GetCurrentValue(), HealthRegenRate.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_Mana(const FGameplayAttributeData& OldMana)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Mana, OldMana);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMana.GetCurrentValue(), Mana.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_ManaMax(const FGameplayAttributeData& OldManaMax)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ManaMax, OldManaMax);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldManaMax.GetCurrentValue(), ManaMax.GetCurrentValue());
+}
+
+void UGHOAttributeSetBase::OnRep_ManaRegenRate(const FGameplayAttributeData& OldManaRegenRate)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ManaRegenRate, OldManaRegenRate);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldManaRegenRate.GetCurrentValue(), ManaRegenRate.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed)
