@@ -18,7 +18,7 @@ void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* I
 {
 	UGHOAttributeSetBase* AttributeSet = InSourceObject->GetAttributeSet();
 
-	TSubclassOf<class UGameplayEffect>& DefaultAttributes = InSourceObject->GetDefaultAttributes();
+	const TSubclassOf<class UGameplayEffect>& DefaultAttributes = InSourceObject->GetDefaultAttributes();
 
 	// Can run on Server and Client
 	FGameplayEffectContextHandle EffectContext = MakeEffectContext();
@@ -86,6 +86,30 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 
 	bCharacterAbilitiesGiven = false;
 
+}
+
+void UGHOAbilitySystemComponent::AddStartupEffects(class AGHOCharacterBase* InSourceObject)
+{
+	if (bStartupEffectsApplied)
+	{
+		return;
+	}
+	UGHOAttributeSetBase* AttributeSet = InSourceObject->GetAttributeSet();
+	const TArray<TSubclassOf<class UGameplayEffect>>& StartupEffects = InSourceObject->GetStartupEffects();
+
+	FGameplayEffectContextHandle EffectContext = MakeEffectContext();
+	EffectContext.AddSourceObject(InSourceObject);
+
+	for (const TSubclassOf<UGameplayEffect>& GameplayEffect : StartupEffects)
+	{
+		FGameplayEffectSpecHandle NewHandle = MakeOutgoingSpec(GameplayEffect, AttributeSet->GetCharacterLevel(), EffectContext);
+		if (NewHandle.IsValid())
+		{
+			FActiveGameplayEffectHandle ActiveGEHandle = ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), this);
+		}
+	}
+
+	bStartupEffectsApplied = true;
 }
 
 void UGHOAbilitySystemComponent::ClearDead()

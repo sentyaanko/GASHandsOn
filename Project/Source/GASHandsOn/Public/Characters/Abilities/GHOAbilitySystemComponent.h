@@ -21,6 +21,7 @@ public:
 	void InitializeAttributes(class AGHOCharacterBase* InSourceObject);
 	void AddCharacterAbilities(class AGHOCharacterBase* InSourceObject);
 	void RemoveCharacterAbilities(class AGHOCharacterBase* InSourceObject);
+	void AddStartupEffects(class AGHOCharacterBase* InSourceObject);
 
 	void ClearDead();
 	bool IsDead() const;
@@ -34,4 +35,5 @@ private:
 	FGameplayTag EffectRemoveOnDeathTag;
 
 	bool bCharacterAbilitiesGiven = false;
+	bool bStartupEffectsApplied = false;
 };
