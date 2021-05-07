@@ -169,6 +169,36 @@ void AGHOCharacterBase::InitializeAttributes()
 void AGHOCharacterBase::AddStartupEffects()
 {
 	//for server
+#if 0
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->StartupEffectsApplied)
+	{
+		return;
+	}
+
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	for (TSubclassOf<UGameplayEffect> GameplayEffect : StartupEffects)
+	{
+		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, GetCharacterLevel(), EffectContext);
+		if (NewHandle.IsValid())
+		{
+			FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
+		}
+	}
+
+	AbilitySystemComponent->StartupEffectsApplied = true;
+#else
+	if (GetLocalRole() != ROLE_Authority)
+	{
+		return;
+	}
+	if (UGHOAbilitySystemComponent* AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		AbilitySystemComponent->AddStartupEffects(this);
+	}
+
+#endif
 }
 
 void AGHOCharacterBase::AddCharacterAbilities()

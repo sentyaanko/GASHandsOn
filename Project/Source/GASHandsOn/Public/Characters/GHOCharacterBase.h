@@ -81,7 +81,9 @@ public:
 
 	const TArray<TSubclassOf<class UGHOGameplayAbility>>& GetCharacterAbilities()const { return CharacterAbilities; }
 
-	TSubclassOf<class UGameplayEffect>& GetDefaultAttributes() { return DefaultAttributes; }
+	const TSubclassOf<class UGameplayEffect>& GetDefaultAttributes()const { return DefaultAttributes; }
+
+	const TArray<TSubclassOf<class UGameplayEffect>>& GetStartupEffects()const { return StartupEffects; }
 
 	bool IsMovable()const;
 
@@ -127,6 +129,7 @@ private:
 
 
 protected:
+	////TODO: Implement Death Animation.
 	//// Death Animation
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Animation")
 	//UAnimMontage* DeathMontage;
@@ -141,6 +144,15 @@ protected:
 	*/
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributes;
+
+	/*
+	by GASDocumentation
+		These effects are only applied one time on startup
+	和訳
+		これらの効果は起動維持に一度だけ適用されます。
+	*/
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
+	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
 
 	/*
 	by GASDocumentation

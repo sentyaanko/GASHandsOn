@@ -76,10 +76,13 @@ void UGHOGA_CharacterJump::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 			// why not return? 
 			// We need to change it so that it costs more and see how it behaves when CommitAbility fails.
 			// If there is a problem, report it to the author.
+			// Normally, the cost is checked by CanActivateAbility(), so being rejected here is a special case.
+			//UE_LOG(LogTemp, Error, TEXT("%s() CommitAbility() is falied."), *FString(__FUNCTION__));
 		}
 
 		if (ACharacter * Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get()))
 		{
+			//UE_LOG(LogTemp, Error, TEXT("%s() call Jump()."), *FString(__FUNCTION__));
 			Character->Jump();
 		}
 	}
