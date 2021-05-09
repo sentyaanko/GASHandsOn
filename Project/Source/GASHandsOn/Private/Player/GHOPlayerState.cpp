@@ -6,6 +6,7 @@
 #include "Characters/Abilities/GHOAttributeSetBase.h"
 #include "Characters/GHOHeroCharacterBase.h"
 #include "Player/GHOPlayerController.h"
+#include "UI/GHOHUDWidget.h"
 
 
 AGHOPlayerState::AGHOPlayerState()
@@ -121,12 +122,10 @@ void AGHOPlayerState::HealthMaxChanged(const FOnAttributeChangeData& Data)
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		//TODO
-		//	HUD の実装の際に対応すること。
-		//if (UGDHUDWidget* HUD = PC->GetHUD())
-		//{
-		//	HUD->SetHealthMax(HealthMax);
-		//}
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetHealthMax(HealthMax);
+		}
 	}
 }
 
@@ -137,12 +136,10 @@ void AGHOPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData & Data
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		//TODO
-		//	HUD の実装の際に対応すること。
-		//if (UGDHUDWidget* HUD = PC->GetHUD())
-		//{
-		//	HUD->SetHealthRegenRate(HealthRegenRate);
-		//}
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetHealthRegenRate(HealthRegenRate);
+		}
 	}
 }
 
@@ -191,12 +188,10 @@ void AGHOPlayerState::ManaMaxChanged(const FOnAttributeChangeData & Data)
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		//TODO
-		//	HUD の実装の際に対応すること。
-		//if (UGDHUDWidget* HUD = PC->GetHUD())
-		//{
-		//	HUD->SetManaMax(ManaMax);
-		//}
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetManaMax(ManaMax);
+		}
 	}
 }
 
@@ -207,12 +202,10 @@ void AGHOPlayerState::ManaRegenRateChanged(const FOnAttributeChangeData & Data)
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		//TODO
-		//	HUD の実装の際に対応すること。
-		//if (UGDHUDWidget* HUD = PC->GetHUD())
-		//{
-		//	HUD->SetManaRegenRate(ManaRegenRate);
-		//}
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetManaRegenRate(ManaRegenRate);
+		}
 	}
 }
 
@@ -239,13 +232,10 @@ void AGHOPlayerState::StaminaMaxChanged(const FOnAttributeChangeData& Data)
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		//TODO
-		//	HUD の実装の際に対応すること。
-		//UGDHUDWidget* HUD = PC->GetHUD();
-		//if (HUD)
-		//{
-		//	HUD->SetStaminaMax(StaminaMax);
-		//}
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetStaminaMax(StaminaMax);
+		}
 	}
 }
 
@@ -256,12 +246,9 @@ void AGHOPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData& Data
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
 	{
-		//TODO
-		//	HUD の実装の際に対応すること。
-		//UGDHUDWidget* HUD = PC->GetHUD();
-		//if (HUD)
-		//{
-		//	HUD->SetStaminaRegenRate(StaminaRegenRate);
-		//}
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetStaminaRegenRate(StaminaRegenRate);
+		}
 	}
 }

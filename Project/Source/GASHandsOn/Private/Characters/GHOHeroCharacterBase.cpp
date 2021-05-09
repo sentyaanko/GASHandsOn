@@ -11,6 +11,7 @@
 #include "Characters/Abilities/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOAttributeSetBase.h"
 #include "Player/GHOPlayerState.h"
+#include "Player/GHOPlayerController.h"
 
 
 AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectInitializer)
@@ -232,6 +233,10 @@ void AGHOHeroCharacterBase::InitializeAbilitySystemWeakObjects(class AGHOPlayerS
 
 void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 {
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetController()))
+	{
+		PC->CreateHUD();
+	}
 	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->ClearDead();

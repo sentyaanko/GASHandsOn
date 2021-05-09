@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "UI/GHOHUDWidgetParameter.h"
 #include "GHOAttributeSetBase.generated.h"
 
 // Uses macros from AttributeSet.h
@@ -13,6 +14,7 @@
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+
 
 /**
  * 
@@ -193,6 +195,8 @@ public:
 	void InitializeAttributesOnSpawned();
 
 	bool IsAlive()const;
+
+	FGHOHUDWidgetParameter GetHUDParameter()const;
 
 protected:
 	/*
