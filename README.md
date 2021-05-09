@@ -51,6 +51,11 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.13
 	* Character に Stamina 関連の Attribute 組み込み
 	* 詳細は [./Documents/Add-Stamina-Attribute.md](./Documents/Add-Stamina-Attribute.md) を参照
+* v0.0.13.1
+	* StaminaMax が変更された際に Stamina を Adjust していなかった不具合の修正
+* v0.0.14
+	* HUD 組み込み
+	* 詳細は [./Documents/Add-HUD.md](./Documents/Add-HUD.md) を参照
 
 -----
 おしまい。

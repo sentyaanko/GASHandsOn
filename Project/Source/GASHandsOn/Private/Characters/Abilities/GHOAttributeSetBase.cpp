@@ -121,6 +121,24 @@ bool UGHOAttributeSetBase::IsAlive()const
 	return GetHealth() > 0.f;
 }
 
+FGHOHUDWidgetParameter UGHOAttributeSetBase::GetHUDParameter()const
+{
+	return FGHOHUDWidgetParameter
+	(
+		GetCharacterLevel(),
+		GetMoveSpeed(),
+		GetHealth(),
+		GetHealthMax(),
+		GetHealthRegenRate(),
+		GetMana(),
+		GetManaMax(),
+		GetManaRegenRate(),
+		GetStamina(),
+		GetStaminaMax(),
+		GetStaminaRegenRate()
+	);
+}
+
 void UGHOAttributeSetBase::AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty)
 {
 	UAbilitySystemComponent* AbilityComp = GetOwningAbilitySystemComponent();

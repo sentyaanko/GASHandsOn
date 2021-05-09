@@ -14,10 +14,27 @@ class GASHANDSON_API AGHOPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+public:
+	AGHOPlayerController();
+
 	// AController interface
 protected:
 	virtual void OnRep_PlayerState() override;
 	virtual void OnPossess(APawn* aPawn) override;
 
 	// End of AController interface
+
+
+public:
+	void CreateHUD();
+	class UGHOHUDWidget* GetHUD() { return UIHUDWidget; }
+
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|UI")
+	TSubclassOf<class UGHOHUDWidget> UIHUDWidgetClass;
+
+private:
+	UPROPERTY()
+	class UGHOHUDWidget* UIHUDWidget;
+
 };
