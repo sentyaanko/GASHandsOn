@@ -5,7 +5,9 @@
 
 * `widget` 関連の実装方法については `AbilitySystem` が絡む部分のみ記述します。
 * まだ扱わないことは以下の通り
-	* `Health` などの現在値の更新部分は `AsyncTaskAttributeChanged` を使用する予定のため、
+	* `AsyncTaskAttributeChanged` の実装
+		* `Health` などの現在値の更新で使用する予定。
+		* そのため、今回の更新では `Health` 等の更新があっても `HUD` に反映されない。
 
 # 手順
 
