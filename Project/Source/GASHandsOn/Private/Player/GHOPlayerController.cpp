@@ -51,8 +51,8 @@ void AGHOPlayerController::OnRep_PlayerState()
 	/*
 	by GASDocumentation
 		For edge cases where the PlayerState is repped before the Hero is possessed.
-	˜a–ó
-		Hero ‚Ì possessed ‚ªŒÄ‚Î‚ê‚é‘O‚É PlayerState ‚ª Rep ‚³‚ê‚é ƒGƒbƒWƒP[ƒX‘Îô
+	å’Œè¨³
+		Hero ã® possessed ãŒå‘¼ã°ã‚Œã‚‹å‰ã« PlayerState ãŒ Rep ã•ã‚Œã‚‹ ã‚¨ãƒƒã‚¸ã‚±ãƒ¼ã‚¹å¯¾ç­–
 	*/
 	CreateHUD();
 
