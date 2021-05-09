@@ -7,6 +7,33 @@
 
 
 USTRUCT(BlueprintType)
+struct GASHANDSON_API FGHOGaugeWidgetParameter
+{
+	GENERATED_BODY()
+
+	FGHOGaugeWidgetParameter()
+		: FGHOGaugeWidgetParameter(0.f, 0.f, 0.f)
+	{
+	}
+
+	FGHOGaugeWidgetParameter(float InCurrent, float InMax, float InRegenRate)
+		: Current(InCurrent)
+		, Max(InMax)
+		, RegenRate(InRegenRate)
+	{
+	}
+
+	UPROPERTY(BlueprintReadWrite)
+	float Current;
+
+	UPROPERTY(BlueprintReadWrite)
+	float Max;
+
+	UPROPERTY(BlueprintReadWrite)
+	float RegenRate;
+};
+
+USTRUCT(BlueprintType)
 struct GASHANDSON_API FGHOHUDWidgetParameter
 {
 	GENERATED_BODY()
@@ -19,15 +46,9 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 	FGHOHUDWidgetParameter(int32 InHeroLevel, float InMoveSpeed, float InHealth, float InHealthMax, float InHealthRegenRate, float InMana, float InManaMax, float InManaRegenRate, float InStamina, float InStaminaMax, float InStaminaRegenRate)
 		: HeroLevel(InHeroLevel)
 		, MoveSpeed(InMoveSpeed)
-		, Health(InHealth)
-		, HealthMax(InHealthMax)
-		, HealthRegenRate(InHealthRegenRate)
-		, Mana(InMana)
-		, ManaMax(InManaMax)
-		, ManaRegenRate(InManaRegenRate)
-		, Stamina(InStamina)
-		, StaminaMax(InStaminaMax)
-		, StaminaRegenRate(InStaminaRegenRate)
+		, Health(InHealth, InHealthMax, InHealthRegenRate)
+		, Mana(InMana, InManaMax, InManaRegenRate)
+		, Stamina(InStamina, InStaminaMax, InStaminaRegenRate)
 	{
 	}
 
@@ -38,29 +59,12 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 	float MoveSpeed;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Health")
-	float Health;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Health")
-	float HealthMax;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Health")
-	float HealthRegenRate;
+	FGHOGaugeWidgetParameter Health;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Mana")
-	float Mana;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Mana")
-	float ManaMax;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Mana")
-	float ManaRegenRate;
+	FGHOGaugeWidgetParameter Mana;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Stamina")
-	float Stamina;
+	FGHOGaugeWidgetParameter Stamina;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Stamina")
-	float StaminaMax;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Stamina")
-	float StaminaRegenRate;
 };

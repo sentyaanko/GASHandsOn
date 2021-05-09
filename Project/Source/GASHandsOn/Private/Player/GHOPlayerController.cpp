@@ -33,10 +33,11 @@ void AGHOPlayerController::CreateHUD()
 	// Need a valid PlayerState to get attributes from
 	if (AGHOPlayerState* playerState = GetPlayerState<AGHOPlayerState>())
 	{
-		UIHUDWidget = CreateWidget<UGHOHUDWidget>(this, UIHUDWidgetClass);
-		UIHUDWidget->AddToViewport();
-		if (UGHOAttributeSetBase* attr = Cast<UGHOAttributeSetBase>(playerState->GetAbilitySystemComponent()))
+		if (UGHOAttributeSetBase* attr = Cast<UGHOAttributeSetBase>(playerState->GetAttributeSetBase()))
 		{
+			UIHUDWidget = CreateWidget<UGHOHUDWidget>(this, UIHUDWidgetClass);
+			UIHUDWidget->AddToViewport();
+
 			// Set attributes
 			UIHUDWidget->SetParamter(attr->GetHUDParameter());
 		}
