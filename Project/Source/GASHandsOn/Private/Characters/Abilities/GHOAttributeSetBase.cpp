@@ -92,6 +92,10 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	{
 		AdjustAttributeForMaxChange(Mana, ManaMax, NewValue, GetManaAttribute());
 	}
+	else if (Attribute == GetStaminaMaxAttribute())
+	{
+		AdjustAttributeForMaxChange(Stamina, StaminaMax, NewValue, GetStaminaAttribute());
+	}
 	else if (Attribute == GetMoveSpeedAttribute())
 	{
 		/*
