@@ -56,6 +56,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.14
 	* HUD 組み込み
 	* 詳細は [./Documents/Add-HUD.md](./Documents/Add-HUD.md) を参照
+* v0.0.15
+	* AsyncTaskAttributeChanged 組み込み
+	* 詳細は [./Documents/Add-AsyncTaskAttributeChanged.md](./Documents/Add-AsyncTaskAttributeChanged.md) を参照
 
 -----
 おしまい。
