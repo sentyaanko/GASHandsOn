@@ -12,6 +12,7 @@
 #include "Characters/Abilities/GHOAttributeSetBase.h"
 #include "Player/GHOPlayerState.h"
 #include "Player/GHOPlayerController.h"
+#include "Game/GHOGameModeBase.h"
 
 
 AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectInitializer)
@@ -180,6 +181,19 @@ UGHOAttributeSetBase* AGHOHeroCharacterBase::GetAttributeSet()
 const UGHOAttributeSetBase* AGHOHeroCharacterBase::GetAttributeSet()const
 {
 	return AttributeSetBase.Get();
+}
+
+void AGHOHeroCharacterBase::FinishDying()
+{
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		if (AGHOGameModeBase* GM = Cast<AGHOGameModeBase>(GetWorld()->GetAuthGameMode()))
+		{
+			GM->HeroDied(GetController());
+		}
+	}
+
+	Super::FinishDying();
 }
 
 void AGHOHeroCharacterBase::TurnAtRate(float Rate)

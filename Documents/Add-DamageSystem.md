@@ -6,6 +6,7 @@
 * `AttributeSet` に `Damage` アトリビュートを追加する。
 * ダメージ計算を行う `GameplayEffectExecutionCalculation` 派生クラスを新規作成する。
 * ダメージの確認用に、範囲内に居るとダメージを受けるボリューム `BP_GEVolume_Damage` を用意する。
+* 死亡後のリスポーンの処理を `GameMode` に追加する。
 * まだ扱わないことは以下の通り
 	* `UGHOAttributeSetBase::PostGameplayEffectExecute_Damage()` で行う予定のこと
 		* ダメージ時のモンタージュ再生
@@ -16,7 +17,6 @@
 		* `Armor` アトリビュートによるダメージ軽減処理
 		* ダメージのターゲットの `AbilitySystemComponent` に対して 軽減前後のダメージ値の `Broadcast` する
 			* 軽減前後のダメージ値はユーザーに提示するには有用だが、 `GASDocumentation` では利用していない
-	* 死亡後のリスポーン
 
 # 手順
 
@@ -36,6 +36,36 @@
 	* 概要
 		* `GEEC` は `GameplayEffectExecutionCalcuration` の頭文字。
 		* 詳細はコード参照。
+1. `AGHOGameModeBase` に以下を追加
+	* プロパティ
+		* `RespawnDelay`
+			* リスポーンまでの待機時間
+		* `HeroClass`
+			* リスポーンで構築するクラス
+	* 関数
+		* コンストラクタ
+			* 追加した以下のプロパティの初期化
+				* `RespawnDelay`
+				* `HeroClass`
+		* `HeroDied()`
+			* 死亡時の処理。
+			* `Controller` から現在の `Pawn` を `UnPossess` し、スペクターポーン新規にスポーンし、 `Possess` する。
+			* `RespawnDelay` 秒後に `RespawnHero()` を呼び出す。
+			* 詳しくはコード参照。
+		* `RespawnHero()`
+			* マップ上から `PlayerStart` を探し、その座標に `HeroClass` をスポーンし、 `Contorller` に `Possess` する。
+			* 詳しくはコード参照。
+1. `AGHOCharacterBase` の変更
+	* 関数
+		* `FinishDying()`
+			* オーバーライドしたいので `virtual` に。
+1. `AGHOHeroCharacterBase` の変更
+	* 関数
+		* `FinishDying()`
+			* `ROLE_Authority` の場合は `GameMode` を取得し、 `AGHOGameModeBase::HeroDied()` を呼び出す。
+			* 要は死亡時の処理でリスポーンの登録処理を呼び出す。
+
+
 
 Editor での設定類。
 
@@ -72,7 +102,7 @@ BP 類。
 	* 詳しくは `BluePrint` 参照。
 
 
-以上で、プレイヤーにダメージを与える仕組みが作成できます。
+以上で、プレイヤーにダメージを与える仕組みと死亡時にリスポーンする仕組みが作成できます。
 
 
 -----
