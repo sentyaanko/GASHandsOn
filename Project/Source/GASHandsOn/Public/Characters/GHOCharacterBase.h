@@ -61,7 +61,7 @@ public:
 	void Die();
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
-	void FinishDying();
+	virtual void FinishDying();
 
 	/*
 	by GASDocumentation

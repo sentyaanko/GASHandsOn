@@ -4,6 +4,8 @@
 #include "Characters/Abilities/GHOAttributeSetBase.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
+#include "Characters/GHOCharacterBase.h"
+#include "Player/GHOPlayerController.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -31,7 +33,11 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 {
 	Super::PostGameplayEffectExecute(Data);
 
-	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
+	{
+		PostGameplayEffectExecute_Damage(Data);
+	}// Damage
+	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		/*
 		by GASDocumentation
@@ -63,6 +69,115 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 		*/
 		// 
 		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetStaminaMax()));
+	}
+}
+
+void UGHOAttributeSetBase::PostGameplayEffectExecute_Damage(const struct FGameplayEffectModCallbackData& Data)
+{
+	FGameplayEffectContextHandle Context = Data.EffectSpec.GetContext();
+	UAbilitySystemComponent* Source = Context.GetOriginalInstigatorAbilitySystemComponent();
+	//const FGameplayTagContainer& SourceTags = *Data.EffectSpec.CapturedSourceTags.GetAggregatedTags();
+	//FGameplayTagContainer SpecAssetTags;
+	//Data.EffectSpec.GetAllAssetTags(SpecAssetTags);
+
+	/*
+	by GASDocumentation
+		Get the Target actor, which should be our owner
+	和訳
+		owner であるはずのターゲットアクターを取得します。
+	*/
+	AActor* TargetActor = nullptr;
+	AController* TargetController = nullptr;
+	AGHOCharacterBase* TargetCharacter = nullptr;
+	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
+	{
+		TargetActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
+		TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
+		TargetCharacter = Cast<AGHOCharacterBase>(TargetActor);
+	}
+
+	/*
+	by GASDocumentation
+		Get the Source actor
+	和訳
+		ソースアクターを取得します。
+	*/
+	AActor* SourceActor = nullptr;
+	AController* SourceController = nullptr;
+	AGHOCharacterBase* SourceCharacter = nullptr;
+	if (Source && Source->AbilityActorInfo.IsValid() && Source->AbilityActorInfo->AvatarActor.IsValid())
+	{
+		SourceActor = Source->AbilityActorInfo->AvatarActor.Get();
+		SourceController = Source->AbilityActorInfo->PlayerController.Get();
+		if (SourceController == nullptr && SourceActor != nullptr)
+		{
+			if (APawn* Pawn = Cast<APawn>(SourceActor))
+			{
+				SourceController = Pawn->GetController();
+			}
+		}
+
+		/*
+		by GASDocumentation
+			Use the controller to find the source pawn
+		和訳
+			コントローラーを使用してソースのポーンを見つけます。
+		*/
+		if (SourceController)
+		{
+			SourceCharacter = Cast<AGHOCharacterBase>(SourceController->GetPawn());
+		}
+		else
+		{
+			SourceCharacter = Cast<AGHOCharacterBase>(SourceActor);
+		}
+
+		/*
+		by GASDocumentation
+			Set the causer actor based on context if it's set
+		和訳
+			因果関係のあるアクターが設定されていれば、それに基づいて設定します。
+		*/
+		if (Context.GetEffectCauser())
+		{
+			SourceActor = Context.GetEffectCauser();
+		}
+	}
+
+	/*
+	by GASDocumentation
+		Store a local copy of the amount of damage done and clear the damage attribute
+	和訳
+		ダメージ量のローカルコピーを保存し、ダメージアトリビュートをクリアする。
+	*/
+	const float LocalDamageDone = GetDamage();
+	SetDamage(0.f);
+
+	if (LocalDamageDone > 0.0f)
+	{
+		/*
+		by GASDocumentation
+			If character was alive before damage is added, handle damage
+			This prevents damage being added to dead things and replaying death animations
+		和訳
+			ダメージが追加される前にキャラクターが生きていた場合、ダメージ処理をする。
+			これにより死んだものにダメージが追加され、死亡アニメーションがリプレイされることを防ぎます。
+		*/
+		const bool WasAlive = TargetCharacter? TargetCharacter->IsAlive(): true;
+
+		if (!TargetCharacter->IsAlive())
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("%s() %s is NOT alive when receiving damage"), TEXT(__FUNCTION__), *TargetCharacter->GetName());
+		}
+
+		/*
+		by GASDocumentation
+			Apply the health change and then clamp it
+		和訳
+			Health の変化を適用してからクランプする。
+		*/
+		const float NewHealth = GetHealth() - LocalDamageDone;
+		SetHealth(FMath::Clamp(NewHealth, 0.0f, GetHealthMax()));
 	}
 }
 
