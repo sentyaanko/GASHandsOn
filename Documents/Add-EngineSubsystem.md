@@ -1,0 +1,28 @@
+# Add-EngineSubsystem
+`TargetData` を利用するための準備を行う。
+なお、これは、（ `TargetData` をこれまで使用していないため問題になっていませんが）本来最初にやるべき事柄の１つです。
+
+# 方法
+
+* `EngineSubsystem` を派生し、 `Initialize` 内で `UAbilitySystemGlobals::Get().InitGlobalData()` を呼び出す。
+* 詳しくは `GASDocumentation` の以下を参照。
+	* [3. GAS を使用したプロジェクトの設定](https://github.com/tranek/GASDocumentation#setup) [(和訳)](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#setup)
+	* [4.9.1 InitGlobalData()](https://github.com/tranek/GASDocumentation#concepts-asg-initglobaldata) [(和訳)](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-asg-initglobaldata)
+	* [4.11.1 Target Data](https://github.com/tranek/GASDocumentation#concepts-targeting-data) [(和訳)](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-targeting-data)
+
+# 手順
+
+ソース類
+
+
+1. `UGHOEngineSubsystem` を `UEngineSubsystem` から派生して新規作成
+	* 関数
+		* `USubsystem::Initialize()` (override)
+			* `UAbilitySystemGlobals::Get().InitGlobalData()` を呼び出す。
+
+
+以上で、 `TargetData` を利用する際にエラーが発生せず正常に動作するようになります。
+
+
+-----
+おしまい。
