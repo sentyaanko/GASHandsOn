@@ -16,4 +16,12 @@ class GASHANDSON_API AGHOGameModeBase : public AGameModeBase
 	
 public:
 	AGHOGameModeBase();
+
+	void HeroDied(AController* Controller);
+
+private:
+	float RespawnDelay;
+	TSubclassOf<class AGHOHeroCharacterBase> HeroClass;
+
+	void RespawnHero(AController* Controller);
 };

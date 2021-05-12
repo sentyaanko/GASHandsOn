@@ -62,6 +62,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.16
 	* EngineSubsystem 組み込み
 	* 詳細は [./Documents/Add-EngineSubsystem.md](./Documents/Add-EngineSubsystem.md) を参照
+* v0.0.17
+	* ダメージの仕組みの組み込み
+	* リスポーンの仕組みの組み込み
+	* 詳細は [./Documents/Add-DamageSystem.md](./Documents/Add-DamageSystem.md) を参照
 
 -----
 おしまい。

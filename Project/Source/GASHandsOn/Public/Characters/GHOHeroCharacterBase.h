@@ -48,10 +48,13 @@ public:
 
 	// End of IAbilitySystemInterface interface
 
+	// AGHOCharacterBase interface
 public:
 	virtual class UGHOAttributeSetBase* GetAttributeSet() override;
 	virtual const class UGHOAttributeSetBase* GetAttributeSet() const override;
+	virtual void FinishDying();
 
+	// End of AGHOCharacterBase interface
 
 protected:
 	/** Called for forwards/backward input */

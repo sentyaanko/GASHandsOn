@@ -182,6 +182,18 @@ public:
 
 	/*
 	by GASDocumentation
+		Damage is a meta attribute used by the DamageExecution to calculate final damage, which then turns into -Health
+		Temporary value that only exists on the Server. Not replicated.
+	和訳
+		Damage は DamageExecution が最終的なダメージを計算するために使用するメタ・アトリビュートで、それが -Health に変わります。
+		サーバーのみに存在する一時的な値です。レプリケーションされません。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Damage")
+	FGameplayAttributeData Damage;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Damage)
+
+	/*
+	by GASDocumentation
 		MoveSpeed affects how fast characters can move.
 	和訳
 		MoveSpeed は キャラクターの移動速度に影響を与えます。
@@ -245,4 +257,8 @@ protected:
 
 	UFUNCTION()
 	void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
+
+private:
+	void PostGameplayEffectExecute_Damage(const struct FGameplayEffectModCallbackData& Data);
+
 };
