@@ -59,6 +59,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.15
 	* AsyncTaskAttributeChanged 組み込み
 	* 詳細は [./Documents/Add-AsyncTaskAttributeChanged.md](./Documents/Add-AsyncTaskAttributeChanged.md) を参照
+* v0.0.16
+	* EngineSubsystem 組み込み
+	* 詳細は [./Documents/Add-EngineSubsystem.md](./Documents/Add-EngineSubsystem.md) を参照
 
 -----
 おしまい。
