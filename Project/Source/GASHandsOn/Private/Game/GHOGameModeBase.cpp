@@ -38,10 +38,7 @@ void AGHOGameModeBase::HeroDied(AController* Controller)
 	RespawnDelegate = FTimerDelegate::CreateUObject(this, &AGHOGameModeBase::RespawnHero, Controller);
 	GetWorldTimerManager().SetTimer(RespawnTimerHandle, RespawnDelegate, RespawnDelay, false);
 
-	//if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(Controller))
-	//{
-	//	PC->SetRespawnCountdown(RespawnDelay);
-	//}
+	//TODO: Call AGHOPlayerController::SetRespawnCountdown() for display RespawnCountdown.
 }
 
 void AGHOGameModeBase::RespawnHero(AController* Controller)
@@ -61,17 +58,5 @@ void AGHOGameModeBase::RespawnHero(AController* Controller)
 		OldSpectatorPawn->Destroy();
 		Controller->Possess(Hero);
 	}
-	//else
-	//{
-	//	// Respawn AI hero
-	//	FActorSpawnParameters SpawnParameters;
-	//	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-	//	AGHOHeroCharacterBase* Hero = GetWorld()->SpawnActor<AGHOHeroCharacterBase>(HeroClass, EnemySpawnPoint->GetActorTransform(), SpawnParameters);
-
-	//	APawn* OldSpectatorPawn = Controller->GetPawn();
-	//	Controller->UnPossess();
-	//	OldSpectatorPawn->Destroy();
-	//	Controller->Possess(Hero);
-	//}
+	//TODO: Implement for AI Hero.
 }
