@@ -24,6 +24,7 @@ UGHOCharacterMovementComponent::UGHOCharacterMovementComponent()
 	NetworkNoSmoothUpdateDistance = 140.f;
 	
 	
+	SprintingSpeedMultiplier = 1.4f;
 	AimDownSightsSpeedMultiplier = 0.5f;
 	MoveFlag = EGHOMoveFlag::MF_None;
 }
@@ -84,8 +85,19 @@ void UGHOCharacterMovementComponent::UpdateFromCompressedFlags(uint8 Flags)
 
 	RequestToStartADS = (Flags & FSavedMove_Character::FLAG_Custom_1) != 0;
 #else
+	SetSprinting(Flags & FGHOSavedMove::FLAG_Custom_Sprinting);
 	SetAimDownSights(Flags & FGHOSavedMove::FLAG_Custom_AimDownSights);
 #endif
+}
+
+void UGHOCharacterMovementComponent::StartSprinting()
+{
+	SetSprinting(true);
+}
+
+void UGHOCharacterMovementComponent::StopSprinting()
+{
+	SetSprinting(false);
 }
 
 void UGHOCharacterMovementComponent::StartAimDownSights()
@@ -96,6 +108,19 @@ void UGHOCharacterMovementComponent::StartAimDownSights()
 void UGHOCharacterMovementComponent::StopAimDownSights()
 {
 	SetAimDownSights(false);
+}
+
+bool UGHOCharacterMovementComponent::IsSprinting()const
+{
+	return EnumHasAnyFlags(MoveFlag, EGHOMoveFlag::MF_Sprinting);
+}
+
+void UGHOCharacterMovementComponent::SetSprinting(bool flag)
+{
+	if (flag)
+		EnumAddFlags(MoveFlag, EGHOMoveFlag::MF_Sprinting);
+	else
+		EnumRemoveFlags(MoveFlag, EGHOMoveFlag::MF_Sprinting);
 }
 
 bool UGHOCharacterMovementComponent::IsAimDownSights()const
@@ -113,7 +138,9 @@ void UGHOCharacterMovementComponent::SetAimDownSights(bool flag)
 
 float UGHOCharacterMovementComponent::GetSpeedMultiplier()const
 {
-	if (IsAimDownSights())
+	if (IsSprinting())
+		return SprintingSpeedMultiplier;
+	else if (IsAimDownSights())
 		return AimDownSightsSpeedMultiplier;
 	else
 		return 1.f;
@@ -169,10 +196,17 @@ uint8 UGHOCharacterMovementComponent::FGHOSavedMove::GetCompressedFlags() const
 {
 	uint8 Result = Super::GetCompressedFlags();
 
+	if (IsSprinting())
+		Result |= FLAG_Custom_Sprinting;
 	if(IsAimDownSights())
 		Result |= FLAG_Custom_AimDownSights;
 	return Result;
 
+}
+
+bool UGHOCharacterMovementComponent::FGHOSavedMove::IsSprinting()const
+{
+	return EnumHasAnyFlags(MoveFlag, EGHOMoveFlag::MF_Sprinting);
 }
 
 bool UGHOCharacterMovementComponent::FGHOSavedMove::IsAimDownSights()const
