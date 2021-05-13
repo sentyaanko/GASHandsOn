@@ -66,6 +66,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* ダメージの仕組みの組み込み
 	* リスポーンの仕組みの組み込み
 	* 詳細は [./Documents/Add-DamageSystem.md](./Documents/Add-DamageSystem.md) を参照
+* v0.0.18
+	* スタミナゲージの更新処理を誤ってスタミナ最大値にバインドしていたのを修正
+	* Character に Sprint の Ability 組み込み
+	* 詳細は [./Documents/Add-Sprint.md](./Documents/Add-Sprint.md) を参照
 
 -----
 おしまい。

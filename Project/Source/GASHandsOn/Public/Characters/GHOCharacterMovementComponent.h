@@ -9,7 +9,8 @@
 enum class EGHOMoveFlag : uint8
 {
 	MF_None = 0x00,
-	MF_AimDownSights = 0x01,
+	MF_Sprinting= 0x01,
+	MF_AimDownSights = 0x02,
 };
 ENUM_CLASS_FLAGS(EGHOMoveFlag)
 
@@ -85,6 +86,7 @@ private:
 		*/
 		virtual uint8 GetCompressedFlags() const override;
 
+		bool IsSprinting()const;
 		bool IsAimDownSights()const;
 
 		/*
@@ -164,13 +166,11 @@ public:
 	const EGHOMoveFlag& GetMoveFlag()const { return MoveFlag; }
 
 protected:
-#if 0
 	// Sprint
 	UFUNCTION(BlueprintCallable, Category = "Sprint")
 	void StartSprinting();
 	UFUNCTION(BlueprintCallable, Category = "Sprint")
 	void StopSprinting();
-#endif
 
 	// Aim Down Sights
 	UFUNCTION(BlueprintCallable, Category = "Aim Down Sights")
@@ -179,16 +179,18 @@ protected:
 	void StopAimDownSights();
 
 private:
+	bool IsSprinting()const;
+	void SetSprinting(bool flag);
+
 	bool IsAimDownSights()const;
 	void SetAimDownSights(bool flag);
 
 	float GetSpeedMultiplier()const;
 
 protected:
-#if 0
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
-	float SprintSpeedMultiplier;
-#endif
+	float SprintingSpeedMultiplier;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Aim Down Sights")
 	float AimDownSightsSpeedMultiplier;
 
