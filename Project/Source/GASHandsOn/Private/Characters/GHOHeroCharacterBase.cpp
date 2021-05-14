@@ -2,9 +2,11 @@
 
 
 #include "Characters/GHOHeroCharacterBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -13,6 +15,8 @@
 #include "Player/GHOPlayerState.h"
 #include "Player/GHOPlayerController.h"
 #include "Game/GHOGameModeBase.h"
+#include "UI/GHOFloatingStatusBarWidget.h"
+
 
 
 AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectInitializer)
@@ -63,6 +67,34 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionProfileName(FName("NoCollision"));
 
+	UIFloatingStatusBarComponent = CreateDefaultSubobject<UWidgetComponent>(FName("UIFloatingStatusBarComponent"));
+	UIFloatingStatusBarComponent->SetupAttachment(RootComponent);
+	UIFloatingStatusBarComponent->SetRelativeLocation(FVector(0, 0, 120));
+	UIFloatingStatusBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	UIFloatingStatusBarComponent->SetDrawSize(FVector2D(500, 500));
+	
+	UIFloatingStatusBarClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASHandsOn/UI/FloatingStatusBar/WBP_FloatingStatusBar.WBP_FloatingStatusBar_C"));
+	if (!UIFloatingStatusBarClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find UIFloatingStatusBarClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
+	}
+}
+
+void AGHOHeroCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	/*
+	by GASDocumentation
+		Only needed for Heroes placed in world and when the player is the Server.
+		On respawn, they are set up in PossessedBy.
+		When the player a client, the floating status bars are all set up in OnRep_PlayerState.
+	和訳
+		ワールドに配置されたヒーローと、プレイヤーがサーバーである場合にのみ必要。
+		リスポーン時には PossessedBy 経由で設定されます。
+		プレイヤーがクライアントの場合、 FloatingStatusBar はすべて OnRep_PlayerState で設定されます。
+	*/
+	InitializeFloatingStatusBar();
 }
 
 //Client only
@@ -237,6 +269,11 @@ void AGHOHeroCharacterBase::MoveRight(float Value)
 	}
 }
 
+UGHOFloatingStatusBarWidget* AGHOHeroCharacterBase::GetFloatingStatusBar()
+{
+	return UIFloatingStatusBar;
+}
+
 void AGHOHeroCharacterBase::InitializeAbilitySystemWeakObjects(class AGHOPlayerState* playerState)
 {
 	AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(playerState->GetAbilitySystemComponent());
@@ -251,6 +288,15 @@ void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 	{
 		PC->CreateHUD();
 	}
+
+	/*
+	by GASDocumentation
+		Simulated on proxies don't have their PlayerStates yet when BeginPlay is called so we call it again here
+	和訳
+		Simulated Proxy は BeginPlay が呼ばれたときにはまだ PlayerState を所持していないので、ここでもう一度呼び出します。
+	*/
+	InitializeFloatingStatusBar();
+
 	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->ClearDead();
@@ -269,5 +315,46 @@ void AGHOHeroCharacterBase::BindASCInput()
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString(), FString(), FString("EGHOAbilityInputID")));
 
 		bASCInputBound = true;
+	}
+}
+
+void AGHOHeroCharacterBase::InitializeFloatingStatusBar()
+{
+	if (!UIFloatingStatusBarComponent || !UIFloatingStatusBarClass)
+	{
+		return;
+	}
+	// Only create once
+	if (UIFloatingStatusBar)
+	{
+		return;
+	}
+	if(!AbilitySystemComponent.IsValid() || !AttributeSetBase.IsValid())
+	{
+		return;
+	}
+
+	/*
+	by GASDocumentation
+		Setup UI for Locally Owned Players only, not AI or the server's copy of the PlayerControllers
+	和訳
+		ローカルに所有するプレーヤーのみに UI を設定し、 AI やサーバーのコピーの PlayerController には設定しない。
+	*/
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0)))
+	{
+		if (PC->IsLocalPlayerController())
+		{
+			UIFloatingStatusBar = CreateWidget<UGHOFloatingStatusBarWidget>(PC, UIFloatingStatusBarClass);
+			if (UIFloatingStatusBar)
+			{
+				UIFloatingStatusBarComponent->SetWidget(UIFloatingStatusBar);
+
+				// Setup the floating status bar
+				UIFloatingStatusBar->SetCharacterName(FText());
+				UIFloatingStatusBar->SetHealthPercentage(AttributeSetBase->GetHealth() / AttributeSetBase->GetHealthMax());
+				UIFloatingStatusBar->SetManaPercentage(AttributeSetBase->GetMana() / AttributeSetBase->GetManaMax());
+				
+			}
+		}
 	}
 }
