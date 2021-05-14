@@ -70,6 +70,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* スタミナゲージの更新処理を誤ってスタミナ最大値にバインドしていたのを修正
 	* Character に Sprint の Ability 組み込み
 	* 詳細は [./Documents/Add-Sprint.md](./Documents/Add-Sprint.md) を参照
+* v0.0.19
+	* ダメージボリュームの秒間ダメージがテキストでは 15 だが実際は 20 だったので 15 に統一
+	* FloatingStatusBar 組み込み
+	* 詳細は [./Documents/Add-FloatingStatusBar.md](./Documents/Add-FloatingStatusBar.md) を参照
 
 -----
 おしまい。
