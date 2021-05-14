@@ -17,6 +17,18 @@ class GASHANDSON_API AGHOHeroCharacterBase : public AGHOCharacterBase
 public:
 	AGHOHeroCharacterBase(const FObjectInitializer& ObjectInitializer);
 
+	// AActor interface
+protected:
+	/*
+	by Epic
+		Overridable native event for when play begins for this actor.
+	和訳
+		このアクタの Play が始まるときのオーバーライド可能なネイティブイベント。
+	*/
+	virtual void BeginPlay()override;
+
+	// End of AActor interface
+
 	// APawn interface
 public:
 	virtual void OnRep_PlayerState()override;
@@ -81,11 +93,23 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+	class UGHOFloatingStatusBarWidget* GetFloatingStatusBar();
+
 private:
 	void InitializeAbilitySystemWeakObjects(class AGHOPlayerState* playerState);
 	void InitializeAfterAbilitySystem();
 	void BindASCInput();
 
+	/*
+	by GASDocumentation
+		Creates and initializes the floating status bar for heroes.
+		Safe to call many times because it checks to make sure it only executes once.
+	和訳
+		ヒーロー用のフローティングステータスバーを作成、初期化します。
+		一度しか実行されないことを確認しているので、何度も呼び出しても安全です。
+	*/
+	UFUNCTION()
+	void InitializeFloatingStatusBar();
 
 private:
 	/** Camera boom positioning the camera behind the character */
@@ -96,6 +120,12 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAGHandsOn|UI", meta = (AllowPrivateAccess = "true"))
+	class UWidgetComponent* UIFloatingStatusBarComponent;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAGHandsOn|UI", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UGHOFloatingStatusBarWidget> UIFloatingStatusBarClass;
+
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -104,6 +134,9 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseLookUpRate;
+
+	UPROPERTY()
+	class UGHOFloatingStatusBarWidget* UIFloatingStatusBar;
 
 private:
 	/*

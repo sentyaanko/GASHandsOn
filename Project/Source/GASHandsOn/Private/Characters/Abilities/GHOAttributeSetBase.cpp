@@ -47,6 +47,11 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 			他の Health の変更を扱う。
 			Health の減少は Damage を経由する必要があります。
 		*/
+		/*
+		解説
+			これを実行することで、レプリケーションが発生します。
+			実行しない場合、例えば Health が HealthRegen の効果でクライアントだけ HealthMax を突破した状態になります。
+		*/
 		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetHealthMax()));
 	} // Health
 	else if (Data.EvaluatedData.Attribute == GetManaAttribute())
@@ -220,6 +225,31 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 			150 units/s 以下の減速と 1000 units/s 以上の加速を制限する。
 		*/
 		NewValue = FMath::Clamp<float>(NewValue, 150.f, 1000.f);
+	}
+	/*
+	解説
+		ここでクランプを行わない場合、以下のような処理の流れとなります。
+			* サーバーサイドでは変更が行われた後に GetLifetimeReplicatedProps でクランプ（つまりは２回目の変更）が行われる
+			* クライアントサイドではクランプ後の値のみ受け取る
+		要は、サーバーサイドでは AGHOPlayerState が所持するデリゲートなどで変更通知が２回来るということです。
+		[「GASDocumentation」の「4.4.6 PostGameplayEffectExecute()」](https://github.com/tranek/GASDocumentation#concepts-as-postgameplayeffectexecute) [(和訳)](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-as-postgameplayeffectexecute) も参照。
+		GASDocumentation ではここでのクランプを行っていません。
+		GASHandsOn では以下を理由に、クランプするようにしています。
+			* ゲームルール的にクランプしても問題ないこと
+			* サーバーサイドのデリゲートが一時的にでも想定した上限を超えること
+				* 例えば Health が最大のときでも HealthRegen の効果で一秒ごとに HealthMax を超える。この変更はデリゲートにも通知が届く。
+	*/
+	else if (Attribute == GetHealthAttribute())
+	{
+		NewValue = FMath::Clamp<float>(NewValue, 0, GetHealthMax());
+	}
+	else if (Attribute == GetManaAttribute())
+	{
+		NewValue = FMath::Clamp<float>(NewValue, 0, GetManaMax());
+	}
+	else if (Attribute == GetStaminaAttribute())
+	{
+		NewValue = FMath::Clamp<float>(NewValue, 0, GetStaminaMax());
 	}
 }
 
