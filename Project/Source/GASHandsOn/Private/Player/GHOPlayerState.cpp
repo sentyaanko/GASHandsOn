@@ -7,6 +7,7 @@
 #include "Characters/GHOHeroCharacterBase.h"
 #include "Player/GHOPlayerController.h"
 #include "UI/GHOHUDWidget.h"
+#include "UI/GHOFloatingStatusBarWidget.h"
 
 
 AGHOPlayerState::AGHOPlayerState()
@@ -89,15 +90,14 @@ UGHOAttributeSetBase* AGHOPlayerState::GetAttributeSetBase()const
 void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 {
 	const float Health = Data.NewValue;
+	const float HealthMax = AttributeSetBase ? AttributeSetBase->GetHealthMax(): 1.f;
 
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
-		//TODO
-		//	FloatingStatusBar の実装の際に対応すること。
-		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
-		//{
-		//	HeroFloatingStatusBar->SetHealthPercentage(Health / GetHealthMax());
-		//}
+		if (UGHOFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		{
+			HeroFloatingStatusBar->SetHealthPercentage(Health / HealthMax);
+		}
 
 		if ((Health <= 0.f) && !AbilitySystemComponent->IsDead())
 		{
@@ -108,16 +108,15 @@ void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 
 void AGHOPlayerState::HealthMaxChanged(const FOnAttributeChangeData& Data)
 {
+	const float Health = AttributeSetBase ? AttributeSetBase->GetHealth() : 0.f;
 	const float HealthMax = Data.NewValue;
 
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
-		//TODO
-		//	FloatingStatusBar の実装の際に対応すること。
-		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
-		//{
-		//	HeroFloatingStatusBar->SetHealthPercentage(GetHealth() / HealthMax);
-		//}
+		if (UGHOFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		{
+			HeroFloatingStatusBar->SetHealthPercentage(Health / HealthMax);
+		}
 	}
 	// Update the HUD
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
@@ -146,16 +145,15 @@ void AGHOPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData & Data
 void AGHOPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 {
 	const float Mana = Data.NewValue;
+	const float ManaMax = AttributeSetBase ? AttributeSetBase->GetManaMax() : 1.f;
 
 	// Update floating status bar
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
-		//TODO
-		//	FloatingStatusBar の実装の際に対応すること。
-		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
-		//{
-		//	HeroFloatingStatusBar->SetManaPercentage(Mana / GetManaMax());
-		//}
+		if (UGHOFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		{
+			HeroFloatingStatusBar->SetManaPercentage(Mana / ManaMax);
+		}
 	}
 
 	/*
@@ -172,17 +170,16 @@ void AGHOPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 
 void AGHOPlayerState::ManaMaxChanged(const FOnAttributeChangeData & Data)
 {
-	float ManaMax = Data.NewValue;
+	const float Mana= AttributeSetBase ? AttributeSetBase->GetMana() : 0.f;
+	const float ManaMax = Data.NewValue;
 
 	// Update floating status bar
 	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
 	{
-		//TODO
-		//	FloatingStatusBar の実装の際に対応すること。
-		//if (UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
-		//{
-		//	HeroFloatingStatusBar->SetManaPercentage(GetMana() / ManaMax);
-		//}
+		if (UGHOFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		{
+			HeroFloatingStatusBar->SetManaPercentage(Mana / ManaMax);
+		}
 	}
 
 	// Update the HUD
