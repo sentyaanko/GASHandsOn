@@ -74,6 +74,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* ダメージボリュームの秒間ダメージがテキストでは 15 だが実際は 20 だったので 15 に統一
 	* FloatingStatusBar 組み込み
 	* 詳細は [./Documents/Add-FloatingStatusBar.md](./Documents/Add-FloatingStatusBar.md) を参照
+* v0.0.19
+	* FloatingDamageText 組み込み
+	* 詳細は [./Documents/Add-FloatingDamageText.md](./Documents/Add-FloatingDamageText.md) を参照
 
 -----
 おしまい。
