@@ -170,10 +170,10 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute_Damage(const struct FGamepl
 		*/
 		const bool WasAlive = TargetCharacter? TargetCharacter->IsAlive(): true;
 
-		if (!TargetCharacter->IsAlive())
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("%s() %s is NOT alive when receiving damage"), TEXT(__FUNCTION__), *TargetCharacter->GetName());
-		}
+		//if (!WasAlive)
+		//{
+		//	//UE_LOG(LogTemp, Warning, TEXT("%s() %s is NOT alive when receiving damage"), TEXT(__FUNCTION__), *TargetCharacter->GetName());
+		//}
 
 		/*
 		by GASDocumentation
@@ -183,6 +183,25 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute_Damage(const struct FGamepl
 		*/
 		const float NewHealth = GetHealth() - LocalDamageDone;
 		SetHealth(FMath::Clamp(NewHealth, 0.0f, GetHealthMax()));
+
+		if (TargetCharacter && WasAlive)
+		{
+			/*
+			by GASDocumentation
+				Show damage number for the Source player unless it was self damage
+			和訳
+				自身へのダメージでない限り、ソースプレイヤーのダメージ数を表示します。
+			解説
+				DamageVolume もこの条件で弾かれてしまうため、この分岐はコメントアウトしています。
+			*/
+			//if (SourceActor != TargetActor)
+			{
+				if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(SourceController))
+				{
+					PC->RPCClientShowDamageText(LocalDamageDone, EGHOFloatingTextType::Damage, TargetCharacter);
+				}
+			}
+		}
 	}
 }
 
