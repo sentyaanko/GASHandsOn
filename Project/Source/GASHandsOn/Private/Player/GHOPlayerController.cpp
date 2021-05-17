@@ -6,11 +6,16 @@
 #include "AbilitySystemComponent.h"
 #include "UI/GHOHUDWidget.h"
 #include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/GHOCharacterBase.h"
 
 
 AGHOPlayerController::AGHOPlayerController()
 {
-
+	UIFloatingDamageTextComponentClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASHandsOn/UI/FloatingDamageText/BP_FloatingDamageTextComponent.BP_FloatingDamageTextComponent_C"));
+	if (!UIFloatingDamageTextComponentClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find UIFloatingDamageTextComponentClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
+	}
 }
 
 void AGHOPlayerController::CreateHUD()
@@ -67,3 +72,15 @@ void AGHOPlayerController::OnPossess(APawn* aPawn)
 		playerState->GetAbilitySystemComponent()->InitAbilityActorInfo(playerState, aPawn);
 	}
 }
+
+void AGHOPlayerController::RPCClientShowDamageText_Implementation(float DamageAmount, EGHOFloatingTextType FloatingTextType, AGHOCharacterBase* TargetCharacter)
+{
+	if (TargetCharacter && UIFloatingDamageTextComponentClass)
+	{
+		UGHOFloatingDamageTextComponent* FloatingDamageTextComponent = NewObject<UGHOFloatingDamageTextComponent>(TargetCharacter, UIFloatingDamageTextComponentClass);
+		FloatingDamageTextComponent->RegisterComponent();
+		FloatingDamageTextComponent->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		FloatingDamageTextComponent->SetDamage(DamageAmount, FloatingTextType);
+	}
+}
+
