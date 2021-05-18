@@ -7,6 +7,8 @@
 #include "Player/GHOPlayerController.h"
 #include "Game/GHOGameStateBase.h"
 #include "Player/GHOPlayerState.h"
+#include "Settings/GHODefaultClasses.h"
+
 
 AGHOGameModeBase::AGHOGameModeBase()
 {
@@ -16,11 +18,7 @@ AGHOGameModeBase::AGHOGameModeBase()
 	PlayerStateClass = AGHOPlayerState::StaticClass();
 
 	RespawnDelay = 5.f;
-	HeroClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASHandsOn/Characters/Heroes/Default/BP_DefaultHero.BP_DefaultHero_C"));
-	if (!HeroClass)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find HeroClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
-	}
+	HeroClass = FGHODefaultClasses::GetHeroClass();
 }
 
 void AGHOGameModeBase::HeroDied(AController* Controller)

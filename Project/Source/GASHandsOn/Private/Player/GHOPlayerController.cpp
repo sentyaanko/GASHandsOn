@@ -7,15 +7,13 @@
 #include "UI/GHOHUDWidget.h"
 #include "Characters/Abilities/GHOAttributeSetBase.h"
 #include "Characters/GHOCharacterBase.h"
+#include "Settings/GHODefaultClasses.h"
 
 
 AGHOPlayerController::AGHOPlayerController()
 {
-	UIFloatingDamageTextComponentClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASHandsOn/UI/FloatingDamageText/BP_FloatingDamageTextComponent.BP_FloatingDamageTextComponent_C"));
-	if (!UIFloatingDamageTextComponentClass)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find UIFloatingDamageTextComponentClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
-	}
+	UIHUDWidgetClass = FGHODefaultClasses::GetHUDWidgetClass();
+	UIFloatingDamageTextComponentClass = FGHODefaultClasses::GetFloatingDamageTextComponentClass();
 }
 
 void AGHOPlayerController::CreateHUD()
