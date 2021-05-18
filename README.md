@@ -77,6 +77,8 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.19
 	* FloatingDamageText 組み込み
 	* 詳細は [./Documents/Add-FloatingDamageText.md](./Documents/Add-FloatingDamageText.md) を参照
+* v0.0.20
+	* C++ 内のデフォルトクラスの指定を一箇所に集めた。
 
 -----
 おしまい。
