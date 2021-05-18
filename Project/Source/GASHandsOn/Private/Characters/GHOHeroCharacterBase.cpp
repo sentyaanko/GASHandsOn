@@ -16,6 +16,7 @@
 #include "Player/GHOPlayerController.h"
 #include "Game/GHOGameModeBase.h"
 #include "UI/GHOFloatingStatusBarWidget.h"
+#include "Settings/GHODefaultClasses.h"
 
 
 
@@ -73,11 +74,7 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	UIFloatingStatusBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	UIFloatingStatusBarComponent->SetDrawSize(FVector2D(500, 500));
 	
-	UIFloatingStatusBarClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASHandsOn/UI/FloatingStatusBar/WBP_FloatingStatusBar.WBP_FloatingStatusBar_C"));
-	if (!UIFloatingStatusBarClass)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find UIFloatingStatusBarClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
-	}
+	UIFloatingStatusBarClass = FGHODefaultClasses::GetFloatingStatusBarClass();
 }
 
 void AGHOHeroCharacterBase::BeginPlay()

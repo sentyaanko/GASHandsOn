@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GHOCharacterBase.h"
+#include "UI/GHOFloatingStatusBarWidget.h"
 #include "GHOHeroCharacterBase.generated.h"
 
 /**
