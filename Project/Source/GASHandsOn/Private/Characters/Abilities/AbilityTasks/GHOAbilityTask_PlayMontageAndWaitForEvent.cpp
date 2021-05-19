@@ -31,7 +31,12 @@ void UGHOAbilityTask_PlayMontageAndWaitForEvent::OnMontageBlendingOut(UAnimMonta
 		{
 			AbilitySystemComponent->ClearAnimatingAbility(Ability);
 
-			// Reset AnimRootMotionTranslationScale
+			/*
+			by Epic
+				Reset AnimRootMotionTranslationScale
+			和訳
+				AnimRootMotionTranslationScale をリセットする
+			*/
 			ACharacter* Character = Cast<ACharacter>(GetAvatarActor());
 			if (Character && (Character->GetLocalRole() == ROLE_Authority ||
 				(Character->GetLocalRole() == ROLE_AutonomousProxy && Ability->GetNetExecutionPolicy() == EGameplayAbilityNetExecutionPolicy::LocalPredicted)))
@@ -60,11 +65,21 @@ void UGHOAbilityTask_PlayMontageAndWaitForEvent::OnMontageBlendingOut(UAnimMonta
 
 void UGHOAbilityTask_PlayMontageAndWaitForEvent::OnAbilityCancelled()
 {
-	// TODO: Merge this fix back to engine, it was calling the wrong callback
+	/*
+	by Epic
+		TODO: Merge this fix back to engine, it was calling the wrong callback
+	和訳
+		TODO: 誤ったコールバックを呼び出していたため、この修正をエンジンにマージしました。
+	*/
 
 	if (StopPlayingMontage())
 	{
-		// Let the BP handle the interrupt as well
+		/*
+		by Epic
+			Let the BP handle the interrupt as well
+		和訳
+			割り込みも BP に任せましょう
+		*/
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
 			OnCancelled.Broadcast(FGameplayTag(), FGameplayEventData());
@@ -128,12 +143,22 @@ void UGHOAbilityTask_PlayMontageAndWaitForEvent::Activate()
 		UAnimInstance* AnimInstance = ActorInfo->GetAnimInstance();
 		if (AnimInstance != nullptr)
 		{
-			// Bind to event callback
+			/*
+			by Epic
+				Bind to event callback
+			和訳
+				イベントコールバックにバインドする
+			*/
 			EventHandle = GHOAbilitySystemComponent->AddGameplayEventTagContainerDelegate(EventTags, FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &UGHOAbilityTask_PlayMontageAndWaitForEvent::OnGameplayEvent));
 
 			if (GHOAbilitySystemComponent->PlayMontage(Ability, Ability->GetCurrentActivationInfo(), MontageToPlay, Rate, StartSection) > 0.f)
 			{
-				// Playing a montage could potentially fire off a callback into game code which could kill this ability! Early out if we are  pending kill.
+				/*
+				by Epic
+					Playing a montage could potentially fire off a callback into game code which could kill this ability! Early out if we are  pending kill.
+				和訳
+					モンタージュを再生すると、ゲームコードにコールバックが発生し、このアビリティがキルされる可能性があります！キルが保留されている場合は早めに確認してください。
+				*/
 				if (ShouldBroadcastAbilityTaskDelegates() == false)
 				{
 					return;
@@ -191,10 +216,18 @@ void UGHOAbilityTask_PlayMontageAndWaitForEvent::ExternalCancel()
 
 void UGHOAbilityTask_PlayMontageAndWaitForEvent::OnDestroy(bool AbilityEnded)
 {
-	// Note: Clearing montage end delegate isn't necessary since its not a multicast and will be cleared when the next montage plays.
-	// (If we are destroyed, it will detect this and not do anything)
+	/*
+	by Epic
+		Note: Clearing montage end delegate isn't necessary since its not a multicast and will be cleared when the next montage plays.
+		(If we are destroyed, it will detect this and not do anything)
 
-	// This delegate, however, should be cleared as it is a multicast
+		This delegate, however, should be cleared as it is a multicast
+	和訳
+		Note: MontageEnd デリゲートのクリアは、マルチキャストではないので必要なく、次のモンタージュが再生されるとクリアされます。
+		(私達が破棄すると、これを検知して何もしません。)
+
+		しかしながら、このデリゲートはマルチキャストであるため、クリアする必要があります。
+	*/
 	if (Ability)
 	{
 		Ability->OnGameplayAbilityCancelled.Remove(CancelledHandle);
@@ -228,8 +261,14 @@ bool UGHOAbilityTask_PlayMontageAndWaitForEvent::StopPlayingMontage()
 		return false;
 	}
 
-	// Check if the montage is still playing
-	// The ability would have been interrupted, in which case we should automatically stop the montage
+	/*
+	by Epic
+		Check if the montage is still playing
+		The ability would have been interrupted, in which case we should automatically stop the montage
+	和訳
+		モンタージュがまだ再生されているか確認。
+		アビリティが中断された場合、モンタージュを自動的に停止する必要がある。
+	*/
 	if (AbilitySystemComponent && Ability)
 	{
 		if (AbilitySystemComponent->GetAnimatingAbility() == Ability
