@@ -79,6 +79,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* 詳細は [./Documents/Add-FloatingDamageText.md](./Documents/Add-FloatingDamageText.md) を参照
 * v0.0.20
 	* C++ 内のデフォルトクラスの指定を一箇所に集めた。
+* v0.0.21
+	* AbilityTask_PlayMontageAndWaitForEvent の追加
+	* 詳細は [./Documents/Add-AbilityTask_PlayMontageAndWaitForEvent.md](./Documents/Add-AbilityTask_PlayMontageAndWaitForEvent.md) を参照
 
 -----
 おしまい。
