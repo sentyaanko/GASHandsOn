@@ -1,6 +1,13 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 // Copyright 2020 Dan Kestranek.
 // (C) Sentya Anko 2021
+/*
+解説
+	このファイルは Epic によるサンプル ActionRPG に同梱されているソースの複製です。
+		https://www.unrealengine.com/marketplace/ja/product/action-rpg
+		Source/ActionRPG/Private/Abilities/RPGAbilityTask_PlayMontageAndWaitForEvent.cpp
+		Source/ActionRPG/Public/Abilities/RPGAbilityTask_PlayMontageAndWaitForEvent.h
+*/
 
 #pragma once
 
