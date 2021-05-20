@@ -65,7 +65,8 @@ public:
 public:
 	virtual class UGHOAttributeSetBase* GetAttributeSet() override;
 	virtual const class UGHOAttributeSetBase* GetAttributeSet() const override;
-	virtual void FinishDying();
+	virtual void FinishDying()override;
+	virtual FTransform GetProjectileTransform(float Range)const override;
 
 	// End of AGHOCharacterBase interface
 

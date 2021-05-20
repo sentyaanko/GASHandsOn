@@ -16,14 +16,19 @@ public:
 	// Sets default values for this actor's properties
 	AGHOProjectile();
 
+public:
+	void SetRange(float inRange) { Range = inRange; }
+	void SetDamageEffectSpecHandle(const FGameplayEffectSpecHandle& inDamageEffectSpecHandle) { DamageEffectSpecHandle = inDamageEffectSpecHandle; }
+
+protected:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	class UProjectileMovementComponent* ProjectileMovement;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Meta = (ExposeOnSpawn = true))
 	float Range;
 
 	UPROPERTY(BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	class UProjectileMovementComponent* ProjectileMovement;
 
 //protected:
 //	// Called when the game starts or when spawned
