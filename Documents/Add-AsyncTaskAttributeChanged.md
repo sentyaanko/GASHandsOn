@@ -5,7 +5,7 @@
 # 方法
 
 * `UBlueprintAsyncActionBase` の派生クラスを作る
-	* 構築時に `AbilitySystemCopmponent` と 「 `ATtribute` とデリゲートを含んだ構造体」の配列を受け取り、 `AbilitySystemCopmponent` に変更通知用のデリゲートとして登録する。
+	* 構築時に `AbilitySystemCopmponent` と 「 `Attribute` とデリゲートを含んだ構造体」の配列を受け取り、 `AbilitySystemCopmponent` に変更通知用のデリゲートとして登録する。
 * `HUD` の `Construct` 時に変更時のデリゲートを指定して `Task` を作り、 `Destruct` 時に `Task` を破棄する。
 
 # 手順
