@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "GHOAbilitySystemComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, UGHOAbilitySystemComponent*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
+
 /**
  * 
  */
@@ -29,6 +31,16 @@ public:
 
 	bool IsStun() const;
 
+	/*
+	by GASDocumentation
+		Called from GHODamageExecCalculation. Broadcasts on ReceivedDamage whenever this ASC receives damage.
+	和訳
+		GHODamageExecCalculation から呼び出されます。この ASC がダメージを受けるたびに ReceivedDamage でブロードキャストします。
+	*/ 
+	void ReceiveDamage(UGHOAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage);
+
+	FReceivedDamageDelegate& GetReceivedDamage() { return ReceivedDamage; };
+
 private:
 	FGameplayTag DeadTag;
 	FGameplayTag StunTag;
@@ -36,4 +48,6 @@ private:
 
 	bool bCharacterAbilitiesGiven = false;
 	bool bStartupEffectsApplied = false;
+
+	FReceivedDamageDelegate ReceivedDamage;
 };
