@@ -182,6 +182,16 @@ public:
 
 	/*
 	by GASDocumentation
+		Armor reduces the amount of damage done by attackers
+	和訳
+		Armor は攻撃者から受けるダメージを軽減する。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Armor", ReplicatedUsing = OnRep_Armor)
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Armor)
+
+	/*
+	by GASDocumentation
 		Damage is a meta attribute used by the DamageExecution to calculate final damage, which then turns into -Health
 		Temporary value that only exists on the Server. Not replicated.
 	和訳
@@ -254,6 +264,9 @@ protected:
 
 	UFUNCTION()
 	void OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate);
+
+	UFUNCTION()
+	void OnRep_Armor(const FGameplayAttributeData& OldArmor);
 
 	UFUNCTION()
 	void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);

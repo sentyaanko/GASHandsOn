@@ -14,6 +14,7 @@ by GASDocumentation
 struct GHODamageStatics
 {
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Damage);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor);
 
 	GHODamageStatics()
 	{
@@ -35,6 +36,14 @@ struct GHODamageStatics
 			ダメージ GameplayEffect の ExecutionCalculation の下の CalculationModifier で設定されているオプションのダメージ値を取り込みます。
 		*/
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UGHOAttributeSetBase, Damage, Source, true);
+
+		/*
+		by GASDocumentation
+			Capture the Target's Armor. Don't snapshot.
+		和訳
+			ターゲットの Armor ｗキャプチャする。スナップショットは取らない。
+		*/
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UGHOAttributeSetBase, Armor, Target, false);
 	}
 };
 
@@ -47,6 +56,7 @@ static const GHODamageStatics& DamageStatics()
 UGHOGEEC_Damage::UGHOGEEC_Damage()
 {
 	RelevantAttributesToCapture.Add(DamageStatics().DamageDef);
+	RelevantAttributesToCapture.Add(DamageStatics().ArmorDef);
 }
 
 void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters & ExecutionParams, OUT FGameplayEffectCustomExecutionOutput & OutExecutionOutput) const
@@ -71,6 +81,11 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	FAggregatorEvaluateParameters EvaluationParameters;
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
+
+	float Armor = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmorDef, EvaluationParameters, Armor);
+	Armor = FMath::Max<float>(Armor, 0.0f);
+
 
 	float Damage = 0.0f;
 	/*
@@ -97,7 +112,7 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	*/
 	float UnmitigatedDamage = Damage;
 
-	const float MitigatedDamage = UnmitigatedDamage;
+	const float MitigatedDamage = (UnmitigatedDamage) * (100 / (100 + Armor));
 
 	if (MitigatedDamage > 0.f)
 	{
