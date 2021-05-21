@@ -86,6 +86,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* このファイルの更新履歴の v0.0.20 ～ v0.0.22 が数字が 1 小さく誤っていたのを修正（ v0.0.19 が二つになっていた）
 	* Character に FireGun の Ability 組み込み
 	* 詳細は [./Documents/Add-FireGun.md](./Documents/Add-FireGun.md) を参照
+* v0.0.24
+	* Character に Armor の Attribute 組み込み
+	* 詳細は [./Documents/Add-Armor-Attribute.md](./Documents/Add-Armor-Attribute.md) を参照
+
 
 -----
 おしまい。
