@@ -131,7 +131,7 @@ BP 類。
 	* イベントグラフ
 		* `GetNotifyName`
 			* 見やすいように `EventTag` を文字列化したものを返すようにする。
-		* `RecievedNotify`
+		* `ReceivedNotify`
 			* `OwnerActor` に `EventTag` を送る。
 1. `AM_FireGun` という名前で `AnimationMontage` を新規作成
 	* 概要
