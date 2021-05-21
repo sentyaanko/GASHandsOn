@@ -124,4 +124,16 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 		*/
 		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(DamageStatics().DamageProperty, EGameplayModOp::Additive, MitigatedDamage));
 	}
+
+	/*
+	by GASDocumentation
+		Broadcast damages to Target ASC
+	和訳
+		ダメージを ターゲット ASC にブロードキャストします。
+	*/
+	if (UGHOAbilitySystemComponent* TargetASC = Cast<UGHOAbilitySystemComponent>(TargetAbilitySystemComponent))
+	{
+		UGHOAbilitySystemComponent* SourceASC = Cast<UGHOAbilitySystemComponent>(SourceAbilitySystemComponent);
+		TargetASC->ReceiveDamage(SourceASC, UnmitigatedDamage, MitigatedDamage);
+	}
 }

@@ -145,3 +145,7 @@ bool UGHOAbilitySystemComponent::IsStun() const
 	return HasMatchingGameplayTag(StunTag);
 }
 
+void UGHOAbilitySystemComponent::ReceiveDamage(UGHOAbilitySystemComponent * SourceASC, float UnmitigatedDamage, float MitigatedDamage)
+{
+	ReceivedDamage.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
+}
