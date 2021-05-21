@@ -92,6 +92,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.25
 	* AbilityTask_WaitReceiveDamage の追加
 	* 詳細は [./Documents/Add-AbilityTask-WaitReceiveDamage.md](./Documents/Add-AbilityTask-WaitReceiveDamage.md) を参照
+* v0.0.26
+	* 過去のドキュメントの誤字修正
+	* AsyncTaskEffectStackChanged の追加
+	* 詳細は [./Documents/Add-AsyncTaskEffectStackChanged.md](./Documents/Add-AsyncTaskEffectStackChanged.md) を参照
 
 
 -----
