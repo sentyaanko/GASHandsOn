@@ -88,6 +88,11 @@ void AGHOCharacterBase::FinishDying()
 	Destroy();
 }
 
+FTransform AGHOCharacterBase::GetProjectileTransform(float Range)const
+{
+	return GetTransform();
+}
+
 int32 AGHOCharacterBase::GetAbilityLevel(EGHOAbilityInputID AbilityID) const
 {
 	return 1;

@@ -63,6 +63,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
 	virtual void FinishDying();
 
+	virtual FTransform GetProjectileTransform(float Range)const;
+
 	/*
 	by GASDocumentation
 		Switch on AbilityID to return individual ability levels. 

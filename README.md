@@ -74,14 +74,18 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* ダメージボリュームの秒間ダメージがテキストでは 15 だが実際は 20 だったので 15 に統一
 	* FloatingStatusBar 組み込み
 	* 詳細は [./Documents/Add-FloatingStatusBar.md](./Documents/Add-FloatingStatusBar.md) を参照
-* v0.0.19
+* v0.0.20
 	* FloatingDamageText 組み込み
 	* 詳細は [./Documents/Add-FloatingDamageText.md](./Documents/Add-FloatingDamageText.md) を参照
-* v0.0.20
-	* C++ 内のデフォルトクラスの指定を一箇所に集めた。
 * v0.0.21
+	* C++ 内のデフォルトクラスの指定を一箇所に集めた。
+* v0.0.22
 	* AbilityTask_PlayMontageAndWaitForEvent の追加
 	* 詳細は [./Documents/Add-AbilityTask_PlayMontageAndWaitForEvent.md](./Documents/Add-AbilityTask_PlayMontageAndWaitForEvent.md) を参照
+* v0.0.23
+	* このファイルの更新履歴の v0.0.20 ～ v0.0.22 が数字が 1 小さく誤っていたのを修正（ v0.0.19 が二つになっていた）
+	* Character に FireGun の Ability 組み込み
+	* 詳細は [./Documents/Add-FireGun.md](./Documents/Add-FireGun.md) を参照
 
 -----
 おしまい。
