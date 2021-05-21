@@ -3,6 +3,7 @@
 
 #include "Characters/GHOHeroCharacterBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -223,6 +224,27 @@ void AGHOHeroCharacterBase::FinishDying()
 	}
 
 	Super::FinishDying();
+}
+
+FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
+{
+#if 0
+	FVector Start = Character->GetGunComponent()->GetSocketLocation(FName("Muzzle"));
+	FVector End = Character->GetCameraBoom()->GetComponentLocation() + Character->GetFollowCamera()->GetForwardVector() * Range;
+	FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
+
+	FTransform MuzzleTransform = Character->GetGunComponent()->GetSocketTransform(FName("Muzzle"));
+	MuzzleTransform.SetRotation(Rotation.Quaternion());
+	MuzzleTransform.SetScale3D(FVector(1.0f));
+#endif
+	FTransform MuzzleTransform = GetMesh()->GetSocketTransform(FName("Muzzle"));
+	//FVector Start = MuzzleTransform.GetLocation();
+	//FVector End = GetCameraBoom()->GetComponentLocation() + GetFollowCamera()->GetForwardVector() * Range;
+	//FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
+	//MuzzleTransform.SetRotation(Rotation.Quaternion());
+	//MuzzleTransform.SetScale3D(FVector(1.0f));
+	UE_LOG(LogTemp, Error, TEXT("%s() Muzzle:%s"), *FString(__FUNCTION__), *MuzzleTransform.ToString());
+	return MuzzleTransform;
 }
 
 void AGHOHeroCharacterBase::TurnAtRate(float Rate)
