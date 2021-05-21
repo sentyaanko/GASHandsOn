@@ -113,9 +113,16 @@ BP 類。
 1. `M_GunProjectile` を新規作成
 	* 概要
 		* `GunProjectile` 用のマテリアル。
+1. `PS_GunProjectileImpact` を新規作成
+	* 概要
+		* `GunProjectile` が命中した際のエフェクト。
+		* ループしないエフェクトがなかったので仮で作成。
 1. `GC_GunProjectileImpact` を `GameplayCueNotify_Static` から派生して新規作成
 	* クラスのデフォルトの設定
 		* `GameplayCue > Gameplay Cue Tag` を `GameplayCue.Shared.FireGun.Impact` に
+	* 関数
+		* `OnExecute`
+			* 渡された `HitResult` の座標で `GC_GunProjectileImpact` を再生。
 1. `AN_GenericEventByTag` を `AnimNotify` から派生して新規作成
 	* プロパティ
 		* `EventTag`
