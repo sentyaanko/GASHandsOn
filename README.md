@@ -89,6 +89,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.24
 	* Character に Armor の Attribute 組み込み
 	* 詳細は [./Documents/Add-Armor-Attribute.md](./Documents/Add-Armor-Attribute.md) を参照
+* v0.0.25
+	* AbilityTask_WaitReceiveDamage の追加
+	* 詳細は [./Documents/Add-AbilityTask-WaitReceiveDamage.md](./Documents/Add-AbilityTask-WaitReceiveDamage.md) を参照
 
 
 -----
