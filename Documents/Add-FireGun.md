@@ -4,9 +4,10 @@
 # 方法
 
 * 投射物の `Actor` クラス作成（ C++ で基底、BluePrint で表示関連）
+* 命中時の `ParticleEffect` の作成
 * 命中時の `GameplayCue` の作成（ BluePrint ）
 * 発砲時の `Montage` の作成
-* 発泡用の `GameplayAbility` クラス作成（ C++ で基底、BluePrint で表示関連）
+* 発砲用の `GameplayAbility` クラス作成（ C++ で基底、BluePrint で表示関連）
 * ダメージ計算は以前作成したものを使用する。
 * まだ扱わないことは以下の通り
 	* `GASDocumentation` との違い
