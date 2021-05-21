@@ -238,11 +238,12 @@ FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
 	MuzzleTransform.SetScale3D(FVector(1.0f));
 #endif
 	FTransform MuzzleTransform = GetMesh()->GetSocketTransform(FName("Muzzle"));
-	FVector Start = MuzzleTransform.GetLocation();
-	FVector End = GetCameraBoom()->GetComponentLocation() + GetFollowCamera()->GetForwardVector() * Range;
-	FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
-	MuzzleTransform.SetRotation(Rotation.Quaternion());
-	MuzzleTransform.SetScale3D(FVector(1.0f));
+	//FVector Start = MuzzleTransform.GetLocation();
+	//FVector End = GetCameraBoom()->GetComponentLocation() + GetFollowCamera()->GetForwardVector() * Range;
+	//FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
+	//MuzzleTransform.SetRotation(Rotation.Quaternion());
+	//MuzzleTransform.SetScale3D(FVector(1.0f));
+	UE_LOG(LogTemp, Error, TEXT("%s() Muzzle:%s"), *FString(__FUNCTION__), *MuzzleTransform.ToString());
 	return MuzzleTransform;
 }
 
