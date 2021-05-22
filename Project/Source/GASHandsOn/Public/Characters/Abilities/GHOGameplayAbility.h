@@ -18,18 +18,23 @@ class GASHANDSON_API UGHOGameplayAbility : public UGameplayAbility
 public:
 	UGHOGameplayAbility();
 
-//	// UGameplayAbility interface
-//public:
-//	/** Called when the avatar actor is set/changes */
-//	// If an ability is marked as 'ActivateAbilityOnGranted', activate them immediately when given here
-//	// Epic's comment: Projects may want to initiate passives or do other "BeginPlay" type of logic here.
-//	/*
-//		アビリティに「ActivateAbilityOnGranted」が設定されている場合は、ここで与えられたときにすぐに起動する。
-//		エピックのコメント : プロジェクトでは、パッシブを開始したり、その他の「BeginPlay」タイプのロジックをここで行うことができます。
-//	*/
-//	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
-//
-//	// End of UGameplayAbility interface
+	// UGameplayAbility interface
+public:
+	/*
+	by Epic
+		Called when the avatar actor is set/changes
+	和訳
+		Avator Actor が設定/変更されたときに呼び出される。
+	by GASDocumentation
+		If an ability is marked as 'ActivateAbilityOnGranted', activate them immediately when given here
+		Epic's comment: Projects may want to initiate passives or do other "BeginPlay" type of logic here.
+	和訳
+		アビリティに「ActivateAbilityOnGranted」が設定されている場合は、ここで与えられたときにすぐに起動する。
+		エピックのコメント : プロジェクトでは、パッシブを開始したり、その他の「BeginPlay」タイプのロジックをここで行うことができます。
+	*/
+	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
+
+	// End of UGameplayAbility interface
 
 public:
 	/*
@@ -52,8 +57,15 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
 	EGHOAbilityInputID AbilityID = EGHOAbilityInputID::None;
 
-	//// Tells an ability to activate immediately when its granted. Used for passive abilities and abilities forced on others.
-	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
-	//bool bActivateAbilityOnGranted = false;
+	/*
+	by GASDocumentation
+		Tells an ability to activate immediately when its granted. 
+		Used for passive abilities and abilities forced on others.
+	和訳
+		アビリティが付与されたときにすぐに発動するようにします。
+		パッシブアビリティや他の人に強制するアビリティに使用します。
+	*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	bool bActivateAbilityOnGranted = false;
 
 };
