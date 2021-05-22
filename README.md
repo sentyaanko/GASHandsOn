@@ -96,6 +96,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* 過去のドキュメントの誤字修正
 	* AsyncTaskEffectStackChanged の追加
 	* 詳細は [./Documents/Add-AsyncTaskEffectStackChanged.md](./Documents/Add-AsyncTaskEffectStackChanged.md) を参照
+* v0.0.27
+	* 過去のドキュメントの誤字修正
+	* Character に PassiveArmor の Ability 組み込み
+	* 詳細は [./Documents/Add-PassiveArmor-Ability.md](./Documents/Add-PassiveArmor-Ability.md) を参照
 
 
 -----
