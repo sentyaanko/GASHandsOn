@@ -16,12 +16,12 @@ UGHOGameplayAbility::UGHOGameplayAbility()
 
 }
 
-//void UGHOGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
-//{
-//	Super::OnAvatarSet(ActorInfo, Spec);
-//
-//	if (bActivateAbilityOnGranted)
-//	{
-//		bool ActivatedAbility = ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
-//	}
-//}
+void UGHOGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
+{
+	Super::OnAvatarSet(ActorInfo, Spec);
+
+	if (bActivateAbilityOnGranted)
+	{
+		bool ActivatedAbility = ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
+	}
+}

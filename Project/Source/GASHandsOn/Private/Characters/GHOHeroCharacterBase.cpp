@@ -243,7 +243,7 @@ FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
 	//FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
 	//MuzzleTransform.SetRotation(Rotation.Quaternion());
 	//MuzzleTransform.SetScale3D(FVector(1.0f));
-	UE_LOG(LogTemp, Error, TEXT("%s() Muzzle:%s"), *FString(__FUNCTION__), *MuzzleTransform.ToString());
+	//UE_LOG(LogTemp, Error, TEXT("%s() Muzzle:%s"), *FString(__FUNCTION__), *MuzzleTransform.ToString());
 	return MuzzleTransform;
 }
 

@@ -191,7 +191,7 @@ class GAMEPLAYABILITIES_API UGameplayEffect : public UObject, public IGameplayTa
 
 ```c++
 	/** Policy for how the effect duration should be refreshed while stacking */
-	/** スタック時に硬化時間を更新する方法のポリシー */
+	/** スタック時に持続時間を更新する方法のポリシー */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stacking)
 	EGameplayEffectStackingDurationPolicy StackDurationRefreshPolicy;
 ```

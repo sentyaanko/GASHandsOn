@@ -20,8 +20,8 @@ enum class EGHOAbilityInputID : uint8
 	Ability2		UMETA(DisplayName = "Ability2"),
 	//// 5 Q
 	//Ability3		UMETA(DisplayName = "Ability3"),
-	//// 6 E
-	//Ability4		UMETA(DisplayName = "Ability4"),
+	// 6 E
+	Ability4		UMETA(DisplayName = "Ability4"),
 	//// 7 R
 	//Ability5		UMETA(DisplayName = "Ability5"),
 	// 8 Sprint
