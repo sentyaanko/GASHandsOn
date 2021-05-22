@@ -1,4 +1,4 @@
-# Add-PassiveArmor-Ability.md
+# Add-PassiveArmor-Ability
 `GameplayEffect` のスタックを使用して、スタックが増える毎に `Armor` が増える `PassiveArmor` の仕組みを実装する
 
 # 方法
