@@ -86,6 +86,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* このファイルの更新履歴の v0.0.20 ～ v0.0.22 が数字が 1 小さく誤っていたのを修正（ v0.0.19 が二つになっていた）
 	* Character に FireGun の Ability 組み込み
 	* 詳細は [./Documents/Add-FireGun.md](./Documents/Add-FireGun.md) を参照
+* v0.0.23.1
+	* FireGun で使用するモーションが短いため、 Blend In/Out の時間を 0 に変更
+	* AnimBP にて Slot ノードがなかったためモンタージュが再生されていなかったのを修正。
 
 -----
 おしまい。
