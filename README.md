@@ -100,7 +100,12 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* 過去のドキュメントの誤字修正
 	* Character に PassiveArmor の Ability 組み込み
 	* 詳細は [./Documents/Add-PassiveArmor-Ability.md](./Documents/Add-PassiveArmor-Ability.md) を参照
-
+* v0.0.28
+	* v0.0.23 の不具合修正
+		* FireGun で使用するモーションが短いため、 Blend In/Out の時間を 0 に変更
+		* AnimBP にて Slot ノードがなかったためモンタージュが再生されていなかったのを修正。
+	* Character に Dash の Ability 組み込み
+	* 詳細は [./Documents/Add-Dash-Ability.md](./Documents/Add-Dash-Ability.md) を参照
 
 -----
 おしまい。
