@@ -48,6 +48,9 @@ private:
 	void StaminaMaxChanged(const struct FOnAttributeChangeData& Data);
 	void StaminaRegenRateChanged(const struct FOnAttributeChangeData& Data);
 
+	// Tag change callbacks
+	void StunTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
+
 private:
 	UPROPERTY()
 	class UGHOAbilitySystemComponent* AbilitySystemComponent;

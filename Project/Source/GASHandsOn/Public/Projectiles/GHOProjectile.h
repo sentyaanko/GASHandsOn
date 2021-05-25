@@ -19,6 +19,7 @@ public:
 public:
 	void SetRange(float inRange) { Range = inRange; }
 	void SetDamageEffectSpecHandle(const FGameplayEffectSpecHandle& inDamageEffectSpecHandle) { DamageEffectSpecHandle = inDamageEffectSpecHandle; }
+	void SetAdditionalEffectSpecHandles(const TArray<FGameplayEffectSpecHandle>& inAdditionalEffectSpecHandles) { AdditionalEffectSpecHandles = inAdditionalEffectSpecHandles; }
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
@@ -29,6 +30,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
+
+	UPROPERTY(BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	TArray<FGameplayEffectSpecHandle> AdditionalEffectSpecHandles;
 
 //protected:
 //	// Called when the game starts or when spawned

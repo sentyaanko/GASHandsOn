@@ -125,6 +125,11 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		}
 
 		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageGameplayEffect, GetAbilityLevel());
+		TArray<FGameplayEffectSpecHandle> AdditionalEffectSpecHandles;
+		for (auto& AdditionalGameplayEffect : AdditionalGameplayEffects)
+		{
+			AdditionalEffectSpecHandles.Add(MakeOutgoingGameplayEffectSpec(AdditionalGameplayEffect, GetAbilityLevel()));
+		}
 
 		/*
 		by GASDocumentation
@@ -140,6 +145,7 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 			Character, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		Projectile->SetDamageEffectSpecHandle( DamageEffectSpecHandle );
 		Projectile->SetRange( Range );
+		Projectile->SetAdditionalEffectSpecHandles(AdditionalEffectSpecHandles);
 		Projectile->FinishSpawning(MuzzleTransform);
 #endif
 	}
