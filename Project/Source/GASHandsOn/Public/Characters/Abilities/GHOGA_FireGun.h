@@ -58,6 +58,9 @@ protected:
 	TSubclassOf<UGameplayEffect> DamageGameplayEffect;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	TArray<TSubclassOf<UGameplayEffect>> AdditionalGameplayEffects;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	float Range;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
