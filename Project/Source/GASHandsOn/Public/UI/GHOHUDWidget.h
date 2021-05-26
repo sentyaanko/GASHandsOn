@@ -16,6 +16,9 @@ class GASHANDSON_API UGHOHUDWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
+	void ShowAbilityConfirmCancelText(bool bShowText);
+
 	/**
 	* Attribute setters
 	*/

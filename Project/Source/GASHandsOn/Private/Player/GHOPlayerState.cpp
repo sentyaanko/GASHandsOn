@@ -90,6 +90,17 @@ UGHOAttributeSetBase* AGHOPlayerState::GetAttributeSetBase()const
 	return AttributeSetBase;
 }
 
+void AGHOPlayerState::ShowAbilityConfirmCancelText(bool bShowText)
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->ShowAbilityConfirmCancelText(bShowText);
+		}
+	}
+}
+
 void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 {
 	const float Health = Data.NewValue;
