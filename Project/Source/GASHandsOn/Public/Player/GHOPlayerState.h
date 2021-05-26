@@ -35,6 +35,8 @@ public:
 public:
 	class UGHOAttributeSetBase* GetAttributeSetBase()const;
 
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
+	void ShowAbilityConfirmCancelText(bool bShowText);
 
 private:
 	// Attribute changed callbacks
