@@ -85,7 +85,7 @@ BP 類。
 
 1. `GA_FireGun` に以下を追加
 	* クラスのデフォルトの設定
-		* `GHOGA Fire Gun > Additional Gameplay Effects` 似要素を追加して `GE_Stun` を指定
+		* `GHOGA Fire Gun > Additional Gameplay Effects` に要素を追加して `GE_Stun` を指定
 1. `BP_GunProjectile` に以下を追加
 	* イベントグラフ
 		* `On Component Begin Overlap (Collision)`

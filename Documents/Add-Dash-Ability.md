@@ -65,7 +65,7 @@ BP 類。
 	* 詳細はグラフ参照。
 1. `BP_HeroCharacterBase` に以下を追加
 	* クラスのデフォルトの設定
-		* `GASHands On > Character Abilities` に要素を追加し `GA_Dash` を指定
+		* `GASHands On > Abilities > Character Abilities` に要素を追加し `GA_Dash` を指定
 
 
 以上で、 キャラクターに `Dash` のアビリティが適用できます。

@@ -156,7 +156,7 @@ BP 類。
 		* `Ability > Ability ID` を `Ability1` に
 1. `BP_HeroCharacterBase` に以下を追加
 	* クラスのデフォルトの設定
-		* `GASHands On > Abilities > Character Abilities` 似要素を追加して `GA_FireGun` に
+		* `GASHands On > Abilities > Character Abilities` に要素を追加して `GA_FireGun` に
 1. `UE4_Mannequin_Skelton` に以下を追加
 	* `Head` の下に ソケットを追加し、名前を `Muzzle` に
 
