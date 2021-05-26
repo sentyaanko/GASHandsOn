@@ -12,7 +12,7 @@
 
 ソース類
 
-1. `UBlueprintAsyncActionBase` を `UBlueprintAsyncActionBase` から派生して新規作成
+1. `UGHOAsyncTaskAttributeChanged` を `UBlueprintAsyncActionBase` から派生して新規作成
 	* 概要
 		* `AbilitySystem` とはほとんど関係ないので、詳細については割愛します。
 		* 詳細はソース参照

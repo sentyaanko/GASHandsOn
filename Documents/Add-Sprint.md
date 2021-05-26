@@ -86,7 +86,7 @@ BP 類。
 		* 0.05 秒ごとにコストの検査をしているので、秒間およそ 20 の `Stamina` を消費する。
 		* 詳しくは `Blueprint` 参照。
 1. `BP_HeroCharacterBase` に以下を追加
-	* `GASHandsOn > CharacterAbilities` 似要素を追加し `GA_Sprint_HeroBase` を指定
+	* `GASHandsOn > CharacterAbilities` に要素を追加し `GA_Sprint_HeroBase` を指定
 
 
 以上で CharacterMovementComponent に `Sprint` 機能を追加し、左シフトを押している間は `Sprint` 扱いとなり、
