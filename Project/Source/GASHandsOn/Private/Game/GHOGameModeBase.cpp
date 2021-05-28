@@ -8,6 +8,7 @@
 #include "Game/GHOGameStateBase.h"
 #include "Player/GHOPlayerState.h"
 #include "Settings/GHODefaultClasses.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AGHOGameModeBase::AGHOGameModeBase()
@@ -19,6 +20,23 @@ AGHOGameModeBase::AGHOGameModeBase()
 
 	RespawnDelay = 5.f;
 	HeroClass = FGHODefaultClasses::GetHeroClass();
+}
+
+void AGHOGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Get the enemy hero spawn point
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), Actors);
+	for (AActor* Actor : Actors)
+	{
+		if (Actor->GetName() == FString("EnemyHeroSpawn"))
+		{
+			EnemySpawnPoint = Actor;
+			break;
+		}
+	}
 }
 
 void AGHOGameModeBase::HeroDied(AController* Controller)
@@ -56,5 +74,17 @@ void AGHOGameModeBase::RespawnHero(AController* Controller)
 		OldSpectatorPawn->Destroy();
 		Controller->Possess(Hero);
 	}
-	//TODO: Implement for AI Hero.
+	else
+	{
+		// Respawn AI hero
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		AGHOHeroCharacterBase* Hero = GetWorld()->SpawnActor<AGHOHeroCharacterBase>(HeroClass, EnemySpawnPoint->GetActorTransform(), SpawnParameters);
+
+		APawn* OldSpectatorPawn = Controller->GetPawn();
+		Controller->UnPossess();
+		OldSpectatorPawn->Destroy();
+		Controller->Possess(Hero);
+	}
 }

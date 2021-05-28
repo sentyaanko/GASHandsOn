@@ -114,6 +114,11 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* 詳細は [./Documents/Add-Meteor-Ability.md](./Documents/Add-Meteor-Ability.md) を参照
 * v0.0.31
 	* Document の typo の修正
+* v0.0.32
+	* AimDownSights 後の CameraBoom の ArmLength を元の状態に戻す際の処理を修正
+		* 直値 -> ヒーロークラスが持っている初期値を利用するように変更
+	* HeroAI 組み込み
+	* 詳細は [./Documents/Add-HeroAI.md](./Documents/Add-HeroAI.md) を参照
 
 -----
 おしまい。
