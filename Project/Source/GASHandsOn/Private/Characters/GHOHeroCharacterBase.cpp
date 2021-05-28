@@ -18,6 +18,7 @@
 #include "Game/GHOGameModeBase.h"
 #include "UI/GHOFloatingStatusBarWidget.h"
 #include "Settings/GHODefaultClasses.h"
+#include "AI/GHOHeroAIController.h"
 
 
 
@@ -76,6 +77,15 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	UIFloatingStatusBarComponent->SetDrawSize(FVector2D(500, 500));
 	
 	UIFloatingStatusBarClass = FGHODefaultClasses::GetFloatingStatusBarClass();
+
+	/*
+	AIControllerClass
+	by Epic
+		Default class to use when pawn is controlled by AI.
+	和訳
+		ポーンが AI によってコントロールされている場合に使用されるデフォルトのクラス。
+	*/
+	AIControllerClass = AGHOHeroAIController::StaticClass();
 }
 
 void AGHOHeroCharacterBase::BeginPlay()
