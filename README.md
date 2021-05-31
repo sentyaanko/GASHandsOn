@@ -119,6 +119,14 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 		* 直値 -> ヒーロークラスが持っている初期値を利用するように変更
 	* HeroAI 組み込み
 	* 詳細は [./Documents/Add-HeroAI.md](./Documents/Add-HeroAI.md) を参照
+* v0.0.33
+	* Projectile の不具合修正
+		* 状況：ダメージでターゲットが死亡した場合。
+		* 原因：AdditionalEffects で無効の AbilitySystemComponent を参照していた。
+		* 対応：AdditionalEffects のループ処理の前に AbilitySystemComponent の Valid チェックをおこなように修正
+		* 備考：AdditionalEffects でターゲットを死亡させる物があるのであれば、 AbilitySystemComponent の Valid チェック はループ内に移動すること。
+	* Minion 組み込み
+	* 詳細は [./Documents/Add-Minion.md](./Documents/Add-Minion.md) を参照
 
 -----
 おしまい。
