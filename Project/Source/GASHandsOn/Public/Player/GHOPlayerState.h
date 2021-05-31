@@ -20,7 +20,12 @@ public:
 	
 	// AActor interface
 protected:
-	/** Overridable native event for when play begins for this actor. */
+	/*
+	by Epic
+		Overridable native event for when play begins for this actor.
+	和訳
+		このアクタの Play が始まるときのオーバーライド可能なネイティブイベント。
+	*/
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -39,7 +44,12 @@ public:
 	void ShowAbilityConfirmCancelText(bool bShowText);
 
 private:
-	// Attribute changed callbacks
+	/*
+	by Epic
+		Attribute changed callbacks
+	和訳
+		Attribute 変更コールバック
+	*/
 	void HealthChanged(const struct FOnAttributeChangeData& Data);
 	void HealthMaxChanged(const struct FOnAttributeChangeData& Data);
 	void HealthRegenRateChanged(const struct FOnAttributeChangeData& Data);
@@ -50,7 +60,12 @@ private:
 	void StaminaMaxChanged(const struct FOnAttributeChangeData& Data);
 	void StaminaRegenRateChanged(const struct FOnAttributeChangeData& Data);
 
-	// Tag change callbacks
+	/*
+	by Epic
+		Tag change callbacks
+	和訳
+		タグ変更コールバック
+	*/
 	void StunTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
 
 private:
@@ -70,4 +85,5 @@ private:
 	FDelegateHandle StaminaMaxChangedDelegateHandle;
 	FDelegateHandle StaminaRegenRateChangedDelegateHandle;
 
+	FDelegateHandle StunChangedDelegateHandle;
 };
