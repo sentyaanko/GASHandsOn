@@ -71,6 +71,11 @@ AI 専用キャラクターである `Minion` の実装を行う。
 
 BP 類。
 
+1. `WBP_FloatingStatusBar_Minion` を `WBP_FloatingStatusBar` から複製して新規作成
+	* 概要
+		* `Minion` 用の `FloatingStatusBar` 
+		* `Mana` を持たないため、マナのゲージを消している。
+		* 詳細はグラフ参照。
 1. `BP_MinionCharacterBase` を `AGHOMinionCharacterBase` から派生して新規作成
 	* クラスのデフォルトの設定
 		* `メッシュ > Skeltal Mesh` を `SK_Mannequin` に
