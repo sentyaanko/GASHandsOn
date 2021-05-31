@@ -1,0 +1,149 @@
+# Add-Minion
+AI 専用キャラクターである `Minion` の実装を行う。
+
+
+# 方法
+* `CharacterBase` から派生した `Minion` 専用の基底クラスを作成する。（プレイヤー用の `Horo` とは異なる継承ツリーとなる）
+* レベル上への配置はスポーンさせるアクターを Blueprint で作成、配置し、スポーンした `Minion` が死亡するたびにリスポーンするようにする。
+* まだ扱わないことは以下の通り
+	* ビヘイビアツリーによる制御。（ `GASDocumentation` でも扱っていないので割愛）
+
+
+# 手順
+
+ソース類
+
+1. `FGHODefaultClasses` に、以下を追加する
+	* 関数
+		* `GetFloatingStatusBarForMinionClass()`
+			* `Minion` 用の `FloatingStatusBar` のデフォルトクラスを取得する関数。
+1. `UGHOAbilitySystemComponent` に、以下を追加する
+	* 関数
+		* `CancelAbilitiesByStun()`
+			* スタンによるアビリティのキャンセル処理。
+			* `Hero` と `Minion` で処理が共通なため、キャラクタークラスからこちらへ移譲。
+1. `AGHOPlayerState` に、以下を追加する
+	* プロパティ
+		* `StunChangedDelegateHandle`
+			* スタン状態変更のコールバックへのハンドル（ `Minion` とは特に関係ないです）
+	* 関数
+		* `BeginPlay()`
+			* `StunChangedDelegateHandle` の初期化（ `Minion` とは特に関係ないです）
+		* `StunTagChanged()`
+			* `UGHOAbilitySystemComponent::CancelAbilitiesByStun()` を利用するように変更
+1. `AGHOMinionCharacterBase` を `AGHOCharacterBase` から派生して新規作成
+	* プロパティ
+		* `CharacterName`
+			* キャラクターの名前。 Blueprint 指定用
+		* `UIFloatingStatusBarComponent`
+			* `FloatingStatusBar` のコンポーネント
+		* `UIFloatingStatusBarClass`
+			* `FloatingStatusBar` に表示させる `Widget` クラス。 Blueprint 指定用
+		* `AbilitySystemComponent`
+			* このクラスが所持する `AbilitySystemComponent` のインスタンス保持用
+		* `AttributeSetBase`
+			* このクラスが所持する `AttributeSet` のインスタンス保持用
+		* `UIFloatingStatusBar`
+			* `FloatingStatusBar` に表示させる `Widget` クラスのインスタンス。
+		* `HealthChangedDelegateHandle`
+			* ヘルス変更時のコールバックへのハンドル
+		* `StunChangedDelegateHandle`
+			* スタン状態変更のコールバックへのハンドル
+	* 関数
+		* コンストラクタ
+			* `UGHOAbilitySystemComponent` / `UGHOAttributeSetBase` コンポーネントを追加
+			* コリジョンコンポーネントのチャンネルの変更
+			* `FloatigStatusBar` 用の `UWidgetComponent` を追加
+			* `FloatigStatusBar` 用の `Class` の初期化
+		* `BeginPlay()`
+			* `FloatigStatusBar` の作成
+		* `IAbilitySystemInterface::GetAbilitySystemComponent()` (override)
+			* コンストラクタで構築した `AbilitySystemComponent` を返す
+		* `AGHOCharacterBase::GetAttributeSet()` (override)
+			* コンストラクタで構築した `AttributeSet` を返す
+		* `HealthChanged()`
+			* ヘルス変更時のコールバック
+			* `FloatingStatusBar` への通知と死亡処理を行う
+		* `StunTagChanged()`
+			* スタン状態変更時のコールバック
+			* スタンしたのであればアビリティのキャンセル処理を行う
+
+
+BP 類。
+
+1. `WBP_FloatingStatusBar_Minion` を `WBP_FloatingStatusBar` から複製して新規作成
+	* 概要
+		* `Minion` 用の `FloatingStatusBar` 
+		* `Mana` を持たないため、マナのゲージを消している。
+		* 詳細はグラフ参照。
+1. `BP_MinionCharacterBase` を `AGHOMinionCharacterBase` から派生して新規作成
+	* クラスのデフォルトの設定
+		* `メッシュ > Skeltal Mesh` を `SK_Mannequin` に
+		* `ポーン > Auto PossessAI` を `Placed In World or Spawned` に
+		* `コリジョン > コリジョンプリセット` を `Custom` に
+		* `コリジョン > コリジョンプリセット > コリジョンレスポンス > トレース応答` の `Visibility` を `オーバーラップ` に
+		* `コリジョン > コリジョンプリセット > コリジョンレスポンス > トレース応答` の `Camera` を `無視する` に
+1. `GE_BlueMinion_Attributes` / `GE_RedMinion_Attributes` を `` から派生して新規作成
+	* 概要
+		* `BlueMinion` / `RedMinion` のアトリビュート。
+		* `BlueMinion` は `Health` が、 `RedMinion` は `HealthRegenRate` が高くなるように設定します。
+		* `Mana` と `Stamina` は使用しない仕様とするため、 0 に設定します。
+	* クラスのデフォルトの設定 
+		* `Gameplay Effect > Modifiers` に要素を 8 つ追加し以下を設定
+			* 0
+				* `Attribute` を `HealthMax` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `150.0` / `75.0` に
+			* 1
+				* `Attribute` を `HealthRegenRate` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `2.0` / `8.0` に
+			* 2
+				* `Attribute` を `ManaMax` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `0.0` に
+			* 3
+				* `Attribute` を `ManaRegenRate` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `0.0` に
+			* 4
+				* `Attribute` を `StaminaMax` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `0.0` に
+			* 5
+				* `Attribute` を `StaminaRegenRate` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `0.0` に
+			* 6
+				* `Attribute` を `MoveSpeed` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `600.0` に
+			* 7
+				* `Attribute` を `Armor` に
+				* `ModifierOp` を `Override` に
+				* `Modifier Magnitude > Scalable Float Magnitude` を `8.0` に
+1. `MI_BlueMinion` / `MI_RedMinion` を `M_Male_Body` からマテリアルインスタンスの新規作成
+	* マテリアルパラメータの設定
+		* `Global Vector Parameter Values > Body Color` を 青系 / 赤系 に
+1. `BP_BlueMinion` / `BP_RedMinion` を `BP_MinionCharacterBase` から派生して新規作成
+	* クラスのデフォルトの設定
+		* `GASHands On > Character > Character Name` を `BlueMinion` / `RedMinion` に
+		* `GASHands On > Attributes > Default Attributes` を `GE_BlueMinion_Attributes` / `GE_RedMinion_Attributes` に
+		* `GASHands On > Attributes > Startup Effects` に要素を追加し `GE_HealthRegen` を設定
+1. `BP_MinionSpawner` を `Actor` から派生して新規作成
+	* イベントグラフ
+		* `BeginPlay`
+			* `Authority` の場合はタイマーイベントを作成し、 delay 時間を待つ
+			* `Minion Class` で指定された `BP_MinionCharacterBase` 派生クラスをスポーンさせる。
+			* スポーンさせた `BP_MinionCharacterBase` が死亡した際に再びタイマー処理を行うようにする。
+* `Test` マップに以下を設定
+	* `BP_MinionSpawner` を配置
+		* 名前を `Spawner_BlueMinion` / `Spawner_RedMinion` に
+		* `GASHands On < Minion Class` を `BP_BlueMinion` / `BP_RedMinion` に
+
+
+以上で、 `Minion` が実装されます。
+
+
+-----
+おしまい。

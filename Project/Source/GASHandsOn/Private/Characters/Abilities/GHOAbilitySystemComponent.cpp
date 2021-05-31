@@ -145,7 +145,19 @@ bool UGHOAbilitySystemComponent::IsStun() const
 	return HasMatchingGameplayTag(StunTag);
 }
 
+void UGHOAbilitySystemComponent::CancelAbilitiesByStun()
+{
+	FGameplayTagContainer AbilityTagsToCancel;
+	AbilityTagsToCancel.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability")));
+
+	FGameplayTagContainer AbilityTagsToIgnore;
+	AbilityTagsToIgnore.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.NotCanceledByStun")));
+
+	CancelAbilities(&AbilityTagsToCancel, &AbilityTagsToIgnore);
+}
+
 void UGHOAbilitySystemComponent::ReceiveDamage(UGHOAbilitySystemComponent * SourceASC, float UnmitigatedDamage, float MitigatedDamage)
 {
 	ReceivedDamage.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
 }
+
