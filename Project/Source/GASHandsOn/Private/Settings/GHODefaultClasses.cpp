@@ -9,6 +9,7 @@ enum EFGHODefaultClassNameID
 	HUDWidgetClass,
 	FloatingDamageTextComponentClass,
 	FloatingStatusBarClass,
+	FloatingStatusBarForMinionClass,
 	HeroClass,
 	NumberOfTable,
 };
@@ -20,6 +21,7 @@ const TCHAR* GetDefaultClassName(EFGHODefaultClassNameID NameID)
 	{
 		TEXT("/Game/GASHandsOn/UI/HUD/WBP_HUD.WBP_HUD_C"),
 		TEXT("/Game/GASHandsOn/UI/FloatingDamageText/BP_FloatingDamageTextComponent.BP_FloatingDamageTextComponent_C"),
+		TEXT("/Game/GASHandsOn/UI/FloatingStatusBar/WBP_FloatingStatusBar.WBP_FloatingStatusBar_C"),
 		TEXT("/Game/GASHandsOn/UI/FloatingStatusBar/WBP_FloatingStatusBar.WBP_FloatingStatusBar_C"),
 		TEXT("/Game/GASHandsOn/Characters/Heroes/Default/BP_DefaultHero.BP_DefaultHero_C"),
 	};
@@ -50,6 +52,10 @@ TSubclassOf<class UGHOFloatingDamageTextComponent> FGHODefaultClasses::GetFloati
 TSubclassOf<class UGHOFloatingStatusBarWidget> FGHODefaultClasses::GetFloatingStatusBarClass()
 {
 	return GetDefaultClass<UGHOFloatingStatusBarWidget>(EFGHODefaultClassNameID::FloatingStatusBarClass);
+}
+TSubclassOf<class UGHOFloatingStatusBarWidget> FGHODefaultClasses::GetFloatingStatusBarForMinionClass()
+{
+	return GetDefaultClass<UGHOFloatingStatusBarWidget>(EFGHODefaultClassNameID::FloatingStatusBarForMinionClass);
 }
 
 TSubclassOf<class AGHOHeroCharacterBase> FGHODefaultClasses::GetHeroClass()

@@ -30,6 +30,7 @@ public:
 	void Die();
 
 	bool IsStun() const;
+	void CancelAbilitiesByStun();
 
 	/*
 	by GASDocumentation

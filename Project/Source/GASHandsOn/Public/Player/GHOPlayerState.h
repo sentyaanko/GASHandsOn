@@ -85,4 +85,5 @@ private:
 	FDelegateHandle StaminaMaxChangedDelegateHandle;
 	FDelegateHandle StaminaRegenRateChangedDelegateHandle;
 
+	FDelegateHandle StunChangedDelegateHandle;
 };

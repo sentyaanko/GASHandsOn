@@ -14,5 +14,6 @@ public:
 	static TSubclassOf<class UGHOHUDWidget> GetHUDWidgetClass();
 	static TSubclassOf<class UGHOFloatingDamageTextComponent> GetFloatingDamageTextComponentClass();
 	static TSubclassOf<class UGHOFloatingStatusBarWidget> GetFloatingStatusBarClass();
+	static TSubclassOf<class UGHOFloatingStatusBarWidget> GetFloatingStatusBarForMinionClass();
 	static TSubclassOf<class AGHOHeroCharacterBase> GetHeroClass();
 };
