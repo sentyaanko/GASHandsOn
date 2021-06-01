@@ -54,7 +54,10 @@ void AGHOGameModeBase::HeroDied(AController* Controller)
 	RespawnDelegate = FTimerDelegate::CreateUObject(this, &AGHOGameModeBase::RespawnHero, Controller);
 	GetWorldTimerManager().SetTimer(RespawnTimerHandle, RespawnDelegate, RespawnDelay, false);
 
-	//TODO: Call AGHOPlayerController::SetRespawnCountdown() for display RespawnCountdown.
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(Controller))
+	{
+		PC->SetRespawnCountdown(RespawnDelay);
+	}
 }
 
 void AGHOGameModeBase::RespawnHero(AController* Controller)
