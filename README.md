@@ -131,6 +131,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 	* BP_GEVolumeBase のタイマーをクリアする処理の追加
 	* RespawnCountdown 組み込み
 	* 詳細は [./Documents/Add-RespawnCountdown.md](./Documents/Add-RespawnCountdown.md) を参照
+* v0.0.35
+	* Character に CharacterLevel / XP / XPBounty / Gold / GoldBounty の Attribute 組み込み
+	* 詳細は [./Documents/Add-Level_XP_Gold-Attributes.md](./Documents/Add-Level_XP_Gold-Attributes.md) を参照
 
 -----
 おしまい。
