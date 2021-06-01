@@ -19,6 +19,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
 	void ShowAbilityConfirmCancelText(bool bShowText);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
+	void SetRespawnCountdown(float RespawnTimeRemaining);
+
 	/**
 	* Attribute setters
 	*/
