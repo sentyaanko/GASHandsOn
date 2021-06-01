@@ -59,6 +59,9 @@ private:
 	void StaminaChanged(const struct FOnAttributeChangeData& Data);
 	void StaminaMaxChanged(const struct FOnAttributeChangeData& Data);
 	void StaminaRegenRateChanged(const struct FOnAttributeChangeData& Data);
+	void CharacterLevelChanged(const struct FOnAttributeChangeData& Data);
+	void XPChanged(const struct FOnAttributeChangeData& Data);
+	void GoldChanged(const struct FOnAttributeChangeData& Data);
 
 	/*
 	by Epic
@@ -84,6 +87,9 @@ private:
 	FDelegateHandle StaminaChangedDelegateHandle;
 	FDelegateHandle StaminaMaxChangedDelegateHandle;
 	FDelegateHandle StaminaRegenRateChangedDelegateHandle;
+	FDelegateHandle CharacterLevelChangedDelegateHandle;
+	FDelegateHandle XPChangedDelegateHandle;
+	FDelegateHandle GoldChangedDelegateHandle;
 
 	FDelegateHandle StunChangedDelegateHandle;
 };

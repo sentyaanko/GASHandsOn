@@ -83,9 +83,6 @@ public:
 	// End of UAttributeSet interface
 
 public:
-	//TODO: We need to complete this function when we implement CharacterLevel.
-	float GetCharacterLevel()const { return 0.f; }
-
 	/*
 	by GASDocumentation
 		Current Health, when 0 we expect owner to die unless prevented by an ability. Capped by HealthMax.
@@ -212,6 +209,49 @@ public:
 	FGameplayAttributeData MoveSpeed;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, MoveSpeed)
 
+	UPROPERTY(BlueprintReadOnly, Category = "Character Level", ReplicatedUsing = OnRep_CharacterLevel)
+	FGameplayAttributeData CharacterLevel;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, CharacterLevel)
+
+	/*
+	by GASDocumentation
+		Experience points gained from killing enemies. Used to level up (not implemented in this project).
+	和訳
+		経験値。敵を倒すと得られる。レベルアップに使用します。（本プロジェクトでは未実装）
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "XP", ReplicatedUsing = OnRep_XP)
+	FGameplayAttributeData XP;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, XP)
+
+	/*
+	by GASDocumentation
+		Experience points awarded to the character's killers. Used to level up (not implemented in this project).
+	和訳
+		キャラクターを倒したものに与えられる経験値。レベルアップに使用します。（本プロジェクトでは未実装）
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "XP", ReplicatedUsing = OnRep_XPBounty)
+	FGameplayAttributeData XPBounty;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, XPBounty)
+
+	/*
+	by GASDocumentation
+		Gold gained from killing enemies. Used to purchase items (not implemented in this project).
+	和訳
+		ゴールド。敵を倒すと得られる。アイテムの購入に使用します。（本プロジェクトでは未実装）
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Gold", ReplicatedUsing = OnRep_Gold)
+	FGameplayAttributeData Gold;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Gold)
+
+	/*
+	by GASDocumentation
+		Gold awarded to the character's killer. Used to purchase items (not implemented in this project).
+	和訳
+		キャラクターを倒したものに与えられるゴールド。アイテムの購入に使用します。（本プロジェクトでは未実装）
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Gold", ReplicatedUsing = OnRep_GoldBounty)
+	FGameplayAttributeData GoldBounty;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, GoldBounty)
 
 public:
 	void InitializeAttributesOnSpawned();
@@ -270,6 +310,21 @@ protected:
 
 	UFUNCTION()
 	void OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed);
+
+	UFUNCTION()
+	void OnRep_CharacterLevel(const FGameplayAttributeData& OldCharacterLevel);
+
+	UFUNCTION()
+	void OnRep_XP(const FGameplayAttributeData& OldXP);
+
+	UFUNCTION()
+	void OnRep_XPBounty(const FGameplayAttributeData& OldXPBounty);
+
+	UFUNCTION()
+	void OnRep_Gold(const FGameplayAttributeData& OldGold);
+
+	UFUNCTION()
+	void OnRep_GoldBounty(const FGameplayAttributeData& OldGoldBounty);
 
 private:
 	void PostGameplayEffectExecute_Damage(const struct FGameplayEffectModCallbackData& Data);

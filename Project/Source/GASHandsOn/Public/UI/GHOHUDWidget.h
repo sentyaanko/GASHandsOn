@@ -31,6 +31,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|HeroLevel")
 	void SetHeroLevel(int32 HeroLevel);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|XP")
+	void SetXP(int32 XP);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Gold")
+	void SetGold(int32 Gold);
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|MoveSpeed")
 	void SetMoveSpeed(float MoveSpeed);
 

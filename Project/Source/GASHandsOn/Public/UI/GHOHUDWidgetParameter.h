@@ -39,12 +39,14 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 	GENERATED_BODY()
 
 	FGHOHUDWidgetParameter()
-	: FGHOHUDWidgetParameter(0, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f)
+	: FGHOHUDWidgetParameter(0, 0, 0, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f)
 	{
 	}
 
-	FGHOHUDWidgetParameter(int32 InHeroLevel, float InMoveSpeed, float InHealth, float InHealthMax, float InHealthRegenRate, float InMana, float InManaMax, float InManaRegenRate, float InStamina, float InStaminaMax, float InStaminaRegenRate)
+	FGHOHUDWidgetParameter(int32 InHeroLevel, int32 InXP, int32 InGold, float InMoveSpeed, float InHealth, float InHealthMax, float InHealthRegenRate, float InMana, float InManaMax, float InManaRegenRate, float InStamina, float InStaminaMax, float InStaminaRegenRate)
 		: HeroLevel(InHeroLevel)
+		, XP(InXP)
+		, Gold(InGold)
 		, MoveSpeed(InMoveSpeed)
 		, Health(InHealth, InHealthMax, InHealthRegenRate)
 		, Mana(InMana, InManaMax, InManaRegenRate)
@@ -54,6 +56,12 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 
 	UPROPERTY(BlueprintReadWrite, Category = "HeroLevel")
 	int32 HeroLevel;
+
+	UPROPERTY(BlueprintReadWrite, Category = "XP")
+	int32 XP;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Gold")
+	int32 Gold;
 
 	UPROPERTY(BlueprintReadWrite, Category = "MoveSpeed")
 	float MoveSpeed;
