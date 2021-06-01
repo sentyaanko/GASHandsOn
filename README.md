@@ -127,6 +127,10 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 		* 備考：AdditionalEffects でターゲットを死亡させる物があるのであれば、 AbilitySystemComponent の Valid チェック はループ内に移動すること。
 	* Minion 組み込み
 	* 詳細は [./Documents/Add-Minion.md](./Documents/Add-Minion.md) を参照
+* v0.0.34
+	* BP_GEVolumeBase のタイマーをクリアする処理の追加
+	* RespawnCountdown 組み込み
+	* 詳細は [./Documents/Add-RespawnCountdown.md](./Documents/Add-RespawnCountdown.md) を参照
 
 -----
 おしまい。
