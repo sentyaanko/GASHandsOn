@@ -74,6 +74,9 @@ void AGHOPlayerState::BeginPlay()
 		StaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaAttribute()).AddUObject(this, &AGHOPlayerState::StaminaChanged);
 		StaminaMaxChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaMaxAttribute()).AddUObject(this, &AGHOPlayerState::StaminaMaxChanged);
 		StaminaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::StaminaRegenRateChanged);
+		XPChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetXPAttribute()).AddUObject(this, &AGHOPlayerState::XPChanged);
+		GoldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetGoldAttribute()).AddUObject(this, &AGHOPlayerState::GoldChanged);
+		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGHOPlayerState::CharacterLevelChanged);
 
 		// Tag change callbacks
 		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun")), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
@@ -260,6 +263,48 @@ void AGHOPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData& Data
 		if (UGHOHUDWidget* HUD = PC->GetHUD())
 		{
 			HUD->SetStaminaRegenRate(StaminaRegenRate);
+		}
+	}
+}
+
+void AGHOPlayerState::CharacterLevelChanged(const FOnAttributeChangeData & Data)
+{
+	float CharacterLevel = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetHeroLevel(CharacterLevel);
+		}
+	}
+}
+
+void AGHOPlayerState::XPChanged(const FOnAttributeChangeData & Data)
+{
+	float XP = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetXP(XP);
+		}
+	}
+}
+
+void AGHOPlayerState::GoldChanged(const FOnAttributeChangeData & Data)
+{
+	float Gold = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetGold(Gold);
 		}
 	}
 }

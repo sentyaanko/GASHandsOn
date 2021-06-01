@@ -28,6 +28,11 @@ void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimePro
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, StaminaRegenRate, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Armor, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, CharacterLevel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, XP, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, XPBounty, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Gold, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, GoldBounty, COND_None, REPNOTIFY_Always);
 }
 
 void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data)
@@ -202,6 +207,43 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute_Damage(const struct FGamepl
 					PC->RPCClientShowDamageText(LocalDamageDone, EGHOFloatingTextType::Damage, TargetCharacter);
 				}
 			}
+			if (!TargetCharacter->IsAlive())
+			{
+				/*
+				by GASDocumentation
+					TargetCharacter was alive before this damage and now is not alive, give XP and Gold bounties to Source.
+					Don't give bounty to self.
+				和訳
+					TargetCharacter はこのダメージを受ける前に生きていたが、今は生きていないので、 XP と GOLD のバウンティを Source に与える。
+					自身にはバウンティを与えない。
+				*/
+				if (SourceController != TargetController)
+				{
+					/*
+					by GASDocumentation
+						Create a dynamic instant Gameplay Effect to give the bounties
+					和訳
+						バウンティを与えるための動的な instant GameplayEffect の生成
+					*/
+					UGameplayEffect* GEBounty = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("Bounty")));
+					GEBounty->DurationPolicy = EGameplayEffectDurationType::Instant;
+
+					int32 Idx = GEBounty->Modifiers.Num();
+					GEBounty->Modifiers.SetNum(Idx + 2);
+
+					FGameplayModifierInfo& InfoXP = GEBounty->Modifiers[Idx];
+					InfoXP.ModifierMagnitude = FScalableFloat(GetXPBounty());
+					InfoXP.ModifierOp = EGameplayModOp::Additive;
+					InfoXP.Attribute = UGHOAttributeSetBase::GetXPAttribute();
+
+					FGameplayModifierInfo& InfoGold = GEBounty->Modifiers[Idx + 1];
+					InfoGold.ModifierMagnitude = FScalableFloat(GetGoldBounty());
+					InfoGold.ModifierOp = EGameplayModOp::Additive;
+					InfoGold.Attribute = UGHOAttributeSetBase::GetGoldAttribute();
+
+					Source->ApplyGameplayEffectToSelf(GEBounty, 1.0f, Source->MakeEffectContext());
+				}
+			}
 		}
 	}
 }
@@ -291,6 +333,8 @@ FGHOHUDWidgetParameter UGHOAttributeSetBase::GetHUDParameter()const
 	return FGHOHUDWidgetParameter
 	(
 		GetCharacterLevel(),
+		GetXP(),
+		GetGold(),
 		GetMoveSpeed(),
 		GetHealth(),
 		GetHealthMax(),
@@ -321,77 +365,79 @@ void UGHOAttributeSetBase::AdjustAttributeForMaxChange(FGameplayAttributeData& A
 void UGHOAttributeSetBase::OnRep_Health(const FGameplayAttributeData& OldHealth)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Health, OldHealth);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealth.GetCurrentValue(), Health.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, HealthMax, OldHealthMax);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealthMax.GetCurrentValue(), HealthMax.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, HealthRegenRate, OldHealthRegenRate);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldHealthRegenRate.GetCurrentValue(), HealthRegenRate.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_Mana(const FGameplayAttributeData& OldMana)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Mana, OldMana);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMana.GetCurrentValue(), Mana.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_ManaMax(const FGameplayAttributeData& OldManaMax)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ManaMax, OldManaMax);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldManaMax.GetCurrentValue(), ManaMax.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_ManaRegenRate(const FGameplayAttributeData& OldManaRegenRate)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ManaRegenRate, OldManaRegenRate);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldManaRegenRate.GetCurrentValue(), ManaRegenRate.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_Stamina(const FGameplayAttributeData& OldStamina)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Stamina, OldStamina);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldStamina.GetCurrentValue(), Stamina.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_StaminaMax(const FGameplayAttributeData& OldStaminaMax)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, StaminaMax, OldStaminaMax);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldStaminaMax.GetCurrentValue(), StaminaMax.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, StaminaRegenRate, OldStaminaRegenRate);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldStaminaRegenRate.GetCurrentValue(), StaminaRegenRate.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_Armor(const FGameplayAttributeData& OldArmor)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Armor, OldArmor);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldArmor.GetCurrentValue(), Armor.GetCurrentValue());
 }
 
 void UGHOAttributeSetBase::OnRep_MoveSpeed(const FGameplayAttributeData& OldMoveSpeed)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, MoveSpeed, OldMoveSpeed);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s() %f -> %f"), *FString(__FUNCTION__), OldMoveSpeed.GetCurrentValue(), MoveSpeed.GetCurrentValue());
 }
 
+void UGHOAttributeSetBase::OnRep_CharacterLevel(const FGameplayAttributeData& OldCharacterLevel)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, CharacterLevel, OldCharacterLevel);
+}
+
+void UGHOAttributeSetBase::OnRep_XP(const FGameplayAttributeData& OldXP)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, XP, OldXP);
+}
+
+void UGHOAttributeSetBase::OnRep_XPBounty(const FGameplayAttributeData& OldXPBounty)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, XPBounty, OldXPBounty);
+}
+
+void UGHOAttributeSetBase::OnRep_Gold(const FGameplayAttributeData& OldGold)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Gold, OldGold);
+}
+
+void UGHOAttributeSetBase::OnRep_GoldBounty(const FGameplayAttributeData& OldGoldBounty)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, GoldBounty, OldGoldBounty);
+}
