@@ -3,13 +3,15 @@
 
 #include "Characters/Abilities/GHOGA_CharacterJump.h"
 #include "GameFramework/Character.h"
+#include "Settings/GHOGameplayTags.h"
+
 
 // This code is based on Engine\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Private\Abilities\GameplayAbility_CharacterJump.cpp
 
 UGHOGA_CharacterJump::UGHOGA_CharacterJump()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::NonInstanced;
-	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Jump")));
+	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Jump)));
 
 	AbilityInputID = EGHOAbilityInputID::Jump;
 }

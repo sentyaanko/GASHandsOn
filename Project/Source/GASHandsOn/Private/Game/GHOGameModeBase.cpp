@@ -26,7 +26,12 @@ void AGHOGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Get the enemy hero spawn point
+	/*
+	by GASDocumentation
+		Get the enemy hero spawn point
+	和訳
+		敵のヒーローのスポーンポイントの取得
+	*/
 	TArray<AActor*> Actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), Actors);
 	for (AActor* Actor : Actors)
@@ -64,7 +69,12 @@ void AGHOGameModeBase::RespawnHero(AController* Controller)
 {
 	if (Controller->IsPlayerController())
 	{
-		// Respawn player hero
+		/*
+		by GASDocumentation
+			Respawn player hero
+		和訳
+			プレイヤーのヒーローのリスポーン
+		*/
 		AActor* PlayerStart = FindPlayerStart(Controller);
 
 		FActorSpawnParameters SpawnParameters;
@@ -79,7 +89,12 @@ void AGHOGameModeBase::RespawnHero(AController* Controller)
 	}
 	else
 	{
-		// Respawn AI hero
+		/*
+		by GASDocumentation
+			Respawn AI hero
+		和訳
+			AI のヒーローのリスポーン
+		*/
 		FActorSpawnParameters SpawnParameters;
 		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 

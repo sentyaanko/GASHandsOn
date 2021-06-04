@@ -78,7 +78,6 @@ protected:
 	TSubclassOf<class UGHOFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
 private:
-#if 0
 	/*
 	by Epic
 		Actual hard pointer to AbilitySystemComponent
@@ -86,13 +85,8 @@ private:
 		AbilitySystemComponent への実際の強参照
 	*/
 	UPROPERTY()
-	class UGHOAbilitySystemComponent* HardRefAbilitySystemComponent;
-#else
-	UPROPERTY()
 	class UGHOAbilitySystemComponent* AbilitySystemComponent;
-#endif
 
-#if 0
 	/*
 	by Epic
 		Actual hard pointer to AttributeSetBase
@@ -100,11 +94,7 @@ private:
 		AttributeSetBaseへの実際の強参照
 	*/
 	UPROPERTY()
-	class UGHOAttributeSetBase* HardRefAttributeSetBase;
-#else
-	UPROPERTY()
 	class UGHOAttributeSetBase* AttributeSetBase;
-#endif
 	
 	UPROPERTY()
 	class UGHOFloatingStatusBarWidget* UIFloatingStatusBar;

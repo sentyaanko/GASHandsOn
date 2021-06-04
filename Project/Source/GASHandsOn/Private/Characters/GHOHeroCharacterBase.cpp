@@ -11,8 +11,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Player/GHOPlayerState.h"
 #include "Player/GHOPlayerController.h"
 #include "Game/GHOGameModeBase.h"
@@ -238,15 +238,11 @@ void AGHOHeroCharacterBase::FinishDying()
 
 FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
 {
-#if 0
-	FVector Start = Character->GetGunComponent()->GetSocketLocation(FName("Muzzle"));
-	FVector End = Character->GetCameraBoom()->GetComponentLocation() + Character->GetFollowCamera()->GetForwardVector() * Range;
-	FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
-
-	FTransform MuzzleTransform = Character->GetGunComponent()->GetSocketTransform(FName("Muzzle"));
-	MuzzleTransform.SetRotation(Rotation.Quaternion());
-	MuzzleTransform.SetScale3D(FVector(1.0f));
-#endif
+	/*
+	解説
+		Muzzle の向きをそのまま Projectile の射出方向として利用しています。
+		GASDocumentation では Muzzle を始点として、カメラの座標からカメラの向き Range の地点を終点としています。
+	*/
 	FTransform MuzzleTransform = GetMesh()->GetSocketTransform(FName("Muzzle"));
 	//FVector Start = MuzzleTransform.GetLocation();
 	//FVector End = GetCameraBoom()->GetComponentLocation() + GetFollowCamera()->GetForwardVector() * Range;
@@ -326,10 +322,14 @@ void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 	*/
 	InitializeFloatingStatusBar();
 
-	if (AbilitySystemComponent.IsValid())
-	{
-		AbilitySystemComponent->ClearDead();
-	}
+	/*
+	解説
+		Character Abilities の付与の際に死亡していると付与できないため、 ClearDead() を UGHOAbilitySystemComponent::InitializeAttributes() 内に移動します。
+	*/
+	//if (AbilitySystemComponent.IsValid())
+	//{
+	//	AbilitySystemComponent->ClearDead();
+	//}
 	if (AttributeSetBase.IsValid())
 	{
 		AttributeSetBase->InitializeAttributesOnSpawned();
@@ -341,7 +341,6 @@ void AGHOHeroCharacterBase::BindASCInput()
 	if (!bASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
 	{
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"), FString("CancelTarget"), FString("EGHOAbilityInputID"), static_cast<int32>(EGHOAbilityInputID::Confirm), static_cast<int32>(EGHOAbilityInputID::Cancel)));
-//		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString(), FString(), FString("EGHOAbilityInputID")));
 
 		bASCInputBound = true;
 	}
@@ -382,7 +381,6 @@ void AGHOHeroCharacterBase::InitializeFloatingStatusBar()
 				UIFloatingStatusBar->SetCharacterName(FText());
 				UIFloatingStatusBar->SetHealthPercentage(AttributeSetBase->GetHealth() / AttributeSetBase->GetHealthMax());
 				UIFloatingStatusBar->SetManaPercentage(AttributeSetBase->GetMana() / AttributeSetBase->GetManaMax());
-				
 			}
 		}
 	}

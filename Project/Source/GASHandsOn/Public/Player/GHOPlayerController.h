@@ -21,6 +21,7 @@ public:
 	// AController interface
 protected:
 	virtual void OnRep_PlayerState() override;
+
 	virtual void OnPossess(APawn* aPawn) override;
 
 	// End of AController interface
@@ -30,6 +31,10 @@ public:
 	void CreateHUD();
 	class UGHOHUDWidget* GetHUD() { return UIHUDWidget; }
 
+	/*
+	解説
+		WithValidation は UE 4.26 では無くてもコンパイルできるので無くしています。
+	*/
 //	UFUNCTION(Client, Reliable, WithValidation)
 	UFUNCTION(Client, Reliable)
 	void RPCClientShowDamageText(float DamageAmount, EGHOFloatingTextType FloatingTextType, class AGHOCharacterBase* TargetCharacter);
@@ -43,6 +48,10 @@ public:
 	和訳
 		GameMode から、リスポーンまでのカウントダウンをクライアントに RPC する簡単な方法。
 		サーバーとの同期が取れない分、レイテンシーが発生します。
+	*/
+	/*
+	解説
+		WithValidation は UE 4.26 では無くてもコンパイルできるので無くしています。
 	*/
 //	UFUNCTION(Client, Reliable, WithValidation)
 	UFUNCTION(Client, Reliable)

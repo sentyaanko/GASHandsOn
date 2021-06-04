@@ -2,12 +2,13 @@
 
 
 #include "Player/GHOPlayerState.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Characters/GHOHeroCharacterBase.h"
 #include "Player/GHOPlayerController.h"
 #include "UI/GHOHUDWidget.h"
 #include "UI/GHOFloatingStatusBarWidget.h"
+#include "Settings/GHOGameplayTags.h"
 
 
 AGHOPlayerState::AGHOPlayerState()
@@ -27,7 +28,7 @@ AGHOPlayerState::AGHOPlayerState()
 		If another GHOPlayerState (Hero) receives a GE, we won't be told about it by the Server.
 		Attributes, GameplayTags, and GameplayCues will still replicate to us.
 	和訳
-		混合モードとは GameplayEffect をシミュレートさせた時、プロ棋士にレプリケーションするのではなく、 GameplayEffect を自分自身にレプリケーションさせることを意味します。
+		混合モードとは GameplayEffect をシミュレートさせた時、プロキシにレプリケーションするのではなく、 GameplayEffect を自分自身にレプリケーションさせることを意味します。
 		他の GHOPlayerState （ヒーロー） が GameplayEffect を受け取った時、サーバーからは通知されません。
 		Attributes, GameplayTags, GameplayCues は引き続きレプリケーションされます。
 	*/
@@ -79,7 +80,7 @@ void AGHOPlayerState::BeginPlay()
 		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGHOPlayerState::CharacterLevelChanged);
 
 		// Tag change callbacks
-		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun")), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
+		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
 	}
 }
 
@@ -180,8 +181,6 @@ void AGHOPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 	和訳
 		HUD の更新
 		AsyncTaskAttributeChanged ノードを使用して UI 自体で処理する。
-	TODO
-		HUD 及び AsyncTaskAttributeChanged の実装を行うこと。（ここで行うことは特に無いです。）
 	*/
 }
 
@@ -234,8 +233,6 @@ void AGHOPlayerState::StaminaChanged(const FOnAttributeChangeData& Data)
 	和訳
 		HUD の更新
 		AsyncTaskAttributeChanged ノードを使用して UI 自体で処理する。
-	TODO
-		HUD 及び AsyncTaskAttributeChanged の実装を行うこと。（ここで行うことは特に無いです。）
 	*/
 }
 

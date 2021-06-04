@@ -14,18 +14,3 @@ AGHOProjectile::AGHOProjectile()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovement"));
 }
-
-//// Called when the game starts or when spawned
-//void AGHOProjectile::BeginPlay()
-//{
-//	Super::BeginPlay();
-//	
-//}
-//
-//// Called every frame
-//void AGHOProjectile::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//}
-//
