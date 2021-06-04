@@ -16,6 +16,9 @@ class GASHANDSON_API UGHOGEEC_Damage : public UGameplayEffectExecutionCalculatio
 	
 public:
 	UGHOGEEC_Damage();
+
+	// UGameplayEffectExecutionCalculation interface
+public:
 	/*
 	by Epic
 		Called whenever the owning gameplay effect is executed. 
@@ -35,4 +38,6 @@ public:
 		@param OutExecutionOutput	[OUT] 実行によって生成された、実行のさらなる動作や結果を示す出力データ
 	*/
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
+
+	// End of UGameplayEffectExecutionCalculation interface
 };

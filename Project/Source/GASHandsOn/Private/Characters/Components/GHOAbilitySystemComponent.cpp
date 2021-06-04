@@ -20,7 +20,12 @@ void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* I
 
 	const TSubclassOf<class UGameplayEffect>& DefaultAttributes = InSourceObject->GetDefaultAttributes();
 
-	// Can run on Server and Client
+	/*
+	by GASDocumentation
+		Can run on Server and Client
+	和訳
+		サーバーとクライアントの療法で動作可能
+	*/
 	FGameplayEffectContextHandle EffectContext = MakeEffectContext();
 	EffectContext.AddSourceObject(InSourceObject);
 
@@ -34,7 +39,12 @@ void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* I
 
 void UGHOAbilitySystemComponent::AddCharacterAbilities(class AGHOCharacterBase* InSourceObject)
 {
-	// Grant abilities, but only on the server	
+	/*
+	by GASDocumentation
+		Grant abilities, but only on the server	
+	和訳
+		アビリティの付与、ただしサーバー上のみ
+	*/
 	if (bCharacterAbilitiesGiven)
 	{
 		return;

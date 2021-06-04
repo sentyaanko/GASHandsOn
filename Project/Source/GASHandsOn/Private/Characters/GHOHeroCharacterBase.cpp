@@ -238,15 +238,11 @@ void AGHOHeroCharacterBase::FinishDying()
 
 FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
 {
-#if 0
-	FVector Start = Character->GetGunComponent()->GetSocketLocation(FName("Muzzle"));
-	FVector End = Character->GetCameraBoom()->GetComponentLocation() + Character->GetFollowCamera()->GetForwardVector() * Range;
-	FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
-
-	FTransform MuzzleTransform = Character->GetGunComponent()->GetSocketTransform(FName("Muzzle"));
-	MuzzleTransform.SetRotation(Rotation.Quaternion());
-	MuzzleTransform.SetScale3D(FVector(1.0f));
-#endif
+	/*
+	解説
+		Muzzle の向きをそのまま Projectile の射出方向として利用しています。
+		GASDocumentation では Muzzle を始点として、カメラの座標からカメラの向き Range の地点を終点としています。
+	*/
 	FTransform MuzzleTransform = GetMesh()->GetSocketTransform(FName("Muzzle"));
 	//FVector Start = MuzzleTransform.GetLocation();
 	//FVector End = GetCameraBoom()->GetComponentLocation() + GetFollowCamera()->GetForwardVector() * Range;
@@ -341,7 +337,6 @@ void AGHOHeroCharacterBase::BindASCInput()
 	if (!bASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
 	{
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"), FString("CancelTarget"), FString("EGHOAbilityInputID"), static_cast<int32>(EGHOAbilityInputID::Confirm), static_cast<int32>(EGHOAbilityInputID::Cancel)));
-//		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString(), FString(), FString("EGHOAbilityInputID")));
 
 		bASCInputBound = true;
 	}
@@ -382,7 +377,6 @@ void AGHOHeroCharacterBase::InitializeFloatingStatusBar()
 				UIFloatingStatusBar->SetCharacterName(FText());
 				UIFloatingStatusBar->SetHealthPercentage(AttributeSetBase->GetHealth() / AttributeSetBase->GetHealthMax());
 				UIFloatingStatusBar->SetManaPercentage(AttributeSetBase->GetMana() / AttributeSetBase->GetManaMax());
-				
 			}
 		}
 	}

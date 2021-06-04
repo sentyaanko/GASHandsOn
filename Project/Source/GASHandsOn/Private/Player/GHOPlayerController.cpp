@@ -27,13 +27,23 @@ void AGHOPlayerController::CreateHUD()
 		UE_LOG(LogTemp, Error, TEXT("%s() Missing UIHUDWidgetClass. Please fill in on the Blueprint of the PlayerController."), *FString(__FUNCTION__));
 		return;
 	}
-	// Only create a HUD for local player
+	/*
+	by GASDocumentation
+		Only create a HUD for local player
+	和訳
+		local player のみ HUD を作成する
+	*/
 	if (!IsLocalPlayerController())
 	{
 		return;
 	}
 
-	// Need a valid PlayerState to get attributes from
+	/*
+	by GASDocumentation
+		Need a valid PlayerState to get attributes from
+	和訳
+		アトリビュートを取得するために有効な PlayerState が必要
+	*/
 	if (AGHOPlayerState* playerState = GetPlayerState<AGHOPlayerState>())
 	{
 		if (UGHOAttributeSetBase* attr = Cast<UGHOAttributeSetBase>(playerState->GetAttributeSetBase()))
@@ -41,7 +51,12 @@ void AGHOPlayerController::CreateHUD()
 			UIHUDWidget = CreateWidget<UGHOHUDWidget>(this, UIHUDWidgetClass);
 			UIHUDWidget->AddToViewport();
 
-			// Set attributes
+			/*
+			by GASDocumentation
+				Set attributes
+			和訳
+				アトリビュートの設定
+			*/
 			UIHUDWidget->SetParamter(attr->GetHUDParameter());
 		}
 	}

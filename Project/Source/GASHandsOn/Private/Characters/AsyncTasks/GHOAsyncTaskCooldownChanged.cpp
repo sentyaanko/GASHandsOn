@@ -5,29 +5,12 @@
 
 UGHOAsyncTaskCooldownChanged * UGHOAsyncTaskCooldownChanged::ListenForCooldownChange(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTagContainer InCooldownTags, bool bInUseServerCooldown)
 {
-#if 0
-	UGHOAsyncTaskCooldownChanged* ListenForCooldownChange = NewObject<UGHOAsyncTaskCooldownChanged>();
-	ListenForCooldownChange->AbilitySystemComponent = InAbilitySystemComponent;
-	ListenForCooldownChange->CooldownTags = InCooldownTags;
-	ListenForCooldownChange->bUseServerCooldown = bInUseServerCooldown;
-
-	if (!IsValid(InAbilitySystemComponent) || InCooldownTags.Num() < 1)
-	{
-		ListenForCooldownChange->EndTask();
-		return nullptr;
-	}
-	AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(ListenForCooldownChange, &UGHOAsyncTaskCooldownChanged::OnActiveGameplayEffectAddedCallback);
-
-	TArray<FGameplayTag> CooldownTagArray;
-	InCooldownTags.GetGameplayTagArray(CooldownTagArray);
-
-	for (FGameplayTag CooldownTag : CooldownTagArray)
-	{
-		AbilitySystemComponent->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved).AddUObject(ListenForCooldownChange, &UGHOAsyncTaskCooldownChanged::CooldownTagChanged);
-	}
-
-	return ListenForCooldownChange;
-#else
+	/*
+	解説
+		GASDocumentation では、まず NewObject() した後に引数チェックを行い、適切でない場合は EndTask() の呼び出しを行っています。
+		そうすることに特に意味がないように読み取れたため、ここでは引数チェックを先んじて行うように変更しています。
+		また、メンバの初期化に関しても Initialize() 関数で行うように変更しています。
+	*/
 	if (!IsValid(InAbilitySystemComponent) || InCooldownTags.Num() < 1)
 	{
 		return nullptr;
@@ -36,7 +19,6 @@ UGHOAsyncTaskCooldownChanged * UGHOAsyncTaskCooldownChanged::ListenForCooldownCh
 	ListenForCooldownChange->Initialize(InAbilitySystemComponent, InCooldownTags, bInUseServerCooldown);
 
 	return ListenForCooldownChange;
-#endif
 }
 
 void UGHOAsyncTaskCooldownChanged::Initialize(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTagContainer InCooldownTags, bool bInUseServerCooldown)

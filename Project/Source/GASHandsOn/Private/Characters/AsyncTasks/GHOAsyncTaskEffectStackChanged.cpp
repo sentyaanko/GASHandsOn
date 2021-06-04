@@ -5,22 +5,12 @@
 
 UGHOAsyncTaskEffectStackChanged * UGHOAsyncTaskEffectStackChanged::ListenForGameplayEffectStackChange(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTag InEffectGameplayTag)
 {
-#if 0
-	UGHOAsyncTaskEffectStackChanged* ListenForGameplayEffectStackChange = NewObject<UGHOAsyncTaskEffectStackChanged>();
-	ListenForGameplayEffectStackChange->AbilitySystemComponent = InAbilitySystemComponent;
-	ListenForGameplayEffectStackChange->EffectGameplayTag = InEffectGameplayTag;
-
-	if (!IsValid(InAbilitySystemComponent) || !InEffectGameplayTag.IsValid())
-	{
-		ListenForGameplayEffectStackChange->EndTask();
-		return nullptr;
-	}
-
-	InAbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(ListenForGameplayEffectStackChange, &UGHOAsyncTaskEffectStackChanged::OnActiveGameplayEffectAddedCallback);
-	InAbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().AddUObject(ListenForGameplayEffectStackChange, &UGHOAsyncTaskEffectStackChanged::OnRemoveGameplayEffectCallback);
-
-	return ListenForGameplayEffectStackChange;
-#else
+	/*
+	解説
+		GASDocumentation では、まず NewObject() した後に引数チェックを行い、適切でない場合は EndTask() の呼び出しを行っています。
+		そうすることに特に意味がないように読み取れたため、ここでは引数チェックを先んじて行うように変更しています。
+		また、メンバの初期化に関しても Initialize() 関数で行うように変更しています。
+	*/
 	if (!IsValid(InAbilitySystemComponent) || !InEffectGameplayTag.IsValid())
 	{
 		return nullptr;
@@ -29,7 +19,6 @@ UGHOAsyncTaskEffectStackChanged * UGHOAsyncTaskEffectStackChanged::ListenForGame
 	UGHOAsyncTaskEffectStackChanged* ListenForGameplayEffectStackChange = NewObject<UGHOAsyncTaskEffectStackChanged>();
 	ListenForGameplayEffectStackChange->Initialize(InAbilitySystemComponent, InEffectGameplayTag);
 	return ListenForGameplayEffectStackChange;
-#endif
 }
 
 void UGHOAsyncTaskEffectStackChanged::EndTask()

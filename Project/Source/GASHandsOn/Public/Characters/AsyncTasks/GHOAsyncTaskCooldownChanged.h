@@ -51,10 +51,8 @@ public:
 private:
 	void Initialize(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTagContainer InCooldownTags, bool bInUseServerCooldown);
 
-	UFUNCTION()
 	void OnActiveGameplayEffectAddedCallback(UAbilitySystemComponent* Target, const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveHandle);
 
-	UFUNCTION()
 	void CooldownTagChanged(const FGameplayTag CooldownTag, int32 NewCount);
 
 	bool GetCooldownRemainingForTag(FGameplayTagContainer CooldownTags, float& TimeRemaining, float& CooldownDuration);

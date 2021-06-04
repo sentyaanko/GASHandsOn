@@ -40,13 +40,10 @@ public:
 private:
 	void Initialize(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTag InEffectGameplayTag);
 
-	UFUNCTION()
 	void OnActiveGameplayEffectAddedCallback(UAbilitySystemComponent* Target, const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveHandle);
 
-	UFUNCTION()
 	void OnRemoveGameplayEffectCallback(const FActiveGameplayEffect& EffectRemoved);
 
-	UFUNCTION()
 	void GameplayEffectStackChanged(FActiveGameplayEffectHandle EffectHandle, int32 NewStackCount, int32 PreviousStackCount);
 
 	bool IsTarget(const FGameplayEffectSpec& Spec)const;

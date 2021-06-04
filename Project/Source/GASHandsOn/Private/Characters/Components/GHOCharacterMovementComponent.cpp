@@ -8,6 +8,7 @@
 UGHOCharacterMovementComponent::UGHOCharacterMovementComponent()
 {
 	/*
+	解説
 		基底クラス UCharacterMovementComponent の
 		NetworkMaxSmoothUpdateDistance と NetworkNoSmoothUpdateDistance の値を変更する事で
 		GetPredictionData_Client() の呼び出し時に new される
@@ -38,13 +39,14 @@ FNetworkPredictionData_Client * UGHOCharacterMovementComponent::GetPredictionDat
 		UGHOCharacterMovementComponent* MutableThis = const_cast<UGHOCharacterMovementComponent*>(this);
 
 		MutableThis->ClientPredictionData = new FGHONetworkPredictionData_Client(*this);
-/*
-		//UCharacterMovementComponent::NetworkMaxSmoothUpdateDistance
-		//UCharacterMovementComponent::NetworkNoSmoothUpdateDistance
-		//の値を変更することでコンストラクタ呼び出し時に初期化されるように変更したので、こちらはコメントアウト。
-		MutableThis->ClientPredictionData->MaxSmoothNetUpdateDist = 92.f;
-		MutableThis->ClientPredictionData->NoSmoothNetUpdateDist = 140.f;
-*/
+		/*
+		解説
+			UCharacterMovementComponent::NetworkMaxSmoothUpdateDistance
+			UCharacterMovementComponent::NetworkNoSmoothUpdateDistance
+			の値を変更することでコンストラクタ呼び出し時に初期化されるように変更したので、こちらはコメントアウト。
+		*/
+		//MutableThis->ClientPredictionData->MaxSmoothNetUpdateDist = 92.f;
+		//MutableThis->ClientPredictionData->NoSmoothNetUpdateDist = 140.f;
 	}
 
 	return ClientPredictionData;
@@ -80,14 +82,8 @@ void UGHOCharacterMovementComponent::UpdateFromCompressedFlags(uint8 Flags)
 		UpdateFromCompressed flags は SavedMove からフラグを MovementComponent にコピーするだけです。
 		基本的には、 MovementComponent を、その移動が行われた時の状態にリセットするだけなので、そこからシミュレーションを行うことが出来ます。
 	*/
-#if 0
-	RequestToStartSprinting = (Flags & FSavedMove_Character::FLAG_Custom_0) != 0;
-
-	RequestToStartADS = (Flags & FSavedMove_Character::FLAG_Custom_1) != 0;
-#else
 	SetSprinting(Flags & FGHOSavedMove::FLAG_Custom_Sprinting);
 	SetAimDownSights(Flags & FGHOSavedMove::FLAG_Custom_AimDownSights);
-#endif
 }
 
 void UGHOCharacterMovementComponent::StartSprinting()

@@ -71,8 +71,14 @@ void UGHOGA_FireGun::OnCompleted(FGameplayTag EventTag, FGameplayEventData Event
 
 void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData EventData)
 {
-	// Montage told us to end the ability before the montage finished playing.
-	// Montage was set to continue playing animation even after ability ends so this is okay.
+	/*
+	by GASDocumentation
+		Montage told us to end the ability before the montage finished playing.
+		Montage was set to continue playing animation even after ability ends so this is okay.
+	和訳
+		モンタージュはモンタージュの再生が終わる前にアビリティの終了を支持しました。
+		モンタージュはアビリティ終了後もアニメーションを流し続けるように設定されていたので、これは問題ないです。
+	*/
 	if (EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.EndAbility")))
 	{
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
@@ -89,41 +95,16 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 	*/
 	if (GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority && EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.SpawnProjectile")))
 	{
-#if 0
-		AGHOHeroCharacter* Hero = Cast<AGHOHeroCharacter>(GetAvatarActorFromActorInfo());
-		if (!Hero)
-		{
-			EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
-		}
-
-		FVector Start = Hero->GetGunComponent()->GetSocketLocation(FName("Muzzle"));
-		FVector End = Hero->GetCameraBoom()->GetComponentLocation() + Hero->GetFollowCamera()->GetForwardVector() * Range;
-		FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
-
-		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageGameplayEffect, GetAbilityLevel());
-
-		// Pass the damage to the Damage Execution Calculation through a SetByCaller value on the GameplayEffectSpec
-		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
-
-		FTransform MuzzleTransform = Hero->GetGunComponent()->GetSocketTransform(FName("Muzzle"));
-		MuzzleTransform.SetRotation(Rotation.Quaternion());
-		MuzzleTransform.SetScale3D(FVector(1.0f));
-
-		FActorSpawnParameters SpawnParameters;
-		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		AGHOProjectile* Projectile = GetWorld()->SpawnActorDeferred<AGHOProjectile>(ProjectileClass, MuzzleTransform, GetOwningActorFromActorInfo(),
-			Hero, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-		Projectile->DamageEffectSpecHandle = DamageEffectSpecHandle;
-		Projectile->Range = Range;
-		Projectile->FinishSpawning(MuzzleTransform);
-#else
 		AGHOCharacterBase* Character = Cast<AGHOCharacterBase>(GetAvatarActorFromActorInfo());
 		if (!Character)
 		{
 			EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
 		}
 
+		/*
+		解説
+			追加の GameplayEffect を適用する仕組み。 GASDocumentation では実装していない機能です。
+		*/
 		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageGameplayEffect, GetAbilityLevel());
 		TArray<FGameplayEffectSpecHandle> AdditionalEffectSpecHandles;
 		for (auto& AdditionalGameplayEffect : AdditionalGameplayEffects)
@@ -147,6 +128,5 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		Projectile->SetRange( Range );
 		Projectile->SetAdditionalEffectSpecHandles(AdditionalEffectSpecHandles);
 		Projectile->FinishSpawning(MuzzleTransform);
-#endif
 	}
 }

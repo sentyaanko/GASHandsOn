@@ -12,37 +12,6 @@
 
 AGHOMinionCharacterBase::AGHOMinionCharacterBase(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
-#if 0
-	/*
-	by GASDocumentation
-		Create ability system component, and set it to be explicitly replicated
-	和訳
-		AbilitySystemComponent を作成し、それを明示的に複製するように設定します。
-	*/
-	HardRefAbilitySystemComponent = CreateDefaultSubobject<UGHOAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
-	HardRefAbilitySystemComponent->SetIsReplicated(true);
-
-	/*
-	by GASDocumentation
-		Minimal Mode means that no GameplayEffects will replicate. 
-		They will only live on the Server. 
-		Attributes, GameplayTags, and GameplayCues will still replicate to us.
-	和訳
-		Minimal モードとは、 GameplayEffect が複製されないことを意味します。
-		GameplayEffect はサーバー上にしか存在しません。
-		Attributes と GameplayTags と GameplayCues はレプリケーションされます。
-	*/
-	HardRefAbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
-
-	/*
-	by GASDocumentation
-		Set our parent's TWeakObjectPtr
-	和訳
-		親の TWeakObjectPtr を設定する。
-	*/
-	AbilitySystemComponent = HardRefAbilitySystemComponent;
-
-#else
 	/*
 	by GASDocumentation
 		Create ability system component, and set it to be explicitly replicated
@@ -64,30 +33,6 @@ AGHOMinionCharacterBase::AGHOMinionCharacterBase(const FObjectInitializer& Objec
 	*/
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
-#endif
-
-#if 0
-	/*
-	by GASDocumentation
-		Create the attribute set, this replicates by default
-		Adding it as a subobject of the owning actor of an AbilitySystemComponent
-		automatically registers the AttributeSet with the AbilitySystemComponent
-	和訳
-		AttributeSet の作成、これはデフォルトで複製されます。
-		AbilitySystemComponent のオーナーであるアクターのサブオブジェクトとして追加します。
-		AbilitySet を AbilitySystemComponent に自動的に登録します。
-	*/
-	HardRefAttributeSetBase = CreateDefaultSubobject<UGHOAttributeSetBase>(TEXT("AttributeSetBase"));
-
-	/*
-	by GASDocumentation
-		Set our parent's TWeakObjectPtr
-	和訳
-		親の TWeakObjectPtr を設定する。
-	*/
-	AttributeSetBase = HardRefAttributeSetBase;
-
-#else
 	/*
 	by GASDocumentation
 		Create the attribute set, this replicates by default
@@ -100,8 +45,6 @@ AGHOMinionCharacterBase::AGHOMinionCharacterBase(const FObjectInitializer& Objec
 	*/
 	AttributeSetBase = CreateDefaultSubobject<UGHOAttributeSetBase>(TEXT("AttributeSetBase"));
 
-#endif
-
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 
 	UIFloatingStatusBarComponent = CreateDefaultSubobject<UWidgetComponent>(FName("UIFloatingStatusBarComponent"));
@@ -110,28 +53,14 @@ AGHOMinionCharacterBase::AGHOMinionCharacterBase(const FObjectInitializer& Objec
 	UIFloatingStatusBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	UIFloatingStatusBarComponent->SetDrawSize(FVector2D(500, 500));
 
-#if 0
-	UIFloatingStatusBarClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASDocumentation/UI/UI_FloatingStatusBar_Minion.UI_FloatingStatusBar_Minion_C"));
-	if (!UIFloatingStatusBarClass)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find UIFloatingStatusBarClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
-	}
-
-#else
 	UIFloatingStatusBarClass = FGHODefaultClasses::GetFloatingStatusBarForMinionClass();
-
-#endif
 }
 
 void AGHOMinionCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-#if 0
-	if (AbilitySystemComponent.IsValid())
-#else
 	if (AbilitySystemComponent)
-#endif
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 		InitializeAttributes();
