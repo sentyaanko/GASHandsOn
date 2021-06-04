@@ -1,7 +1,7 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/ExecutionCalculation/GHOGEEC_Damage.h"
+#include "Characters/ExecutionCalculations/GHOGEEC_Damage.h"
 #include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Settings/GHOGameplayTags.h"
