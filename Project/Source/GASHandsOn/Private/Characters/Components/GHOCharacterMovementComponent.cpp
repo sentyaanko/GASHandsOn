@@ -1,9 +1,9 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/GHOCharacterMovementComponent.h"
+#include "Characters/Components/GHOCharacterMovementComponent.h"
 #include "Characters/GHOCharacterBase.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 
 UGHOCharacterMovementComponent::UGHOCharacterMovementComponent()
 {

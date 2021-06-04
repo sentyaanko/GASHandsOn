@@ -4,7 +4,7 @@
 #include "Characters/Abilities/GHOGA_FireGun.h"
 #include "AbilitySystemComponent.h"
 //#include "Kismet/KismetMathLibrary.h"
-#include "Characters/Abilities/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
+#include "Characters/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
 #include "Characters/GHOCharacterBase.h"
 
 UGHOGA_FireGun::UGHOGA_FireGun()

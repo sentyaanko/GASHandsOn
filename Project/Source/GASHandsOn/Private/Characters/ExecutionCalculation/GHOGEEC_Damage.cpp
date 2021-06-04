@@ -1,9 +1,9 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/Abilities/ExecutionCalculation/GHOGEEC_Damage.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/ExecutionCalculation/GHOGEEC_Damage.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 
 /*
 by GASDocumentation

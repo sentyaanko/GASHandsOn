@@ -1,7 +1,7 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/Abilities/GHOAsyncTaskCooldownChanged.h"
+#include "Characters/AsyncTasks/GHOAsyncTaskCooldownChanged.h"
 
 UGHOAsyncTaskCooldownChanged * UGHOAsyncTaskCooldownChanged::ListenForCooldownChange(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTagContainer InCooldownTags, bool bInUseServerCooldown)
 {

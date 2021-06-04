@@ -1,7 +1,7 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/Abilities/GHOAsyncTaskEffectStackChanged.h"
+#include "Characters/AsyncTasks/GHOAsyncTaskEffectStackChanged.h"
 
 UGHOAsyncTaskEffectStackChanged * UGHOAsyncTaskEffectStackChanged::ListenForGameplayEffectStackChange(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTag InEffectGameplayTag)
 {

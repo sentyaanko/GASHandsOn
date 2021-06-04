@@ -5,9 +5,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "UI/GHOFloatingStatusBarWidget.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Settings/GHODefaultClasses.h"
 
 AGHOMinionCharacterBase::AGHOMinionCharacterBase(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)

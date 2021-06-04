@@ -2,8 +2,8 @@
 
 
 #include "Player/GHOPlayerState.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Characters/GHOHeroCharacterBase.h"
 #include "Player/GHOPlayerController.h"
 #include "UI/GHOHUDWidget.h"

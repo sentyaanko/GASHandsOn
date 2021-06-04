@@ -10,11 +10,11 @@
 */
 
 
-#include "Characters/Abilities/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
+#include "Characters/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "Animation/AnimInstance.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
 #include "GameFramework/Character.h"
 

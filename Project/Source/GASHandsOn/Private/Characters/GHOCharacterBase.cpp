@@ -5,10 +5,10 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 //#include "AbilitySystemComponent.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
+#include "Characters/Components/GHOCharacterMovementComponent.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
-#include "Characters/GHOCharacterMovementComponent.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 
 
 AGHOCharacterBase::AGHOCharacterBase(const FObjectInitializer& ObjectInitializer)

@@ -1,7 +1,7 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/Abilities/GHOAsyncTaskAttributeChanged.h"
+#include "Characters/AsyncTasks/GHOAsyncTaskAttributeChanged.h"
 
 /*
 解説

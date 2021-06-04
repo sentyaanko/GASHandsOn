@@ -1,10 +1,10 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "Characters/GHOCharacterBase.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 
 UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 {

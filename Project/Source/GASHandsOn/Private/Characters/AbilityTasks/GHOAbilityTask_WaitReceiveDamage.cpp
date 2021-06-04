@@ -1,8 +1,8 @@
 // (C) Sentya Anko 2021
 
 
-#include "Characters/Abilities/AbilityTasks/GHOAbilityTask_WaitReceiveDamage.h"
-#include "Characters/Abilities/GHOAbilitySystemComponent.h"
+#include "Characters/AbilityTasks/GHOAbilityTask_WaitReceiveDamage.h"
+#include "Characters/Components/GHOAbilitySystemComponent.h"
 
 UGHOAbilityTask_WaitReceiveDamage::UGHOAbilityTask_WaitReceiveDamage()
 {

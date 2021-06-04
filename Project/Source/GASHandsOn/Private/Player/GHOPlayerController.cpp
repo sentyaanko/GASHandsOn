@@ -5,7 +5,7 @@
 #include "Player/GHOPlayerState.h"
 #include "AbilitySystemComponent.h"
 #include "UI/GHOHUDWidget.h"
-#include "Characters/Abilities/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Characters/GHOCharacterBase.h"
 #include "Settings/GHODefaultClasses.h"
 
