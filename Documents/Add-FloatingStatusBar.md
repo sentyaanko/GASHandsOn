@@ -9,7 +9,8 @@
 
 # 手順
 
-ソース類
+## ソース類
+
 1. `UGHOFloatingStatusBarWidget` を `UUserWidget` から派生して新規作成
 	* 概要
 		* `FloatingStatusBar` 用の基底クラス。
@@ -58,7 +59,7 @@
 		* `InitializeAfterAbilitySystem()`
 			* `AGHOPlayerController::CreateHD()` の呼び出し
 
-BP 類。
+## BP 類
 
 1. `WBP_FloatingGauge` の新規作成
 	* ゲージ用の `widget` 部品の集まり。

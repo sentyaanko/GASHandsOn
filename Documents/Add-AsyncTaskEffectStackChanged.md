@@ -1,5 +1,5 @@
 # Add-AsyncTaskEffectStackChanged
-`AsyncTaskEffectStackChanged` を新規に作成し、エフェクトスタック数の変更時の処理を `GUI` の実装時にしやすくする。
+`AsyncTaskEffectStackChanged` を新規に作成し、エフェクトスタック数の変更時の処理を GUI の実装時にしやすくする。
 エフェクトスタック数の変更時の処理が Blueprint で完結するようになる。
 
 # 方法
@@ -9,7 +9,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `UGHOAsyncTaskEffectStackChanged` を `UBlueprintAsyncActionBase` から派生して新規作成
 	* 概要
@@ -38,7 +38,7 @@
 
 
 
-以上で、 `AbilitySystemCopmponent` のエフェクトスタック数の変更通知を `BluePrint` のみで処理できるようになります。
+以上で、 `AbilitySystemCopmponent` のエフェクトスタック数の変更通知を Blueprint のみで処理できるようになります。
 
 -----
 # 補足

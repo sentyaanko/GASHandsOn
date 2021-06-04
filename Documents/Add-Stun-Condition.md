@@ -15,7 +15,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `AGHOPlayerState` に、以下を追加する
 	* 関数
@@ -43,17 +43,14 @@
 			* `AdditionalGameplayEffects` を元に `GamplayEffectSpecHandle` の配列を生成し、 `AGHOProjectile` に渡す。
 
 
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
 | `GameplayCue.Shared.Stun`     | Stun 時の GameplayCue 再生用                                        |
 
+## BP 類
 
-
-BP 類。
 1. `PS_StunnedLoop` を新規作成
 	* 概要
 		* `Stun` 中を示すエフェクト。
@@ -63,11 +60,11 @@ BP 類。
 		* `DefaultSceneRoot` の下に `Particle System` を追加し、名前を `p_StunnedLoop` とする
 			* 詳細設定
 				* `パーティクル > Template` を `PS_StunnedLoop` に
-				* `コンポーネントティック > Start with Tick Enable` を `false` に
+				* `コンポーネントティック > Start with Tick Enable` を false に
 	* クラスのデフォルトの設定
-		* `CleanUp > Auto Destroy on Remove` を `true` に
+		* `CleanUp > Auto Destroy on Remove` を true に
 		* `GameplayCue > Gameplay Cue Tag` を `GameplayCue.Shared.Stun` に
-		* `GameplayCue > Auto Attach to Owner` を `true` に
+		* `GameplayCue > Auto Attach to Owner` を true に
 	* 関数
 		* `OnExecute`
 			* 渡された `HitResult` の座標で `GC_GunProjectileImpact` を再生。

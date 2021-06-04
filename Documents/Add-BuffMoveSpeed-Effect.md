@@ -8,21 +8,19 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `AGHOCharacterBase` に以下を追加
 	* 関数
 		* `IsAlive()`
-			* `BluePrint` からの呼び出し用
-
-Editor での設定類。
+			* Blueprint からの呼び出し用
 
 プロジェクト設定
 
 1. `Collision` の編集
 	* `Object Channels` に `Ability` をデフォルト応答 `Overrap` で追加
 
-BP 類。
+## BP 類
 
 1. `GE_BuffMoveSpeed` を新規作成
 	* `GameplayEffects > Duration Policy` を `HasD Duration` に
@@ -36,9 +34,9 @@ BP 類。
 	* `Stacking > Stacking Type` を `Aggregate by Target` に
 	* `Stacking > Stack Limit Count` を `1` に
 * `BP_GEVolumeBase` を `Actor` を基底に新規作成
-	* `レプリケーション > Replicates` を `on` に
+	* `レプリケーション > Replicates` を true に
 	* `Box Collision` コンポーネントの追加
-		* `レンダリング > Hidden in Game` を `off` に
+		* `レンダリング > Hidden in Game` を false に
 		* `コリジョン > コリジョンプリセット` を `Custom` に
 		* `コリジョン > コリジョンプリセット > Object Type` を `Ability` に
 		* `コリジョン > コリジョンプリセット > コリジョンレスポンス > トレース応答` をすべて `無視する` に

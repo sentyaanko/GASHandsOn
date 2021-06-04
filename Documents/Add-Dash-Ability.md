@@ -16,29 +16,26 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `enum EGHOAbilityInputID` （入力 ID 用）に以下の値を追加
 	* `Ability3`
 		* `Dash` 用
 
 
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
 | `Ability.Skill.Ability3`      | アビリティ.スキル.Ability3中(Dash)                                  |
 
-入力設定の追加
+## 入力設定の追加
 
 | 入力名     | 割当       |
 |------------|------------|
 | `Ability3` | Q          |
 
-
-BP 類。
+## BP 類
 
 1. `AM_Dash` という `Montage` を新規作成
 	* モンタージュの設定
@@ -46,7 +43,7 @@ BP 類。
 	* アセット詳細の設定
 		* `ブレンドオプション > Blend In > Blend Time` を `0.1` に
 			* モーションが短いため、デフォルトの `0.25` は長いため。
-		* `ブレンドオプション > Enable Auto Blend Out` を `false` に
+		* `ブレンドオプション > Enable Auto Blend Out` を false に
 			* 移動が完了するまで最終ポーズを維持したいため
 1. `GE_DashCost` を `GameplayEffect` から派生して新規作成
 	* クラスのデフォルトの設定
@@ -60,7 +57,7 @@ BP 類。
 		* `タグ > Ability Tags` を `Ability.Skill.Ability3` に
 		* `タグ > Activation Owned Tagss` を `Ability.Skill.Ability3` に
 		* `タグ > Activation Blocked Tags` を `Stae.Dead` `Stae.CrowdControl.Stun` `Ability.Skill` に
-		* `高度 > Server Respects Remote Ability Cancellation` を `false` に
+		* `高度 > Server Respects Remote Ability Cancellation` を false に
 		* `Costs > Cost Gameplay Effect Class` を `GE_DashCost` に
 	* 詳細はグラフ参照。
 1. `BP_HeroCharacterBase` に以下を追加

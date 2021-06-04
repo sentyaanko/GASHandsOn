@@ -27,7 +27,7 @@
 	* `InstancingPolicy` （インスタンスポリシー）を `NonInstanced` （インスタンス化しない）に変更
 	* アビリティタグに `Ability.Jump` を指定
 	* `AbilityInputID` に `Jump` を設定
-		* 実際の `ASC` への関連付けは `UGHOCharacterBase::AddCharacterAbilities()` にて行っている。
+		* 実際の `AbilitySystemComponent` への関連付けは `UGHOCharacterBase::AddCharacterAbilities()` にて行っている。
 	 * `UGameplayAbility` の仮想関数をオーバーライド。
 		* 実装内容についてはエンジンソースの `UGameplayAbility_CharacterJump` とほぼ同じである。
 			* `Engine\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Private\Abilities\GameplayAbility_CharacterJump.cpp`
@@ -47,7 +47,7 @@
 							* **ジャンプにコストを追加し、 `CommitAbility()` の失敗時の動作を確認すること。**
 1. `BP_HeroCharacterBase` の `CharacterAbilities` に `UGHOGA_CharacterJump` を追加する。
 
-以上で `ASC` に入力をバインドし、そこから `CharacterMovementComponent` の機能を利用してキャラクターのジャンプを行うことができるようになります。
+以上で `AbilitySystemComponent` に入力をバインドし、そこから `CharacterMovementComponent` の機能を利用してキャラクターのジャンプを行うことができるようになります。
 
 # 補足
 

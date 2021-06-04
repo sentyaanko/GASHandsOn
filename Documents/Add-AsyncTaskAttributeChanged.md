@@ -1,5 +1,5 @@
 # Add-AsyncTaskAttributeChanged
-`AsyncTaskAttributeChanged` を新規に作成し、アトリビュートの変更時の処理を `GUI` の実装時にしやすくする。
+`AsyncTaskAttributeChanged` を新規に作成し、アトリビュートの変更時の処理を GUI の実装時にしやすくする。
 「エンジニアが `Attribute` を追加したが、変更コールバックを用意していない」というケースでも変更通知を受け取れるようになる。
 
 # 方法
@@ -10,22 +10,21 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `UGHOAsyncTaskAttributeChanged` を `UBlueprintAsyncActionBase` から派生して新規作成
 	* 概要
 		* `AbilitySystem` とはほとんど関係ないので、詳細については割愛します。
 		* 詳細はソース参照
 
-
-BP 類。
+## BP 類
 
 1. `WBP_HUD` に以下を追加
 	* `Construct` で `ASyncTask` 作成
 	* `Destruct` で `ASyncTask` 破棄
 	* 詳細はグラフ参照
 
-以上で、 `AbilitySystemCopmponent` が所持する `Attribute` の変更通知を `BluePrint` のみで処理できるようになります。
+以上で、 `AbilitySystemCopmponent` が所持する `Attribute` の変更通知を Blueprint のみで処理できるようになります。
 
 
 -----

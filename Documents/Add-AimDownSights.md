@@ -11,7 +11,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `enum EGHOAbilityInputID` （入力 ID 用）に以下の値を追加
 	* `Ability2`
@@ -45,9 +45,7 @@
 	* 複雑なため、ソースを参照。
 
 
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
@@ -63,14 +61,14 @@ GameplayTag の追加
 `Ability` で始まるものは主に `GameplaAbility` の `AbilityTags` 用。
 `State` で始まるものは主ゲーム内のキャラクターの状態で、 `GameplaEffect` の `GameplayEffectAssetTag` に紐づくことが多い。
 
-入力設定の追加
+## 入力設定の追加
 
 | 入力名     | 割当       |
 |------------|------------|
 | `Ability1` | 左クリック |
 | `Ability2` | 右クリック |
 
-BP 類。
+## BP 類
 
 1. `GE_AimDownSights` の追加
 	* クラスのデフォルトの設定
@@ -98,7 +96,7 @@ BP 類。
 		* `タグ > Activation Owned Tags` を `Ability.AimDownSights` に
 		* `タグ > Activation Blocked Tags` を `State.CrowdControl.Stun` `State.Dead` `Ability.Skill` に
 			* 未実装であるが、このアビリティはスキル発動中はブロックされる。
-		* `高度 > Server Respects Remote Ability Cancellation` を `false` に
+		* `高度 > Server Respects Remote Ability Cancellation` を false に
 			* コストが掛からないことと、 `Removal` を使用することで、この設定をしても問題が発生しないようにしている。
 	* `ActivateAbility`
 		* `GE_AimDownSights` を自身に付与
@@ -189,8 +187,8 @@ class GAMEPLAYABILITIES_API UGameplayEffect : public UObject, public IGameplayTa
 
 [「GASDocumentation」の「4.5.7 Gameplay Effect Tags」](https://github.com/tranek/GASDocumentation#concepts-ge-tags) [(和訳)](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-ge-tags) も参照。
 
-> Tags that live on the `GameplayEffect` but are also given to the `ASC` that the `GameplayEffect` is applied to. They are removed from the `ASC` when the `GameplayEffect` is removed. This only works for `Duration` and `Infinite` `GameplayEffects`.
-> `GameplayEffect` 上に存在するが、 `GameplayEffect` が与えられた `ASC` にも与えられるタグ。 `GameplayEffect` が削除される際に `ASC` からも削除されます。 `Duration` と `Infinite` の `GameplayEffects` のみで機能します。
+> Tags that live on the `GameplayEffect` but are also given to the `AbilitySystemComponent` that the `GameplayEffect` is applied to. They are removed from the `AbilitySystemComponent` when the `GameplayEffect` is removed. This only works for `Duration` and `Infinite` `GameplayEffects`.
+> `GameplayEffect` 上に存在するが、 `GameplayEffect` が与えられた `AbilitySystemComponent` にも与えられるタグ。 `GameplayEffect` が削除される際に `AbilitySystemComponent` からも削除されます。 `Duration` と `Infinite` の `GameplayEffects` のみで機能します。
 
 -----
 ## UGameplayAbility

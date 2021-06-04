@@ -11,12 +11,12 @@
 	* `ManaRegenRate`
 		* 秒間回復値
 * `Mana` の初期化コードの追加
-* `BluePrint` で初期値の設定
-* `BluePrint` で `Regen` の設定
+* Blueprint で初期値の設定
+* Blueprint で `Regen` の設定
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `UGHOAttributeSetBase` に以下を追加
 	* プロパティ
@@ -66,7 +66,7 @@
 			* `ManaRegenRate` 変更時のデリゲートの実体
 			* 変更結果を UI に反映するのもここで行うが、今回は省略
 
-BP 類。
+## BP 類
 
 1. `GE_HeroAttributes` の変更
 	* `GameplayEffects > Modifiers` に要素を２つ追加し、以下を指定

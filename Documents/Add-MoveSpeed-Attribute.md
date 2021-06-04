@@ -7,7 +7,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `UGHOAttributeSetBase` に以下を追加
 	* プロパティ
@@ -27,10 +27,7 @@
 		* `GetMaxSpeed()`
 			* 暫定で直値で書いていた移動速度をアトリビュートから取得するように修正
 
-
-Editor での設定類。
-
-BP 類。
+## BP 類
 
 1. `GE_HeroAttributes` を更新
 	* `GameplayEffects` の `Modifiers` に要素を追加し、以下を指定

@@ -20,8 +20,7 @@
 
 # 手順
 
-ソース類
-
+## ソース類
 
 1. `UGHOAttributeSetBase` に以下を追加
 	* プロパティ
@@ -65,18 +64,13 @@
 			* `ROLE_Authority` の場合は `GameMode` を取得し、 `AGHOGameModeBase::HeroDied()` を呼び出す。
 			* 要は死亡時の処理でリスポーンの登録処理を呼び出す。
 
-
-
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
 | `Data.Damage`                 | ダメージ用のメタ・アトリビュート                                    |
 
-
-BP 類。
+## BP 類
 
 1. `GE_Damage` を `GameplayEffect` から派生し新規作成
 	* `Gameplay Effect > Executions`  に要素を追加し、以下を指定
@@ -86,20 +80,20 @@ BP 類。
 		* ダメージ処理で `ApplyGameplayEffectSpecToSelf` を使用するが、そこ以外は `BP_GEVolumeBase` とほぼ同じ。
 		* 流用できるようにリファクタリング。
 	* `ApplyGameplayEffectToSelf` を呼び出していた箇所を派生クラスで買えられるように抽象化
-	* 詳しくは `BluePrint` 参照。
+	* 詳しくは Blueprint 参照。
 1. `BP_GEVolumeApplyGEToSelf` を `BP_GEVolumeBase` から派生し新規作成
 	* `BP_GEVolumeBase` で以前行っていた `ApplyGameplayEffectToSelf` の呼び出し実装
-	* 詳しくは `BluePrint` 参照。
+	* 詳しくは Blueprint 参照。
 1. `BP_GEVolume_BuffMoveSpeed` を変更
 	* 親クラスを `BP_GEVolumeApplyGEToSelf` に
-	* 詳しくは `BluePrint` 参照。
+	* 詳しくは Blueprint 参照。
 1. `BP_GEVolume_Damage` を `BP_GEVolumeBase` から派生し新規作成
 	* プロパティ
 		* `Damage`
 			* `AssignTagSetByCallerMagnitude` で指定するダメージ値を指定する変数。
 		* `GameplayEffect`
 			* 適用する `GameplayEffect` を指定する変数。 `GE_Damage` を指定する。
-	* 詳しくは `BluePrint` 参照。
+	* 詳しくは Blueprint 参照。
 
 
 以上で、プレイヤーにダメージを与える仕組みと死亡時にリスポーンする仕組みが作成できます。

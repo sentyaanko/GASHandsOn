@@ -12,7 +12,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `FGHOHUDWidgetParameter` に以下を追加
 	* プロパティ
@@ -71,8 +71,7 @@
 		* `BeginPlay()`
 			* `CharacterLevel` / `XP` / `Gold` の変更コールバックの初期化を行う
 
-
-BP 類。
+## BP 類
 
 1. `GE_HeroAttributes` / `GE_BlueMinion_Attributes` / `GE_RedMinion_Attributes` に以下を追加
 	* `GameplayEffects > Modifiers` に要素を 3 つ追加し、以下を指定

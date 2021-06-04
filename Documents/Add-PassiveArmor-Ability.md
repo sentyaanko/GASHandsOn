@@ -11,7 +11,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `enum EGHOAbilityInputID` （入力 ID 用）に以下の値を追加
 	* `Ability4`
@@ -26,9 +26,7 @@
 			* マクロの呼び出しを行う。
 
 
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
@@ -39,8 +37,7 @@ GameplayTag の追加
 	* `PassiveArmor` はスタンしても効果が切れないようにしたいので、そのためのタグ。
 	* まだスタンさせるアビリティがないですが、このアビリティ側の準備だけを行います。
 
-
-BP 類。
+## BP 類
 
 1. `GE_PassiveArmor` を `GameplayEffect` から派生して新規作成
 	* クラスのデフォルトの設定
@@ -57,7 +54,7 @@ BP 類。
 1. `GA_PassiveArmor` を `GHOGameplayAbility` から派生して新規作成
 	* クラスのデフォルトの設定
 		* `Ability > AbilityID` を `Ability4` に
-		* `Activate Ability on Granted` を `true` に
+		* `Activate Ability on Granted` を true に
 		* `タグ > Ability Tags` を `Ability.NotCanceledByStun` に
 		* `タグ > Activation Blocked Tags` を `Stae.Dead` に
 		* `高度 > Net Execution Policy` を `Server Only` に

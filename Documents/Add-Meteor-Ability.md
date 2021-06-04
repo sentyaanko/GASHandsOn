@@ -23,7 +23,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `enum EGHOAbilityInputID` （入力 ID 用）に以下の値を追加
 	* 詳細
@@ -45,12 +45,12 @@
 		* `ShowAbilityConfirmCancelText()`
 			* 主に `Meteor` のアビリティの実行確認に用いる、 `HUD` に確認用のテキストの表示を On/Off するための関数。
 			* `PlayerState` から呼び出される。
-			* 実装は `Blueprint` で行う。
+			* 実装は Blueprint で行う。
 1. `AGHOPlayerState` に、以下を追加する
 	* 関数
 		* `ShowAbilityConfirmCancelText()`
 			* 主に `Meteor` のアビリティの実行確認に用いる、 `HUD` に確認用のテキストの表示を On/Off するための関数。
-			* `Blueprint` から呼び出される。
+			* Blueprint から呼び出される。
 				* `GameplayAbility` -> `OwningActor` -> `PlayerState` -> `PlayerController` -> `HUD` と流す必要がある。
 				* この関数が受け持つのは `PlayerState` -> `PlayerController` -> `HUD` の部分。
 1. `UGHOAsyncTaskCooldownChanged` を `UBlueprintAsyncActionBase` から派生して新規作成
@@ -77,18 +77,14 @@
 		* `GetCooldownRemainingForTag()`
 			* 指定された `GameplayTag` を持つアクティブな `GameplayEffect` を探し、最も残り時間が長いものの情報を得る
 
-
-
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
 | `Ability.Skill.Ability5`      | アビリティ.スキル.Ability5中（ `Meteor` 用）                        |
 | `Cooldown.Skill.Ability5`     | Ability5 のクールダウン用                                           |
 
-入力設定の追加
+## 入力設定の追加
 
 | 入力名          | 割当       |
 |-----------------|------------|
@@ -96,7 +92,7 @@ GameplayTag の追加
 | `ConfrimTarget` | 左クリック |
 | `CancelTarget`  | 左Ctrl     |
 
-コリジョンプリセットの追加
+## コリジョンプリセットの追加
 
 * 投下地点を指定する際に使用する。
 * 以下を追加
@@ -109,10 +105,8 @@ GameplayTag の追加
 		* `Ability` を `オーバーラップ` に
 		* それ以外を `ブロック` に
 
+## BP 類
 
-
-
-BP 類。
 * `Test` マップに以下を設定
 	* 詳細
 		* `Meteor` のコリジョンイベントは地形に対して行うため、地形のコリジョン設定を変更する。
@@ -129,7 +123,7 @@ BP 類。
 		* `RightArm_StaticMesh`
 		* `1M_Cube_Chamfer`
 	* 以下を設定
-		* `コリジョン > Generate Overlap Event` を `true` に
+		* `コリジョン > Generate Overlap Event` を true に
 1. `GE_MeteorStun` を `GE_Stun` から派生して新規作成
 	* クラスのデフォルトの設定
 		* `Gameplay Effect > Duration Magnitude > Scalable Float Magnitude` を `2.0` に
@@ -192,7 +186,7 @@ BP 類。
 		* `タグ > Cancel Ability with Tag` を `Ability.AimDownSights` に
 		* `タグ > Activation Owned Tags` を `Ability.Skill.Ability5` に
 		* `タグ > Activation Blocked Tags` を `State.Dead` `State.CrowdControl.Stun` `Ability.AimDownSights` `Ability.Skill` に
-		* `高度 > Server Respects Remove Ability Cancellation` を `false` に
+		* `高度 > Server Respects Remove Ability Cancellation` を false に
 		* `Costs > Cost Gameplay Effect Class` を `GE_MeteorCost` に
 		* `Cooldowns > Cooldown Gameplay Effect Class` を `GE_MeteorCooldown` に
 	* イベントグラフ

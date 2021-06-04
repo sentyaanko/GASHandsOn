@@ -1,34 +1,34 @@
 # Add-Minion
-AI 専用キャラクターである `Minion` の実装を行う。
+AI 専用キャラクターである Minion の実装を行う。
 
 
 # 方法
-* `CharacterBase` から派生した `Minion` 専用の基底クラスを作成する。（プレイヤー用の `Horo` とは異なる継承ツリーとなる）
-* レベル上への配置はスポーンさせるアクターを Blueprint で作成、配置し、スポーンした `Minion` が死亡するたびにリスポーンするようにする。
+* `CharacterBase` から派生した Minion 専用の基底クラスを作成する。（プレイヤー用の `Horo` とは異なる継承ツリーとなる）
+* レベル上への配置はスポーンさせるアクターを Blueprint で作成、配置し、スポーンした Minion が死亡するたびにリスポーンするようにする。
 * まだ扱わないことは以下の通り
 	* ビヘイビアツリーによる制御。（ `GASDocumentation` でも扱っていないので割愛）
 
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `FGHODefaultClasses` に、以下を追加する
 	* 関数
 		* `GetFloatingStatusBarForMinionClass()`
-			* `Minion` 用の `FloatingStatusBar` のデフォルトクラスを取得する関数。
+			* Minion 用の `FloatingStatusBar` のデフォルトクラスを取得する関数。
 1. `UGHOAbilitySystemComponent` に、以下を追加する
 	* 関数
 		* `CancelAbilitiesByStun()`
 			* スタンによるアビリティのキャンセル処理。
-			* `Hero` と `Minion` で処理が共通なため、キャラクタークラスからこちらへ移譲。
+			* Hero と Minion で処理が共通なため、キャラクタークラスからこちらへ移譲。
 1. `AGHOPlayerState` に、以下を追加する
 	* プロパティ
 		* `StunChangedDelegateHandle`
-			* スタン状態変更のコールバックへのハンドル（ `Minion` とは特に関係ないです）
+			* スタン状態変更のコールバックへのハンドル（ Minion とは特に関係ないです）
 	* 関数
 		* `BeginPlay()`
-			* `StunChangedDelegateHandle` の初期化（ `Minion` とは特に関係ないです）
+			* `StunChangedDelegateHandle` の初期化（ Minion とは特に関係ないです）
 		* `StunTagChanged()`
 			* `UGHOAbilitySystemComponent::CancelAbilitiesByStun()` を利用するように変更
 1. `AGHOMinionCharacterBase` を `AGHOCharacterBase` から派生して新規作成
@@ -68,12 +68,11 @@ AI 専用キャラクターである `Minion` の実装を行う。
 			* スタン状態変更時のコールバック
 			* スタンしたのであればアビリティのキャンセル処理を行う
 
-
-BP 類。
+## BP 類
 
 1. `WBP_FloatingStatusBar_Minion` を `WBP_FloatingStatusBar` から複製して新規作成
 	* 概要
-		* `Minion` 用の `FloatingStatusBar` 
+		* Minion 用の `FloatingStatusBar` 
 		* `Mana` を持たないため、マナのゲージを消している。
 		* 詳細はグラフ参照。
 1. `BP_MinionCharacterBase` を `AGHOMinionCharacterBase` から派生して新規作成
@@ -142,7 +141,7 @@ BP 類。
 		* `GASHands On < Minion Class` を `BP_BlueMinion` / `BP_RedMinion` に
 
 
-以上で、 `Minion` が実装されます。
+以上で、 Minion が実装されます。
 
 
 -----

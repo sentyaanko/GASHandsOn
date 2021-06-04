@@ -5,7 +5,7 @@
 
 * `UGHOAbilitySystemComponent` にデリゲートを持たせ、ダメージを受けた際に実行するようにする。
 * `AbilityTask` を新規に作成し、デリゲートを持たせて Blueprint から設定できるようにし、 `UGHOAbilitySystemComponent` にはそれを呼び出す関数を登録するようにする。
-* `UGHOGEEC_Damage` でダメージ算出後、ターゲットの ASC に受けたダメージを知らせる。
+* `UGHOGEEC_Damage` でダメージ算出後、ターゲットの `AbilitySystemComponent` に受けたダメージを知らせる。
 * 処理の流れとしては以下のような感じ。
 	* 初期化時
 		* Blueprint でデリゲートを指定 -> `UGHOAbilityTask_WaitReceiveDamage` -> `UGHOAbilitySystemComponent`
@@ -14,7 +14,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `UGHOAbilitySystemComponent` に以下を追加
 	* プロパティ
@@ -41,11 +41,11 @@
 			* `UGDAbilitySystemComponent::ReceivedDamage` から `UGHOAbilityTask_WaitReceiveDamage::OnDamageReceived()` の登録を解除
 		* `OnDamageReceived()`
 			* Blueprint から設定された `OnDamage` デリゲートを呼び出す。
-			* `bTriggerOnce` が `true` ならばそのままタスクを止める。
+			* `bTriggerOnce` が true ならばそのままタスクを止める。
 1. `UGHOGEEC_Damage` に以下を追加
 	* 関数
 		* `Execute_Implementation()`
-			* ターゲットの ASC に受けたダメージを `ReceiveDamage()` で知らせる。
+			* ターゲットの `AbilitySystemComponent` に受けたダメージを `ReceiveDamage()` で知らせる。
 
 
 以上で、 Blueprint でダメージを受けるのを待つタスクを使用できるようになります。

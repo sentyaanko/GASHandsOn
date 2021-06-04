@@ -9,7 +9,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `UGHOHUDWidget` に、以下を追加する
 	* 関数
@@ -25,8 +25,7 @@
 		* `HeroDied()`
 			* 死亡したキャラクターの `AGHOPlayerController` に対して `SetRespawnCountdown()` の `Client` への RPC 呼び出しをする
 
-
-BP 類。
+## BP 類
 
 1. `WBP_HUD` に、以下を追加する
 	* デザイナー

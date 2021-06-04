@@ -3,11 +3,11 @@
 
 # 方法
 
-* 投射物の `Actor` クラス作成（ C++ で基底、BluePrint で表示関連）
+* 投射物の `Actor` クラス作成（ C++ で基底、Blueprint で表示関連）
 * 命中時の `ParticleEffect` の作成
-* 命中時の `GameplayCue` の作成（ BluePrint ）
+* 命中時の `GameplayCue` の作成（ Blueprint ）
 * 発砲時の `Montage` の作成
-* 発砲用の `GameplayAbility` クラス作成（ C++ で基底、BluePrint で表示関連）
+* 発砲用の `GameplayAbility` クラス作成（ C++ で基底、Blueprint で表示関連）
 * ダメージ計算は以前作成したものを使用する。
 * まだ扱わないことは以下の通り
 	* `GASDocumentation` との違い
@@ -16,7 +16,8 @@
 
 # 手順
 
-ソース類
+## ソース類
+
 1. `enum EGHOAbilityInputID` （入力 ID 用）に以下の値を追加
 	* `Ability1`
 		* `FireGun` 用
@@ -27,17 +28,17 @@
 	* プロパティ
 		* `Range`
 			* 射程のための変数。
-			* 実際の破棄は BluePrint 側で行う。
+			* 実際の破棄は Blueprint 側で行う。
 			* 初期化はこの `Actor` をスポーンする `GHOGA_FireGun` で行う。
 		* `DamageEffectSpecHandle`
 			* ダメージのための変数。
-			* 実際のダメージ処理は BluePrint 側で行う。
+			* 実際のダメージ処理は Blueprint 側で行う。
 			* 初期化はこの `Actor` をスポーンする `GHOGA_FireGun` で行う。
 		* `ProjectileMovement`
 			* 投射物の移動のためのコンポーネント `UProjectileMovementComponent`
 	* 関数
 		* コンストラクタ
-			* レプリケーションさせるため、 `AActor::bReplicates` を `true` にする。
+			* レプリケーションさせるため、 `AActor::bReplicates` を true にする。
 			* `ProjectileMovement` を初期化する。
 1. `AGHOCharacterBase` と `AGHOHeroCharacterBase` の変更
 	* 関数
@@ -67,9 +68,7 @@
 			* イベントコールバック用デリゲート関数
 
 
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                                  | 用途                                                                |
 |-----------------------------------------|---------------------------------------------------------------------|
@@ -77,12 +76,11 @@ GameplayTag の追加
 | `Event.Montage.SpawnProjectile`         | `AnimNotify` の投射物のスポーン通知                                 |
 | `GameplayCue.Shared.FireGun.Impact`     | `GunProjectile` 命中時の `GameplayCue` の再生用                     |
 
+## Collision の追加
 
-Collision の追加
 * `Object Channels` に `Projectile` をデフォルト応答 `Overrap` で追加
 
-
-BP 類。
+## BP 類
 
 1. `BP_GunProjectile` を `AGHOProjectile` から派生して新規作成
 	* コンポーネント
@@ -167,12 +165,14 @@ BP 類。
 
 -----
 ## ExposeOnSpawn
+
 * 以下などを参照
 	* [Unreal Engine 4 ドキュメント > プログラミングとスクリプト処理 > ゲームプレイのアーキテクチャ > プロパティ > プロパティ指定子](https://docs.unrealengine.com/ja/ProgrammingAndScripting/GameplayArchitecture/Properties/Specifiers/index.html)
 	* [「PaperSloth’s diary」UE4 C++でのExposeOnSpawnについて](https://papersloth.hatenablog.com/entry/2018/04/13/232533)
 
 -----
 ## SpawnActorDeferred
+
 * 以下などを参照
 	* [Unreal Engine 4 Documentation > Unreal Engine API Reference > Runtime > Engine > Engine > UWorld > UWorld::SpawnActorDeferred](https://docs.unrealengine.com/en-US/API/Runtime/Engine/Engine/UWorld/SpawnActorDeferred/index.html)
 	* [「PaperSloth’s diary」E4 SpawnActorDeferredについて](https://papersloth.hatenablog.com/entry/2018/04/14/001607)

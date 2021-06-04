@@ -12,7 +12,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `EGHOFloatingTextType` を新規作成
 	* 概要
@@ -38,23 +38,22 @@
 				* `WithValidation` は昔は必須だったようだが今はなくてもコンパイルできる。
 					* まだ意味のある実装がないのでコメントアウトしている。
 			* `UIFloatingDamageTextComponentClass` で指定したコンポーネントを渡された `TargetCharacter` に追加する。
-			* 破棄は `BluePrint` 側でおこなう。　
+			* 破棄は Blueprint 側でおこなう。　
 1. `UGHOAttributeSetBase` に以下を追加
 	* 関数
 		* `PostGameplayEffectExecute_Damage()`
 			* ダメージが渡された際に表示登録関数を呼び出す。
 
-
-BP 類。
+## BP 類
 
 1. `WBP_FloatingText` の新規作成
 	* テキスト用の `widget` 部品の集まり。
 	* カラーとテキストを受け取るのみ。テキストの内容は使う側で制御する。
-	* 詳細は `BluePrint` を参照。
+	* 詳細は Blueprint を参照。
 1. `BP_FloatingDamageTextComponent` を `UGHOFloatingDamageTextComponent` から派生して新規作成
 	* `FloatingDamageText` 用の `WidgetComponent`
 	* クラスのデフォルトの `ユーザーインターフェイス > Widget Class` で `WBP_FloatingText` を指定している。
-	* 詳細は `BluePrint` を参照。
+	* 詳細は Blueprint を参照。
 
 
 以上で、キャラクターがダメージを受け取った際に `FloatingDamageText` を表示させることが出来ます。

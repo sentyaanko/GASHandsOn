@@ -11,8 +11,7 @@
 
 # 手順
 
-ソース類
-
+## ソース類
 
 1. `UGHOGaugeWidget` を新規作成
 	* 概要
@@ -78,7 +77,7 @@
 		* `InitializeAfterAbilitySystem()`
 			* `AGHOPlayerController::CreateHD()` の呼び出し
 
-BP 類。
+## BP 類
 
 1. `WBP_AttributeGauge` の新規作成
 	* ゲージ用の `widget` 部品の集まり。

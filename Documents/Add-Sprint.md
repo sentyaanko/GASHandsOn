@@ -10,7 +10,7 @@
 
 # 手順
 
-ソース類
+## ソース類
 
 1. `enum EGHOAbilityInputID` （入力 ID 用）に以下の値を追加
 	* `Sprint`
@@ -19,10 +19,7 @@
 	* ほぼ `AimDownSights` で行っていることと同じ。
 	* 詳しくはソースを参照。
 
-
-Editor での設定類。
-
-GameplayTag の追加
+## GameplayTag の追加
 
 | タグ名                        | 用途                                                                |
 |-------------------------------|---------------------------------------------------------------------|
@@ -30,20 +27,19 @@ GameplayTag の追加
 | `State.Sprinting`             | キャラクターの状態.Sprint中                                         |
 
 * `高度なレプリケーション` の設定
-	* `迅速なレプリケーション` を `true` に
+	* `迅速なレプリケーション` を true に
 	* `よくレプリケートされるタグ` に要素を3つ追加し以下を設定
 		* `State.AimDownSights`
 		* `State.AimDownSights.Removal`
 		* `State.Sprint`
 
-
-入力設定の追加
+## 入力設定の追加
 
 | 入力名     | 割当       |
 |------------|------------|
 | `Sprint`   | 左Shift    |
 
-BP 類。
+## BP 類
 
 1. `GE_Sprint` を `GameplayEffect` を派生して新規作成
 	* 概要
@@ -62,29 +58,29 @@ BP 類。
 				* これにより一度の `CommitAbilityCost` で `Stamina` を `1` 消費する。
 1. `GC_Sprint` を `GameplayCueNotifyActor` を派生して新規作成
 	* クラスのデフォルトの設定
-		* `Cleanup > Auto Destroy on Remove` を `true` に
+		* `Cleanup > Auto Destroy on Remove` を true に
 		* `Gameplay Cue > Gameplay Cue Tag` を `GameplayCue.Shared.Sprint` に
 	* 関数
 		* `WhileActive()`
 			* `Sprint` 用の `ParticleSystemComponent` の構築
-			* 詳しくは `Blueprint` を参照
+			* 詳しくは Blueprint を参照
 		* `OnRemove()`
 			* `WhileActive()` で構築した `ParticleSystemComponent` の破棄
-			* 詳しくは `Blueprint` を参照
+			* 詳しくは Blueprint を参照
 1. `GA_CharacterMovement` を `GA_AimDownSights_HeroBase` を元に新規作成
 	* 概要
 		* これまでに作成した `GA_AimDownSights_HeroBase` が `Sprint` の処理と似るため、共通の基底を作成
-		* 詳しくは `Blueprint` 参照。
+		* 詳しくは Blueprint 参照。
 1. `GA_AimDownSights_HeroBase` を変更
 	* 概要
 		* 親クラスを `GA_CharacterMovement` に変更
 		* `AimDownSights` でしか使わない機能をここで実装
-		* 詳しくは `Blueprint` 参照。
+		* 詳しくは Blueprint 参照。
 1. `GA_Sprint_HeroBase` を `GA_CharacterMovement` を派生して新規作成
 	* 概要
 		* `AimDownSights` にはなかった、コストの処理を主に実装
 		* 0.05 秒ごとにコストの検査をしているので、秒間およそ 20 の `Stamina` を消費する。
-		* 詳しくは `Blueprint` 参照。
+		* 詳しくは Blueprint 参照。
 1. `BP_HeroCharacterBase` に以下を追加
 	* `GASHandsOn > CharacterAbilities` に要素を追加し `GA_Sprint_HeroBase` を指定
 

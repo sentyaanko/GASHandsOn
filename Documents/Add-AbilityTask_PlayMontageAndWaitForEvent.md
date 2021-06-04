@@ -79,14 +79,14 @@
 	AbilityTask は、アビリティの実行中に行うことができる、小さな独立したオペレーションです。
 	彼らの性質は latent/asynchronous （潜伏性/非同期性）です。彼らは一般的に「何かを初めて、それが終わるか中断されるまで待つ」というパターンを取ります。
 	
-	K2Node_LatentAbilityCall には、これらを BluePrint で使用するためおコードが用意されています。
+	K2Node_LatentAbilityCall には、これらを Blueprint で使用するためおコードが用意されています。
 	AbilityTask に慣れる一番良い方法は、 UAbilityTask_WaitOverlap (非常にシンプル) や UAbilityTask_WaitTargetData (遥かに複雑) のようなの既存のタスクを見ることです。
 
 	これらはアビリティタスクを使用するための基本的な条件です:
 	
 	1) あなたの AbilityTask に、 dynamic multicast で BlueprintAssignable なデリゲートを定義します。
 	これらはタスクの出力です。
-	これらのデリゲートが発火すると、呼び出した BluePrint で実行が再開されます。
+	これらのデリゲートが発火すると、呼び出した Blueprint で実行が再開されます。
 	
 	2) あなたの入力は、タスクをインスタンス化する static なファクトリ関数によって定義されます。
 	この関数のパラメータは、タスクへの入力を定義します。
