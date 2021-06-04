@@ -4,18 +4,19 @@
 #include "Characters/Abilities/GHOGA_FireGun.h"
 #include "AbilitySystemComponent.h"
 //#include "Kismet/KismetMathLibrary.h"
-#include "Characters/Abilities/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
+#include "Characters/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
 #include "Characters/GHOCharacterBase.h"
+#include "Settings/GHOGameplayTags.h"
 
 UGHOGA_FireGun::UGHOGA_FireGun()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 
-	FGameplayTag Ability1Tag = FGameplayTag::RequestGameplayTag(FName("Ability.Skill.Ability1"));
+	FGameplayTag Ability1Tag = FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Skill_Ability1));
 	AbilityTags.AddTag(Ability1Tag);
 	ActivationOwnedTags.AddTag(Ability1Tag);
 
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Skill")));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Skill)));
 
 	Range = 1000.0f;
 	Damage = 12.0f;
@@ -30,8 +31,8 @@ void UGHOGA_FireGun::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 	UAnimMontage* MontageToPlay = FireHipMontage;
 
-	if (GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.AimDownSights"))) &&
-		!GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.AimDownSights.Removal"))))
+	if (GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_AimDownSights))) &&
+		!GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_AimDownSights_Removal))))
 	{
 		MontageToPlay = FireIronsightsMontage;
 	}
@@ -71,9 +72,15 @@ void UGHOGA_FireGun::OnCompleted(FGameplayTag EventTag, FGameplayEventData Event
 
 void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData EventData)
 {
-	// Montage told us to end the ability before the montage finished playing.
-	// Montage was set to continue playing animation even after ability ends so this is okay.
-	if (EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.EndAbility")))
+	/*
+	by GASDocumentation
+		Montage told us to end the ability before the montage finished playing.
+		Montage was set to continue playing animation even after ability ends so this is okay.
+	和訳
+		モンタージュはモンタージュの再生が終わる前にアビリティの終了を支持しました。
+		モンタージュはアビリティ終了後もアニメーションを流し続けるように設定されていたので、これは問題ないです。
+	*/
+	if (EventTag == FGameplayTag::RequestGameplayTag(FName(TAG_Event_Montage_EndAbility)))
 	{
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 		return;
@@ -87,43 +94,18 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		投射物はサーバーでのみ生成されます。
 		投射物の Predicting （予測）についてはこの example では説明できない高度なトピックです。
 	*/
-	if (GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority && EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.SpawnProjectile")))
+	if (GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority && EventTag == FGameplayTag::RequestGameplayTag(FName(TAG_Event_Montage_SpawnProjectile)))
 	{
-#if 0
-		AGHOHeroCharacter* Hero = Cast<AGHOHeroCharacter>(GetAvatarActorFromActorInfo());
-		if (!Hero)
-		{
-			EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
-		}
-
-		FVector Start = Hero->GetGunComponent()->GetSocketLocation(FName("Muzzle"));
-		FVector End = Hero->GetCameraBoom()->GetComponentLocation() + Hero->GetFollowCamera()->GetForwardVector() * Range;
-		FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
-
-		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageGameplayEffect, GetAbilityLevel());
-
-		// Pass the damage to the Damage Execution Calculation through a SetByCaller value on the GameplayEffectSpec
-		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
-
-		FTransform MuzzleTransform = Hero->GetGunComponent()->GetSocketTransform(FName("Muzzle"));
-		MuzzleTransform.SetRotation(Rotation.Quaternion());
-		MuzzleTransform.SetScale3D(FVector(1.0f));
-
-		FActorSpawnParameters SpawnParameters;
-		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		AGHOProjectile* Projectile = GetWorld()->SpawnActorDeferred<AGHOProjectile>(ProjectileClass, MuzzleTransform, GetOwningActorFromActorInfo(),
-			Hero, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-		Projectile->DamageEffectSpecHandle = DamageEffectSpecHandle;
-		Projectile->Range = Range;
-		Projectile->FinishSpawning(MuzzleTransform);
-#else
 		AGHOCharacterBase* Character = Cast<AGHOCharacterBase>(GetAvatarActorFromActorInfo());
 		if (!Character)
 		{
 			EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
 		}
 
+		/*
+		解説
+			追加の GameplayEffect を適用する仕組み。 GASDocumentation では実装していない機能です。
+		*/
 		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageGameplayEffect, GetAbilityLevel());
 		TArray<FGameplayEffectSpecHandle> AdditionalEffectSpecHandles;
 		for (auto& AdditionalGameplayEffect : AdditionalGameplayEffects)
@@ -137,7 +119,7 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		和訳
 			GameplayEffectSpec の SetByCaller の値を介して Damage Execution Calculation にダメージを渡す。
 		*/
-		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
+		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName(TAG_Data_Damage)), Damage);
 
 		const FTransform MuzzleTransform = Character->GetProjectileTransform(Range);
 
@@ -147,6 +129,5 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		Projectile->SetRange( Range );
 		Projectile->SetAdditionalEffectSpecHandles(AdditionalEffectSpecHandles);
 		Projectile->FinishSpawning(MuzzleTransform);
-#endif
 	}
 }

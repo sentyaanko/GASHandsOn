@@ -18,23 +18,6 @@ class GASHANDSON_API AGHOCharacterBase : public ACharacter, public IAbilitySyste
 public:
 	AGHOCharacterBase(const FObjectInitializer& ObjectInitializer);
 
-//	// AActor interface
-//public:
-//	// Called when the game starts or when spawned
-//	virtual void BeginPlay() override;
-//
-//	// Called every frame
-//	virtual void Tick(float DeltaTime) override;
-//
-//	// End of AActor interface
-
-//	// APawn interface
-//protected:
-//	// Called to bind functionality to input
-//	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-//
-//	// End of APawn interface
-
 	// IAbilitySystemInterface interface
 public:
 	/*
@@ -46,8 +29,7 @@ public:
 		これは他の Actor に所有させることが出来ます。例えば、 PlayerState コンポーネントを使用した Pawn のように。
 	補足
 		実際、プレイヤーが操作するキャラクターは PlayerState(AGHOPlayerState) が所持しているインスタンスを返却します。
-		AIが操作するキャラクターは Character(AGHOMinionCharacterBase) が所持しているインスタンスを返却する予定です。
-		TODO: 実装したらコメントを修正すること。
+		AIが操作するキャラクターは Character(AGHOMinionCharacterBase) が所持しているインスタンスを返却します。
 	*/
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 

@@ -3,16 +3,27 @@
 
 #include "Characters/Abilities/GHOGameplayAbility.h"
 #include "AbilitySystemComponent.h"
+#include "Settings/GHOGameplayTags.h"
 
 
 UGHOGameplayAbility::UGHOGameplayAbility()
 {
-	// Default to Instance Per Actor
+	/*
+	by GASDocumentation
+		Default to Instance Per Actor
+	和訳
+		デフォルトは InstancedPerActor
+	*/
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 
-	// Default tags that block this ability from activating
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun")));
+	/*
+	by GASDocumentation
+		Default tags that block this ability from activating
+	和訳
+		このアビリティの発動を阻止するデフォルトのタグ
+	*/
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead)));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)));
 
 }
 
