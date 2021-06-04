@@ -24,7 +24,7 @@ void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* I
 	by GASDocumentation
 		Can run on Server and Client
 	和訳
-		サーバーとクライアントの療法で動作可能
+		サーバーとクライアントの両方で動作可能
 	*/
 	FGameplayEffectContextHandle EffectContext = MakeEffectContext();
 	EffectContext.AddSourceObject(InSourceObject);
@@ -34,6 +34,16 @@ void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* I
 	{
 		FActiveGameplayEffectHandle ActiveGEHandle = ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), this);
 	}
+
+	/*
+	解説
+		死亡状態を解除します。
+		元々は AddCharacterAbilities() より後のタイミングで呼び出されていました。
+		ActivateAbilityOnGranted であり、Activation Block Tags に State.Dead が設定されているアビリティ
+		（例えば PassiveArmor ）が CharacterAbilities に設定されていた場合、
+		AddCharacterAbilities() より前に ClearDead() しておかないと、リスポーン時にアビリティが有効化されません。
+	*/
+	ClearDead();
 
 }
 
@@ -95,7 +105,6 @@ void UGHOAbilitySystemComponent::RemoveCharacterAbilities(class AGHOCharacterBas
 	}
 
 	bCharacterAbilitiesGiven = false;
-
 }
 
 void UGHOAbilitySystemComponent::AddStartupEffects(class AGHOCharacterBase* InSourceObject)

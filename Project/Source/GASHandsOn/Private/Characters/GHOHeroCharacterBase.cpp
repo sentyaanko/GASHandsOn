@@ -322,10 +322,14 @@ void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 	*/
 	InitializeFloatingStatusBar();
 
-	if (AbilitySystemComponent.IsValid())
-	{
-		AbilitySystemComponent->ClearDead();
-	}
+	/*
+	解説
+		Character Abilities の付与の際に死亡していると付与できないため、 ClearDead() を UGHOAbilitySystemComponent::InitializeAttributes() 内に移動します。
+	*/
+	//if (AbilitySystemComponent.IsValid())
+	//{
+	//	AbilitySystemComponent->ClearDead();
+	//}
 	if (AttributeSetBase.IsValid())
 	{
 		AttributeSetBase->InitializeAttributesOnSpawned();
