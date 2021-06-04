@@ -1,8 +1,26 @@
 # GASHandsOn
 Gameplay Ability System Hands On Project.
 
-GASDocumentation で行っている各種機能を一つづつ実装していくハンズオン。
-
+* GASDocumentation で行っている各種機能を一つづつ実装していくハンズオン。
+	* 1 つ前のタグと比較することで各機能で何を追加したのかわかるようにしている。
+	* 組み方の取っ掛かりが欲しい人向け。
+	* GASDocumentation をそのまま読めるのであればそちらを参照したほうが良いです。
+* v0.1.0 の時点で対応していないことは以下の通り
+	* アニメーション等のアセットが必要な部分。
+		* `AnimStarterPack` / `ShooterGame` / `ParagonMinions` / `FPWeapon` などのスターターコンテンツ以外のアセットの利用による見た目の改善
+			* 規約的に今後も使用予定はない。
+		* 死亡時のモンタージュ
+			* 適当なモンタージュが用意できなかったのでコードも無効にしている。
+		* 銃
+			* 適当なモデルが用意できなかったのでコードも組み込んでいない。
+			* 銃口はマネキンの顔の前方に設定している。
+		* 操作方法
+			* サードパーソンのテンプレートがほぼそのままの状態。
+			* `ShooterGame` のような FPS 的な操作を組み込んでいない。
+	* `BP_HealthManaStaminaRegenVolume`
+		* `HealthRegen` / `ManaRegen` / `StaminaRegen` の値を上昇させる `Volume` だが、仕組みも単純なため割愛。
+	* `BP_HealthManaStaminaVolume`
+		* `Health` / `Mana` / `Stamina` の値を加算する `Volume` だが、仕組みも単純なため割愛。
 
 # 更新履歴
 
@@ -134,6 +152,9 @@ GASDocumentation で行っている各種機能を一つづつ実装していく
 * v0.0.35
 	* Character に CharacterLevel / XP / XPBounty / Gold / GoldBounty の Attribute 組み込み
 	* 詳細は [./Documents/0.0.35.Attributes-Level_XP_Gold.md](./Documents/0.0.35.Attributes-Level_XP_Gold.md) を参照
+* v0.1.0
+	* ファイルパスやドキュメントなどのクリーンアップ
+	* PassiveArmor がリスポーン後に有効にならない不具合修正（ GASDocumentation にもある不具合 ）
 
 -----
 おしまい。
