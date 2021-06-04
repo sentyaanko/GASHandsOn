@@ -3,6 +3,7 @@
 
 #include "Characters/Abilities/GHOGameplayAbility.h"
 #include "AbilitySystemComponent.h"
+#include "Settings/GHOGameplayTags.h"
 
 
 UGHOGameplayAbility::UGHOGameplayAbility()
@@ -21,8 +22,8 @@ UGHOGameplayAbility::UGHOGameplayAbility()
 	和訳
 		このアビリティの発動を阻止するデフォルトのタグ
 	*/
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun")));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead)));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)));
 
 }
 

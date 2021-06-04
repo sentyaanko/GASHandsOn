@@ -6,16 +6,17 @@
 //#include "Kismet/KismetMathLibrary.h"
 #include "Characters/AbilityTasks/GHOAbilityTask_PlayMontageAndWaitForEvent.h"
 #include "Characters/GHOCharacterBase.h"
+#include "Settings/GHOGameplayTags.h"
 
 UGHOGA_FireGun::UGHOGA_FireGun()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 
-	FGameplayTag Ability1Tag = FGameplayTag::RequestGameplayTag(FName("Ability.Skill.Ability1"));
+	FGameplayTag Ability1Tag = FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Skill_Ability1));
 	AbilityTags.AddTag(Ability1Tag);
 	ActivationOwnedTags.AddTag(Ability1Tag);
 
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Skill")));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Skill)));
 
 	Range = 1000.0f;
 	Damage = 12.0f;
@@ -30,8 +31,8 @@ void UGHOGA_FireGun::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 	UAnimMontage* MontageToPlay = FireHipMontage;
 
-	if (GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.AimDownSights"))) &&
-		!GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.AimDownSights.Removal"))))
+	if (GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_AimDownSights))) &&
+		!GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_AimDownSights_Removal))))
 	{
 		MontageToPlay = FireIronsightsMontage;
 	}
@@ -79,7 +80,7 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		モンタージュはモンタージュの再生が終わる前にアビリティの終了を支持しました。
 		モンタージュはアビリティ終了後もアニメーションを流し続けるように設定されていたので、これは問題ないです。
 	*/
-	if (EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.EndAbility")))
+	if (EventTag == FGameplayTag::RequestGameplayTag(FName(TAG_Event_Montage_EndAbility)))
 	{
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 		return;
@@ -93,7 +94,7 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		投射物はサーバーでのみ生成されます。
 		投射物の Predicting （予測）についてはこの example では説明できない高度なトピックです。
 	*/
-	if (GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority && EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.SpawnProjectile")))
+	if (GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority && EventTag == FGameplayTag::RequestGameplayTag(FName(TAG_Event_Montage_SpawnProjectile)))
 	{
 		AGHOCharacterBase* Character = Cast<AGHOCharacterBase>(GetAvatarActorFromActorInfo());
 		if (!Character)
@@ -118,7 +119,7 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		和訳
 			GameplayEffectSpec の SetByCaller の値を介して Damage Execution Calculation にダメージを渡す。
 		*/
-		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
+		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName(TAG_Data_Damage)), Damage);
 
 		const FTransform MuzzleTransform = Character->GetProjectileTransform(Range);
 

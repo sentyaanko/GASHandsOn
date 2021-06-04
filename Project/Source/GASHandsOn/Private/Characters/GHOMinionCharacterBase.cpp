@@ -9,6 +9,7 @@
 #include "UI/GHOFloatingStatusBarWidget.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Settings/GHODefaultClasses.h"
+#include "Settings/GHOGameplayTags.h"
 
 AGHOMinionCharacterBase::AGHOMinionCharacterBase(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
@@ -110,7 +111,7 @@ void AGHOMinionCharacterBase::BeginPlay()
 		和訳
 			タグの変更コールバック
 		*/
-		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun")), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOMinionCharacterBase::StunTagChanged);
+		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOMinionCharacterBase::StunTagChanged);
 	}
 }
 

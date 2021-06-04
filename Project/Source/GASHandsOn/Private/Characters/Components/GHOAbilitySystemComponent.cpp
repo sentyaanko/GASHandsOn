@@ -5,13 +5,14 @@
 #include "Characters/GHOCharacterBase.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
+#include "Settings/GHOGameplayTags.h"
 
 UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 {
 	// Cache tags
-	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
-	StunTag = FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun"));
-	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
+	DeadTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead));
+	StunTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun));
+	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName(TAG_Effect_RemoveOnDeath));
 }
 
 void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* InSourceObject)
@@ -167,10 +168,10 @@ bool UGHOAbilitySystemComponent::IsStun() const
 void UGHOAbilitySystemComponent::CancelAbilitiesByStun()
 {
 	FGameplayTagContainer AbilityTagsToCancel;
-	AbilityTagsToCancel.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability")));
+	AbilityTagsToCancel.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability)));
 
 	FGameplayTagContainer AbilityTagsToIgnore;
-	AbilityTagsToIgnore.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.NotCanceledByStun")));
+	AbilityTagsToIgnore.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_NotCanceledByStun)));
 
 	CancelAbilities(&AbilityTagsToCancel, &AbilityTagsToIgnore);
 }

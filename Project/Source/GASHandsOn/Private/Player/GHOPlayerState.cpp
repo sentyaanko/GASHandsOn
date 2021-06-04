@@ -8,6 +8,7 @@
 #include "Player/GHOPlayerController.h"
 #include "UI/GHOHUDWidget.h"
 #include "UI/GHOFloatingStatusBarWidget.h"
+#include "Settings/GHOGameplayTags.h"
 
 
 AGHOPlayerState::AGHOPlayerState()
@@ -79,7 +80,7 @@ void AGHOPlayerState::BeginPlay()
 		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGHOPlayerState::CharacterLevelChanged);
 
 		// Tag change callbacks
-		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.CrowdControl.Stun")), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
+		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
 	}
 }
 

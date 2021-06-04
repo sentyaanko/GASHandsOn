@@ -4,6 +4,7 @@
 #include "Characters/ExecutionCalculation/GHOGEEC_Damage.h"
 #include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
+#include "Settings/GHOGameplayTags.h"
 
 /*
 by GASDocumentation
@@ -102,7 +103,7 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	和訳
 		SetByCaller ダメージがあれば加算します。
 	*/
-	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), false, -1.0f), 0.0f);
+	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName(TAG_Data_Damage)), false, -1.0f), 0.0f);
 
 	/*
 	by GASDocumentation
