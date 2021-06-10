@@ -6,17 +6,13 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
-//#include "GameplayAbilitySpec.h"
 #include "Sound/SoundCue.h"
+#include "Settings/GHOCollisions.h"
+#include "Settings/GHOGameplayTags.h"
 #include "Characters/Abilities/GHOGameplayAbility.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Characters/GHOCharacterBase.h"
 
-#define COLLISION_ABILITY						ECollisionChannel::ECC_GameTraceChannel1
-#define COLLISION_PROJECTILE					ECollisionChannel::ECC_GameTraceChannel2
-#define COLLISION_ABILITYOVERLAPPROJECTILE		ECollisionChannel::ECC_GameTraceChannel3
-#define COLLISION_PICKUP						ECollisionChannel::ECC_GameTraceChannel4
-#define COLLISION_INTERACTABLE					ECollisionChannel::ECC_GameTraceChannel5
 
 /*
 和訳
@@ -39,8 +35,8 @@ AGHOPickup::AGHOPickup()
 	CollisionComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	RootComponent = CollisionComp;
 
-	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag("State.Dead"));
-	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag("State.KnockedDown"));
+	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag(TAG_State_Dead));
+	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag(TAG_State_KnockedDown));
 }
 
 void AGHOPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -59,14 +55,33 @@ void AGHOPickup::NotifyActorBeginOverlap(AActor* Other)
 	}
 }
 
-bool AGHOPickup::CanBePickedUp(AGHOCharacterBase* TestCharacter) const
+bool AGHOPickup::CanBePickedUp_Implementation(AGHOCharacterBase* TestCharacter) const
 {
-	return bIsActive && TestCharacter && TestCharacter->IsAlive() && !IsPendingKill() && !TestCharacter->GetAbilitySystemComponent()->HasAnyMatchingGameplayTags(RestrictedPickupTags) && K2_CanBePickedUp(TestCharacter);
+	return bIsActive && TestCharacter && TestCharacter->IsAlive() && !IsPendingKill() && !TestCharacter->GetAbilitySystemComponent()->HasAnyMatchingGameplayTags(RestrictedPickupTags);
 }
 
-bool AGHOPickup::K2_CanBePickedUp_Implementation(AGHOCharacterBase* TestCharacter) const
+void AGHOPickup::OnPickedUp_Implementation()
 {
-	return true;
+	if (PickupSound && PickedUpBy)
+	{
+		UGameplayStatics::SpawnSoundAttached(PickupSound, PickedUpBy->GetRootComponent());
+	}
+}
+
+void AGHOPickup::OnRespawned_Implementation()
+{
+}
+
+void AGHOPickup::OnRep_IsActive()
+{
+	if (bIsActive)
+	{
+		OnRespawned();
+	}
+	else
+	{
+		OnPickedUp();
+	}
 }
 
 void AGHOPickup::PickupOnTouch(AGHOCharacterBase* Pawn)
@@ -92,14 +107,22 @@ void AGHOPickup::PickupOnTouch(AGHOCharacterBase* Pawn)
 void AGHOPickup::GivePickupTo(AGHOCharacterBase* Pawn)
 {
 	UAbilitySystemComponent* ASC = Pawn->GetAbilitySystemComponent();
-	//const float Level = Pawn->GetCharacterLevel();
-	const float Level = Pawn->GetAttributeSet()->GetCharacterLevel();
 
 	if (!ASC)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s Pawn's ASC is null."), *FString(__FUNCTION__));
 		return;
 	}
+
+	auto AttributeSet = Pawn->GetAttributeSet();
+	if (!AttributeSet)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s Pawn's AttributeSetis null."), *FString(__FUNCTION__));
+		return;
+	}
+
+	//const float Level = Pawn->GetCharacterLevel();
+	const float Level = AttributeSet->GetCharacterLevel();
 
 	for (TSubclassOf<UGHOGameplayAbility> AbilityClass : AbilityClasses)
 	{
@@ -131,15 +154,6 @@ void AGHOPickup::GivePickupTo(AGHOCharacterBase* Pawn)
 	}
 }
 
-void AGHOPickup::OnPickedUp()
-{
-	K2_OnPickedUp();
-
-	if (PickupSound && PickedUpBy)
-	{
-		UGameplayStatics::SpawnSoundAttached(PickupSound, PickedUpBy->GetRootComponent());
-	}
-}
 
 void AGHOPickup::RespawnPickup()
 {
@@ -156,19 +170,3 @@ void AGHOPickup::RespawnPickup()
 	}
 }
 
-void AGHOPickup::OnRespawned()
-{
-	K2_OnRespawned();
-}
-
-void AGHOPickup::OnRep_IsActive()
-{
-	if (bIsActive)
-	{
-		OnRespawned();
-	}
-	else
-	{
-		OnPickedUp();
-	}
-}

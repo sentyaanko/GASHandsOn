@@ -39,22 +39,57 @@ public:
 		For events when objects have a blocking collision, for example a player hitting a wall, see 'Hit' events.
 		@note Components on both this and the other Actor must have bGenerateOverlapEvents set to true to generate overlap events.
 	和訳
-
+		このアクターが他のアクターと重なった時のイベント、例えばプレイヤーがトリガーの中に入ってきたときなど。
+		オブジェクトがブロックコリジョンを起こした時のイベント（例えばプレイヤーが壁にぶつかる）については 'Hit' イベントを参照してください。
+		@note オーバーラップイベントとを生成するには、このアクターと他のアクターの両方の bGenerateOverlapEvents が true に設定されている必要があります。
 	by GASShooter
 		Pickup on touch
 	和訳
+		触れることでピックアップ
 	*/
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 	// End of AActor interface
 
+protected:
+	/*
+	by GASShooter
+		Check if pawn can use this pickup
+	和訳
+		ポーンがこのピックアップを使用できるかチェック
+	*/
+	UFUNCTION(BlueprintNativeEvent)
+	bool CanBePickedUp(AGHOCharacterBase* TestCharacter) const;
+	bool CanBePickedUp_Implementation(AGHOCharacterBase* TestCharacter) const;
 
-	// Check if pawn can use this pickup
-	virtual bool CanBePickedUp(AGHOCharacterBase* TestCharacter) const;
+	/*
+	by GASShooter
+		Show effects when pickup disappears
+	和訳
+		ピックアップが消滅したときのエフェクトを表示
+	*/
+	UFUNCTION(BlueprintNativeEvent)
+	void OnPickedUp();
+	void OnPickedUp_Implementation();
 
-	UFUNCTION(BlueprintNativeEvent, Meta = (DisplayName = "CanBePickedUp"))
-	bool K2_CanBePickedUp(AGHOCharacterBase* TestCharacter) const;
-	virtual bool K2_CanBePickedUp_Implementation(AGHOCharacterBase* TestCharacter) const;
+	/*
+	by GASShooter
+		Show effects when pickup appears
+	和訳
+		ピックアップが出現したときのエフェクトを表示
+	*/
+	UFUNCTION(BlueprintNativeEvent)
+	void OnRespawned();
+	void OnRespawned_Implementation();
+
+	UFUNCTION()
+	void OnRep_IsActive();
+
+private:
+	void PickupOnTouch(AGHOCharacterBase* Pawn);
+	void GivePickupTo(AGHOCharacterBase* Pawn);
+	void RespawnPickup();
+
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "GASHandsOn|Pickup")
@@ -72,7 +107,12 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Pickup")
 	FGameplayTagContainer RestrictedPickupTags;
 
-	// Sound played when player picks it up
+	/*
+	by GASShooter
+		Sound played when player picks it up
+	和訳
+		プレイヤーが拾ったときに再生する音
+	*/
 	UPROPERTY(EditDefaultsOnly, Category = "GASHandsOn|Pickup")
 	class USoundCue* PickupSound;
 
@@ -82,32 +122,15 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Pickup")
 	TArray<TSubclassOf<class UGameplayEffect>> EffectClasses;
 
-	// The character who has picked up this pickup
+	/*
+	by GASShooter
+		The character who has picked up this pickup
+	和訳
+		このピックアップを拾ったキャラクター
+	*/
 	UPROPERTY(BlueprintReadOnly, Replicated)
 	AGHOCharacterBase* PickedUpBy;
 
 	FTimerHandle TimerHandle_RespawnPickup;
 
-	void PickupOnTouch(AGHOCharacterBase* Pawn);
-
-	virtual void GivePickupTo(AGHOCharacterBase* Pawn);
-
-	// Show effects when pickup disappears
-	virtual void OnPickedUp();
-
-	// Blueprint implementable effects
-	UFUNCTION(BlueprintImplementableEvent, Meta = (DisplayName = "OnPickedUp"))
-	void K2_OnPickedUp();
-
-	virtual void RespawnPickup();
-
-	// Show effects when pickup appears
-	virtual void OnRespawned();
-
-	// Blueprint implementable effects
-	UFUNCTION(BlueprintImplementableEvent, Meta = (DisplayName = "OnRespawned"))
-	void K2_OnRespawned();
-
-	UFUNCTION()
-	void OnRep_IsActive();
 };

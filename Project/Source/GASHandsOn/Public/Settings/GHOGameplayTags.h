@@ -43,3 +43,5 @@
 #define TAG_State_CrowdControl_Stun						"State.CrowdControl.Stun"
 #define TAG_State_Dead									"State.Dead"
 #define TAG_State_Sprinting								"State.Sprinting"
+#define TAG_State_KnockedDown							"State.KnockedDown"
+

@@ -42,7 +42,7 @@ public:
 public:
 	void Die();
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter")
 	virtual void FinishDying();
 
 	virtual FTransform GetProjectileTransform(float Range)const;
@@ -55,12 +55,25 @@ public:
 		AbilityID をオンにして、個々のアビリティレベルを返します。
 		このプロジェクトではすべてのアビリティに 1 がハードコーディングされれています。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter")
 	virtual int32 GetAbilityLevel(EGHOAbilityInputID AbilityID) const;
 
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GDCharacter")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter")
 	virtual bool IsAlive() const;
+
+	/**
+	* Getters for attributes from GSAttributeSetBase
+	**/
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	int32 GetCharacterLevel() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetMaxHealth() const;
 
 
 	const TArray<TSubclassOf<class UGHOGameplayAbility>>& GetCharacterAbilities()const { return CharacterAbilities; }
@@ -149,7 +162,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
 	TArray<TSubclassOf<class UGHOGameplayAbility>> CharacterAbilities;
 
-	UPROPERTY(BlueprintAssignable, Category = "GASHandsOn|GDCharacter")
+	UPROPERTY(BlueprintAssignable, Category = "GASHandsOn|GHOCharacter")
 	FCharacterDiedDelegate OnCharacterDied;
 
 };
