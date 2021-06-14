@@ -98,6 +98,15 @@ protected:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_IsActive, Category = "GASHandsOn|Pickup")
 	bool bIsActive;
 
+	/*
+	by GASShooter
+		The character who has picked up this pickup
+	和訳
+		このピックアップを拾ったキャラクター
+	*/
+	UPROPERTY(BlueprintReadOnly, Replicated)
+	AGHOCharacterBase* PickedUpBy;
+
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Pickup")
 	bool bCanRespawn;
 
@@ -122,15 +131,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Pickup")
 	TArray<TSubclassOf<class UGameplayEffect>> EffectClasses;
 
-	/*
-	by GASShooter
-		The character who has picked up this pickup
-	和訳
-		このピックアップを拾ったキャラクター
-	*/
-	UPROPERTY(BlueprintReadOnly, Replicated)
-	AGHOCharacterBase* PickedUpBy;
-
+private:
 	FTimerHandle TimerHandle_RespawnPickup;
 
 };
