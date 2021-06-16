@@ -9,6 +9,7 @@
 
 #define TAG_Ability										"Ability"
 #define TAG_Ability_AimDownSights						"Ability.AimDownSights"
+#define TAG_Ability_AimDownSights_Cancel				"Ability.AimDownSights.Cancel"
 #define TAG_Ability_Jump								"Ability.Jump"
 #define TAG_Ability_NotCanceledByStun					"Ability.NotCanceledByStun"
 #define TAG_Ability_Skill								"Ability.Skill"
@@ -17,6 +18,7 @@
 #define TAG_Ability_Skill_Ability3						"Ability.Skill.Ability3"
 #define TAG_Ability_Skill_Ability5						"Ability.Skill.Ability5"
 #define TAG_Ability_Sprint								"Ability.Sprint"
+#define TAG_Ability_Sprint_Cancel						"Ability.Sprint.Cancel"
 #define TAG_Cooldown									"Cooldown"
 #define TAG_Cooldown_Skill								"Cooldown.Skill"
 #define TAG_Cooldown_Skill_Ability5						"Cooldown.Skill.Ability5"
@@ -43,3 +45,4 @@
 #define TAG_State_CrowdControl_Stun						"State.CrowdControl.Stun"
 #define TAG_State_Dead									"State.Dead"
 #define TAG_State_Sprinting								"State.Sprinting"
+#define TAG_State_Sprinting_Removal						"State.Sprinting.Removal"
