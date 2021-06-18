@@ -155,6 +155,10 @@ Gameplay Ability System Hands On Project.
 * v0.1.0
 	* ファイルパスやドキュメントなどのクリーンアップ
 	* PassiveArmor がリスポーン後に有効にならない不具合修正（ GASDocumentation にもある不具合 ）
+* v0.1.1
+	* ローカルでサウンドやパーティクルなど装飾的な GameplayCue を再生する仕組みの組み込み
+	* 詳細は [./Documents/0.1.1.System-LocalGameplayCue.md](./Documents/0.1.1.System-LocalGameplayCue.md) を参照
+
 
 -----
 おしまい。

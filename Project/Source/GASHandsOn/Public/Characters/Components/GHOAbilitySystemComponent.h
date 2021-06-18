@@ -42,6 +42,23 @@ public:
 
 	FReceivedDamageDelegate& GetReceivedDamage() { return ReceivedDamage; };
 
+public:
+	/*
+	解説
+		ローカルで GameplayCue を再生するための口金。
+		GameplayEffect による GameplayCue を使用する代わりにこちらを使用することで、 GameplayEffect の同期のための RPC が発生しなくなり、帯域に優しくなる。
+		同期されないため、利用する際はサウンドやパーティクルなど装飾用のものに制限すること。
+		詳しくは [「GASDocumentation」の「4.8.3 Local Gameplay Cues （ローカル Gameplay Cues）」](https://github.com/tranek/GASDocumentation/blob/master/README.md#concepts-gc-local) [（和訳）](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-gc-local) を参照。
+	*/
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
+	void ExecuteGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
+
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
+	void AddGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
+
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
+	void RemoveGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
+
 private:
 	FGameplayTag DeadTag;
 	FGameplayTag StunTag;
