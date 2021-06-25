@@ -291,7 +291,7 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	/*
 	解説
 		ここでクランプを行わない場合、以下のような処理の流れとなります。
-			* サーバーサイドでは変更が行われた後に GetLifetimeReplicatedProps でクランプ（つまりは２回目の変更）が行われる
+			* サーバーサイドでは変更が行われた後に PostGameplayEffectExecute でクランプ（つまりは２回目の変更）が行われる
 			* クライアントサイドではクランプ後の値のみ受け取る
 		要は、サーバーサイドでは AGHOPlayerState が所持するデリゲートなどで変更通知が２回来るということです。
 		[「GASDocumentation」の「4.4.6 PostGameplayEffectExecute()」](https://github.com/tranek/GASDocumentation#concepts-as-postgameplayeffectexecute) [(和訳)](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-as-postgameplayeffectexecute) も参照。
@@ -356,9 +356,24 @@ void UGHOAttributeSetBase::AdjustAttributeForMaxChange(FGameplayAttributeData& A
 	{
 		// Change current value to maintain the current Val / Max percent
 		const float CurrentValue = AffectedAttribute.GetCurrentValue();
-		float NewDelta = (CurrentMaxValue > 0.f) ? (CurrentValue * NewMaxValue / CurrentMaxValue) - CurrentValue : NewMaxValue;
 
-		AbilityComp->ApplyModToAttributeUnsafe(AffectedAttributeProperty, EGameplayModOp::Additive, NewDelta);
+		/*
+		解説
+			Current が 0 の場合は変更登録しない。
+			GASDocumentation では Current / Max ともに 0 の場合は Current が Max になるようになっていた。
+			さらに PreAttributeChange() でのクランプ処理もなかった。
+			そのため、サーバー側の変更通知のデリゲートで Current が Max と同じ値のときに Max を超える変更が発生すると Current が Max を超える通知が来る。
+			GASHandsOn ではそれを嫌って以下のようにしている。
+				* PreAttributeChange() でクランプ処理を行って、 Current が Max を超えるような通知を排除する
+				* AdjustAttributeForMaxChange() で Current が 0 の場合は Current の更新処理を行わないようにする
+				* AICharacter の Current の初期化のタイミングがなくなるため、 InitializeAttributesOnSpawned() を呼び出すようにする
+
+		*/
+		if (CurrentValue != 0.f)
+		{
+			float NewDelta = (CurrentMaxValue > 0.f) ? (CurrentValue * NewMaxValue / CurrentMaxValue) - CurrentValue : NewMaxValue;
+			AbilityComp->ApplyModToAttributeUnsafe(AffectedAttributeProperty, EGameplayModOp::Additive, NewDelta);
+		}
 	}
 }
 
