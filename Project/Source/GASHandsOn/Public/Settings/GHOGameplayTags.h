@@ -37,6 +37,8 @@
 #define TAG_GameplayCue_Shared_FireGun					"GameplayCue.Shared.FireGun"
 #define TAG_GameplayCue_Shared_FireGun_Impact			"GameplayCue.Shared.FireGun.Impact"
 #define TAG_GameplayCue_Shared_Sprint					"GameplayCue.Shared.Sprint"
+#define TAG_GameplayCue_Shared_Sprint_LocalVoice		"GameplayCue.Shared.Sprint.LocalVoice"
+#define TAG_GameplayCue_Shared_Sprint_Particle			"GameplayCue.Shared.Sprint.Particle"
 #define TAG_GameplayCue_Shared_Stun						"GameplayCue.Shared.Stun"
 #define TAG_State										"State"
 #define TAG_State_AimDownSights							"State.AimDownSights"
