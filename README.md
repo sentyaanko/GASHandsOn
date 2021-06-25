@@ -158,6 +158,8 @@ Gameplay Ability System Hands On Project.
 * v0.1.1
 	* ローカルでサウンドやパーティクルなど装飾的な GameplayCue を再生する仕組みの組み込み
 	* 詳細は [./Documents/0.1.1.System-LocalGameplayCue.md](./Documents/0.1.1.System-LocalGameplayCue.md) を参照
+* v0.1.2
+	* マルチプレイ起動時にクライアントのキャラクターが死亡していた不具合の修正
 
 
 -----
