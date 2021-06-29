@@ -90,6 +90,35 @@ bool AGHOCharacterBase::IsAlive() const
 	return false;
 }
 
+int32 AGHOCharacterBase::GetCharacterLevel() const
+{
+	//TODO
+	//return 1;
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetCharacterLevel();
+	}
+	return 1;
+}
+
+float AGHOCharacterBase::GetHealth() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetHealth();
+	}
+	return 0.0f;
+}
+
+float AGHOCharacterBase::GetMaxHealth() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetHealthMax();
+	}
+	return 1.0f;
+}
+
 bool AGHOCharacterBase::IsMovable()const
 {
 	if (const auto attr = GetAttributeSet())
