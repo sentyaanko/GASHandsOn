@@ -68,6 +68,8 @@ void AGHOMinionCharacterBase::BeginPlay()
 		AddStartupEffects();
 		AddCharacterAbilities();
 
+		AttributeSetBase->InitializeAttributesOnSpawned();
+
 		/*
 		by GASDocumentation
 			Setup FloatingStatusBar UI for Locally Owned Players only, not AI or the server's copy of the PlayerControllers
