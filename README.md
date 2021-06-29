@@ -160,6 +160,10 @@ Gameplay Ability System Hands On Project.
 	* 詳細は [./Documents/0.1.1.System-LocalGameplayCue.md](./Documents/0.1.1.System-LocalGameplayCue.md) を参照
 * v0.1.2
 	* マルチプレイ起動時にクライアントのキャラクターが死亡していた不具合の修正
+* v0.1.3
+	* Character に Sprint の Ability の更新
+	* 詳細は [./Documents/0.1.3.Ability-Sprint-Update.md](./Documents/0.1.3.Ability-Sprint-Update.md) を参照
+
 
 
 -----
