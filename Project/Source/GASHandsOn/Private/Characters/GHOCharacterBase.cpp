@@ -42,6 +42,9 @@ void AGHOCharacterBase::Die()
 		Only runs on Server
 	和訳
 		サーバー上のみで動作
+	解説
+		この関数は GASShooter では呼び出されていません。
+		Hero しか存在しておらず、 Hero ではこの関数を使わないためです。
 	*/
 	RemoveCharacterAbilities();
 
@@ -56,15 +59,22 @@ void AGHOCharacterBase::Die()
 		AbilitySystemComponent->Die();
 	}
 
+	//TODO: DeathSound
+	////TODO replace with a locally executed GameplayCue
+	//if (DeathSound)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+	//}
+
 	//TODO: We need to complete this function when we implement DeathMontage.
-	//if (DeathMontage)
-	//{
-	//	PlayAnimMontage(DeathMontage);
-	//}
-	//else
-	//{
+	if (DeathMontage)
+	{
+		PlayAnimMontage(DeathMontage);
+	}
+	else
+	{
 		FinishDying();
-	//}
+	}
 }
 void AGHOCharacterBase::FinishDying()
 {
@@ -144,6 +154,15 @@ bool AGHOCharacterBase::IsMovable()const
 		return false;
 	}
 	return true;
+}
+
+bool AGHOCharacterBase::IsKnockedDown()const
+{
+	if (const auto asc = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		return asc->IsKnockedDown();
+	}
+	return false;
 }
 
 void AGHOCharacterBase::InitializeAttributes()

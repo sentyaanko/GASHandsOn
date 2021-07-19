@@ -97,6 +97,18 @@ public:
 
 	class UGHOFloatingStatusBarWidget* GetFloatingStatusBar();
 
+
+	// Server handles knockdown - cancel abilities, remove effects, activate knockdown ability
+	void KnockDown();
+
+	// Plays knockdown effects for all clients from KnockedDown tag listener on PlayerState
+	void PlayKnockDownEffects();
+
+	// Plays revive effects for all clients from KnockedDown tag listener on PlayerState
+	void PlayReviveEffects();
+
+
+
 private:
 	void InitializeAbilitySystemWeakObjects(class AGHOPlayerState* playerState);
 	void InitializeAfterAbilitySystem();
@@ -139,6 +151,16 @@ public:
 
 	UPROPERTY()
 	class UGHOFloatingStatusBarWidget* UIFloatingStatusBar;
+
+protected:
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
+	TSubclassOf<UGameplayEffect> KnockDownEffect;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
+	TSubclassOf<UGameplayEffect> ReviveEffect;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
+	TSubclassOf<UGameplayEffect> DeathEffect;
 
 private:
 	/*

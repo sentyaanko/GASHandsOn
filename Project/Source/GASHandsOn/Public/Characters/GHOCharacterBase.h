@@ -84,6 +84,8 @@ public:
 
 	bool IsMovable()const;
 
+	bool IsKnockedDown()const;
+
 protected:
 	/*
 	by GASDocumentation
@@ -111,7 +113,6 @@ protected:
 	*/
 	void AddCharacterAbilities();
 
-private:
 	/*
 	by GASDocumentation
 		Removes all CharacterAbilities.
@@ -126,10 +127,14 @@ private:
 
 
 protected:
-	////TODO: Implement Death Animation.
-	//// Death Animation
-	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Animation")
-	//UAnimMontage* DeathMontage;
+	//TODO: Implement Death Animation.
+	// Death Animation
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Animation")
+	UAnimMontage* DeathMontage;
+
+	//TODO: Implement Death Sound.
+	//UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Audio")
+	//class USoundCue* DeathSound;
 
 	/*
 	by GASDocumentation

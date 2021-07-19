@@ -23,6 +23,7 @@ UGHOGameplayAbility::UGHOGameplayAbility()
 		このアビリティの発動を阻止するデフォルトのタグ
 	*/
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead)));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_KnockedDown)));
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)));
 
 }
