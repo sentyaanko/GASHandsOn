@@ -166,6 +166,9 @@ Gameplay Ability System Hands On Project.
 * v0.1.4
 	* Character の Health を回復させる Pickup の組み込み
 	* 詳細は [./Documents/0.1.4.Pickup-Health.md](./Documents/0.1.4.Pickup-Health.md) を参照
+* v0.1.5
+	* Hero の KnockDwon の組み込み
+	* 詳細は [./Documents/0.1.5.Ability-KnockDown.md](./Documents/0.1.5.Ability-KnockDown.md) を参照
 
 
 
