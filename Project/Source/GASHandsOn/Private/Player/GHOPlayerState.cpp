@@ -81,6 +81,9 @@ void AGHOPlayerState::BeginPlay()
 
 		// Tag change callbacks
 		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
+
+		// Tag change callbacks
+		KnockedDownChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_KnockedDown)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::KnockDownTagChanged);
 	}
 }
 
@@ -119,7 +122,20 @@ void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 
 		if ((Health <= 0.f) && !AbilitySystemComponent->IsDead())
 		{
+#if 0
+			// GASDocumentation
 			Hero->Die();
+#else
+			// GASShotter
+			if (!AbilitySystemComponent->IsKnockedDown())
+			{
+				Hero->KnockDown();
+			}
+			else
+			{
+				Hero->FinishDying();
+			}
+#endif
 		}
 	}
 }
@@ -313,3 +329,22 @@ void AGHOPlayerState::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCo
 		AbilitySystemComponent->CancelAbilitiesByStun();
 	}
 }
+
+void AGHOPlayerState::KnockDownTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
+	{
+		if (IsValid(Hero))
+		{
+			if (NewCount > 0)
+			{
+				Hero->PlayKnockDownEffects();
+			}
+			else if (NewCount < 1 && !AbilitySystemComponent->IsDead())
+			{
+				Hero->PlayReviveEffects();
+			}
+		}
+	}
+}
+

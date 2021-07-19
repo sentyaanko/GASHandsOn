@@ -70,6 +70,7 @@ private:
 		タグ変更コールバック
 	*/
 	void StunTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
+	void KnockDownTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
 
 private:
 	UPROPERTY()
@@ -92,4 +93,5 @@ private:
 	FDelegateHandle GoldChangedDelegateHandle;
 
 	FDelegateHandle StunChangedDelegateHandle;
+	FDelegateHandle KnockedDownChangedDelegateHandle;
 };

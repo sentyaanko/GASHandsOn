@@ -4,6 +4,7 @@
 #include "Characters/Components/GHOCharacterMovementComponent.h"
 #include "Characters/GHOCharacterBase.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
+#include "Settings/GHOGameplayTags.h"
 
 UGHOCharacterMovementComponent::UGHOCharacterMovementComponent()
 {
@@ -24,10 +25,12 @@ UGHOCharacterMovementComponent::UGHOCharacterMovementComponent()
 	NetworkMaxSmoothUpdateDistance = 92.f;
 	NetworkNoSmoothUpdateDistance = 140.f;
 	
-	
+
 	SprintingSpeedMultiplier = 1.4f;
 	AimDownSightsSpeedMultiplier = 0.5f;
+	KnockedDownSpeedMultiplier = 0.4f;
 	MoveFlag = EGHOMoveFlag::MF_None;
+
 }
 
 FNetworkPredictionData_Client * UGHOCharacterMovementComponent::GetPredictionData_Client() const
@@ -64,6 +67,10 @@ float UGHOCharacterMovementComponent::GetMaxSpeed() const
 	if(!Owner->IsMovable())
 	{
 		return 0.f;
+	}
+	if (Owner->IsKnockedDown())
+	{
+		return Owner->GetAttributeSet()->GetMoveSpeed() * KnockedDownSpeedMultiplier;
 	}
 	return Owner->GetAttributeSet()->GetMoveSpeed() * GetSpeedMultiplier();
 }

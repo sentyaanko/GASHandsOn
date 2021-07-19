@@ -19,6 +19,7 @@
 #include "UI/GHOFloatingStatusBarWidget.h"
 #include "Settings/GHODefaultClasses.h"
 #include "AI/GHOHeroAIController.h"
+#include "Settings/GHOGameplayTags.h"
 
 
 
@@ -225,6 +226,8 @@ const UGHOAttributeSetBase* AGHOHeroCharacterBase::GetAttributeSet()const
 
 void AGHOHeroCharacterBase::FinishDying()
 {
+#if 0
+	// GASDocumentation
 	if (GetLocalRole() == ROLE_Authority)
 	{
 		if (AGHOGameModeBase* GM = Cast<AGHOGameModeBase>(GetWorld()->GetAuthGameMode()))
@@ -234,6 +237,37 @@ void AGHOHeroCharacterBase::FinishDying()
 	}
 
 	Super::FinishDying();
+#else
+	// GASShooter
+	// AGHOHeroCharacterBase doesn't follow AGHOCharacterBase's pattern of Die->Anim->FinishDying 
+	// because AGHOHeroCharacterBase can be knocked down to either be revived, bleed out, or finished off by an enemy.
+
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	//TODO: Weapon
+	//RemoveAllWeaponsFromInventory();
+
+	//AbilitySystemComponent->RegisterGameplayTagEvent(WeaponChangingDelayReplicationTag).Remove(WeaponChangingDelayReplicationTagChangedDelegateHandle);
+
+	if (AGHOGameModeBase* GM = Cast<AGHOGameModeBase>(GetWorld()->GetAuthGameMode()))
+	{
+		GM->HeroDied(GetController());
+	}
+
+	RemoveCharacterAbilities();
+
+	if (AbilitySystemComponent.IsValid())
+	{
+		AbilitySystemComponent->Down(Cast<UGameplayEffect>(DeathEffect->GetDefaultObject()));
+	}
+
+	OnCharacterDied.Broadcast(this);
+
+	Super::FinishDying();
+#endif
 }
 
 FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
@@ -297,6 +331,64 @@ void AGHOHeroCharacterBase::MoveRight(float Value)
 UGHOFloatingStatusBarWidget* AGHOHeroCharacterBase::GetFloatingStatusBar()
 {
 	return UIFloatingStatusBar;
+}
+
+void AGHOHeroCharacterBase::KnockDown()
+{
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	if (AbilitySystemComponent.IsValid())
+	{
+		AbilitySystemComponent->Down(Cast<UGameplayEffect>(KnockDownEffect->GetDefaultObject()));
+	}
+	if (AttributeSetBase.IsValid())
+	{
+		AttributeSetBase->SetHealth(AttributeSetBase->GetHealthMax());
+		//TODO: shield attribute
+		//AttributeSetBase->SetShield(0.0f);
+	}
+}
+
+void AGHOHeroCharacterBase::PlayKnockDownEffects()
+{
+	//TODO: Interactive system
+	//// Store perspective to restore on Revive
+	//bWasInFirstPersonPerspectiveWhenKnockedDown = IsInFirstPersonPerspective();
+
+	//TODO: 1st / 3rd person view
+	//SetPerspective(false);
+
+	//TODO: Death montage
+	// Play it here instead of in the ability to skip extra replication data
+	if (DeathMontage)
+	{
+		PlayAnimMontage(DeathMontage);
+	}
+
+	if (AbilitySystemComponent.IsValid())
+	{
+		FGameplayCueParameters GCParameters;
+		GCParameters.Location = GetActorLocation();
+		AbilitySystemComponent->ExecuteGameplayCueLocal(FGameplayTag::RequestGameplayTag(TAG_GameplayCue_Hero_KnockedDown), GCParameters);
+	}
+}
+
+void AGHOHeroCharacterBase::PlayReviveEffects()
+{
+	//TODO: 1st / 3rd person view
+	//// Restore perspective the player had when knocked down
+	//SetPerspective(bWasInFirstPersonPerspectiveWhenKnockedDown);
+
+	// Play revive particles or sounds here (we don't have any)
+	if (AbilitySystemComponent.IsValid())
+	{
+		FGameplayCueParameters GCParameters;
+		GCParameters.Location = GetActorLocation();
+		AbilitySystemComponent->ExecuteGameplayCueLocal(FGameplayTag::RequestGameplayTag(TAG_GameplayCue_Hero_Revived), GCParameters);
+	}
 }
 
 void AGHOHeroCharacterBase::InitializeAbilitySystemWeakObjects(class AGHOPlayerState* playerState)

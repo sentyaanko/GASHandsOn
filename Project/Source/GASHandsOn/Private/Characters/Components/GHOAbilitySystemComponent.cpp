@@ -13,6 +13,7 @@ UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 {
 	// Cache tags
 	DeadTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead));
+	KnockedDownTag = FGameplayTag::RequestGameplayTag(TAG_State_KnockedDown);
 	StunTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun));
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName(TAG_Effect_RemoveOnDeath));
 }
@@ -160,6 +161,22 @@ void UGHOAbilitySystemComponent::Die()
 
 	AddLooseGameplayTag(DeadTag);
 
+}
+
+bool UGHOAbilitySystemComponent::IsKnockedDown() const
+{
+	return HasMatchingGameplayTag(KnockedDownTag);
+}
+
+void UGHOAbilitySystemComponent::Down(const class UGameplayEffect* GameplayEffect)
+{
+	CancelAllAbilities();
+
+	FGameplayTagContainer EffectTagsToRemove;
+	EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+	int32 NumEffectsRemoved = RemoveActiveEffectsWithTags(EffectTagsToRemove);
+
+	ApplyGameplayEffectToSelf(GameplayEffect, 1.0f, MakeEffectContext());
 }
 
 bool UGHOAbilitySystemComponent::IsStun() const

@@ -29,6 +29,10 @@ public:
 	bool IsDead() const;
 	void Die();
 
+	bool IsKnockedDown() const;
+
+	void Down(const class UGameplayEffect* GameplayEffect);
+
 	bool IsStun() const;
 	void CancelAbilitiesByStun();
 
@@ -61,6 +65,7 @@ public:
 
 private:
 	FGameplayTag DeadTag;
+	FGameplayTag KnockedDownTag;
 	FGameplayTag StunTag;
 	FGameplayTag EffectRemoveOnDeathTag;
 

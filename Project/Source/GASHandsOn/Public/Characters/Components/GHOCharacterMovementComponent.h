@@ -188,11 +188,14 @@ private:
 	float GetSpeedMultiplier()const;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
 	float SprintingSpeedMultiplier;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Aim Down Sights")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
 	float AimDownSightsSpeedMultiplier;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
+	float KnockedDownSpeedMultiplier;
 
 private:
 	EGHOMoveFlag MoveFlag;
