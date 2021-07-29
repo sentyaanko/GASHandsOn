@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "GHOCharacterBase.h"
 #include "UI/GHOFloatingStatusBarWidget.h"
+#include "Characters/Interfaces/GHOInteractable.h"
 #include "GHOHeroCharacterBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GASHANDSON_API AGHOHeroCharacterBase : public AGHOCharacterBase
+class GASHANDSON_API AGHOHeroCharacterBase : public AGHOCharacterBase, public IGHOInteractable
 {
 	GENERATED_BODY()
 	
@@ -69,6 +70,86 @@ public:
 	virtual FTransform GetProjectileTransform(float Range)const override;
 
 	// End of AGHOCharacterBase interface
+
+
+protected:
+	// IGHOInteractable interface
+
+	/**
+	by GASShooter
+		We can Interact with other heroes when:
+		Knocked Down - to revive them
+	和訳
+		他のヒーローとインタラクトできます:
+		Knocked Down - 蘇生させる
+	*/
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+
+	/**
+	by GASShooter
+		How long to interact with this player:
+		Knocked Down - to revive them
+	和訳
+		このプレイヤーとのインタラクト時間:
+		Knocked Down - 蘇生させる
+	*/
+	virtual float GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+
+	/**
+	by GASShooter
+		Interaction:
+		Knocked Down - activate revive GA (plays animation)
+	和訳
+		インタラクト:
+		Knocked Down - 蘇生の GA の有効化（アニメーション再生）
+	*/
+	virtual void PreInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+
+	/**
+	by GASShooter
+		Interaction:
+		Knocked Down - apply revive GE
+	和訳
+		インタラクト:
+		Knocked Down - 蘇生の GE の適用
+	*/
+	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+
+	/**
+	by GASShooter
+		Should we wait and who should wait to sync before calling PreInteract():
+		Knocked Down - Yes, client. 
+			This will sync the local player's Interact Duration Timer with the knocked down player's revive animation. 
+			If we had a picking a player up animation, we could play it on the local player in PreInteract().
+	和訳
+		PreInteract() を呼び出す前に、同期すべきか、と、誰が同期すべきか:
+		Knocked Down - 同期すべき、クライアントが。
+			これにより、ローカルプレイヤーの Interact Duration タイマーがノックダウンしているプレイヤーの蘇生アニメーションと同期します。
+			プレイヤーを抱き上げるアニメーションがあれば、 PreInteract() でローカルプレイヤーに再生することができます。
+	*/
+	/**
+	*/
+	virtual void GetPreInteractSyncType_Implementation(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const override;
+
+	/**
+	by GASShooter
+		Cancel interaction:
+		Knocked Down - cancel revive ability
+	和訳
+		インタラクトのキャンセル:
+		Knocked Down - 蘇生アビリティのキャンセル
+	*/
+	virtual void CancelInteraction_Implementation(UPrimitiveComponent* InteractionComponent) override;
+
+	/**
+	by GASShooter
+		Get the delegate for this Actor canceling interaction:
+		Knocked Down - cancel being revived if killed
+	和訳
+		このアクターがキャンセルしたインタラクトのデリゲートを取得:
+		Knocked Down - 殺されたなら、蘇生をキャンセル
+	*/
+	FSimpleMulticastDelegate* GetTargetCancelInteractionDelegate(UPrimitiveComponent* InteractionComponent) override;
 
 protected:
 	/** Called for forwards/backward input */
@@ -162,6 +243,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
 	TSubclassOf<UGameplayEffect> DeathEffect;
 
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|Abilities")
+	float ReviveDuration;
+
 private:
 	/*
 	by GASDocumentation
@@ -191,4 +275,5 @@ private:
 
 	bool bASCInputBound = false;
 
+	FSimpleMulticastDelegate InteractionCanceledDelegate;
 };

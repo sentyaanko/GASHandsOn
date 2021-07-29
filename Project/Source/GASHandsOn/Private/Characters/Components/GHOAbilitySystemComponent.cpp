@@ -15,6 +15,8 @@ UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 	DeadTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead));
 	KnockedDownTag = FGameplayTag::RequestGameplayTag(TAG_State_KnockedDown);
 	StunTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun));
+	InteractingTag = FGameplayTag::RequestGameplayTag(TAG_State_Interacting);
+	ReviveTag = FGameplayTag::RequestGameplayTag(TAG_Ability_Revive);
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName(TAG_Effect_RemoveOnDeath));
 }
 
@@ -155,8 +157,7 @@ void UGHOAbilitySystemComponent::Die()
 {
 	CancelAllAbilities();
 
-	FGameplayTagContainer EffectTagsToRemove;
-	EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+	FGameplayTagContainer EffectTagsToRemove(EffectRemoveOnDeathTag);
 	const int32 NumEffectsRemoved = RemoveActiveEffectsWithTags(EffectTagsToRemove);
 
 	AddLooseGameplayTag(DeadTag);
@@ -172,8 +173,7 @@ void UGHOAbilitySystemComponent::Down(const class UGameplayEffect* GameplayEffec
 {
 	CancelAllAbilities();
 
-	FGameplayTagContainer EffectTagsToRemove;
-	EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+	FGameplayTagContainer EffectTagsToRemove(EffectRemoveOnDeathTag);
 	int32 NumEffectsRemoved = RemoveActiveEffectsWithTags(EffectTagsToRemove);
 
 	ApplyGameplayEffectToSelf(GameplayEffect, 1.0f, MakeEffectContext());
@@ -186,13 +186,27 @@ bool UGHOAbilitySystemComponent::IsStun() const
 
 void UGHOAbilitySystemComponent::CancelAbilitiesByStun()
 {
-	FGameplayTagContainer AbilityTagsToCancel;
-	AbilityTagsToCancel.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability)));
+	FGameplayTagContainer AbilityTagsToCancel(FGameplayTag::RequestGameplayTag(FName(TAG_Ability)));
 
-	FGameplayTagContainer AbilityTagsToIgnore;
-	AbilityTagsToIgnore.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_NotCanceledByStun)));
+	FGameplayTagContainer AbilityTagsToIgnore(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_NotCanceledByStun)));
 
 	CancelAbilities(&AbilityTagsToCancel, &AbilityTagsToIgnore);
+}
+bool UGHOAbilitySystemComponent::IsInteracting() const
+{
+	return HasMatchingGameplayTag(InteractingTag);
+}
+
+void UGHOAbilitySystemComponent::TryActivateRevive()
+{
+	FGameplayTagContainer ReviveTags(ReviveTag);
+	TryActivateAbilitiesByTag(ReviveTags);
+}
+
+void UGHOAbilitySystemComponent::CancelRevive()
+{
+	FGameplayTagContainer ReviveTags(ReviveTag);
+	CancelAbilities(&ReviveTags);
 }
 
 void UGHOAbilitySystemComponent::ReceiveDamage(UGHOAbilitySystemComponent * SourceASC, float UnmitigatedDamage, float MitigatedDamage)

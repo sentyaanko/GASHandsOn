@@ -87,6 +87,8 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 		ポーンが AI によってコントロールされている場合に使用されるデフォルトのクラス。
 	*/
 	AIControllerClass = AGHOHeroAIController::StaticClass();
+
+	ReviveDuration = 4.0f;
 }
 
 void AGHOHeroCharacterBase::BeginPlay()
@@ -286,6 +288,92 @@ FTransform AGHOHeroCharacterBase::GetProjectileTransform(float Range)const
 	//UE_LOG(LogTemp, Error, TEXT("%s() Muzzle:%s"), *FString(__FUNCTION__), *MuzzleTransform.ToString());
 	return MuzzleTransform;
 }
+
+bool AGHOHeroCharacterBase::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	//by GASShooter
+	//	Hero is available to be revived if knocked down and is not already being revived.
+	//	If you want multiple heroes reviving someone to speed it up, you would need to change GA_Interact
+	//	(outside the scope of this sample).
+	//和訳
+	//	ヒーローはノックダウンされた場合、まだ蘇生されていなければ蘇生可能です。
+	//	複数のヒーローで誰かを蘇生させることでそれをスピードアップさせたい場合は、 GA_Interact を変更する必要があります。
+	//	（このサンプルの範囲外です）
+	if (AbilitySystemComponent.IsValid() && AbilitySystemComponent->IsKnockedDown() && !AbilitySystemComponent->IsInteracting())
+	{
+		return true;
+	}
+
+	return IGHOInteractable::IsAvailableForInteraction_Implementation(InteractionComponent);
+}
+
+float AGHOHeroCharacterBase::GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	if (AbilitySystemComponent.IsValid() && AbilitySystemComponent->IsKnockedDown())
+	{
+		return ReviveDuration;
+	}
+
+	return IGHOInteractable::GetInteractionDuration_Implementation(InteractionComponent);
+}
+
+void AGHOHeroCharacterBase::PreInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
+{
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	if (AbilitySystemComponent.IsValid() && AbilitySystemComponent->IsKnockedDown())
+	{
+		AbilitySystemComponent->TryActivateRevive();
+	}
+}
+
+void AGHOHeroCharacterBase::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
+{
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	if (AbilitySystemComponent.IsValid() && AbilitySystemComponent->IsKnockedDown())
+	{
+		AbilitySystemComponent->ApplyGameplayEffectToSelf(Cast<UGameplayEffect>(ReviveEffect->GetDefaultObject()), 1.0f, AbilitySystemComponent->MakeEffectContext());
+	}
+}
+
+void AGHOHeroCharacterBase::GetPreInteractSyncType_Implementation(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const
+{
+	if (AbilitySystemComponent.IsValid() && AbilitySystemComponent->IsKnockedDown())
+	{
+		bShouldSync = true;
+		Type = EAbilityTaskNetSyncType::OnlyClientWait;
+		return;
+	}
+
+	IGHOInteractable::GetPreInteractSyncType_Implementation(bShouldSync, Type, InteractionComponent);
+}
+
+void AGHOHeroCharacterBase::CancelInteraction_Implementation(UPrimitiveComponent* InteractionComponent)
+{
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	if (AbilitySystemComponent.IsValid() && AbilitySystemComponent->IsKnockedDown())
+	{
+		AbilitySystemComponent->CancelRevive();
+	}
+}
+
+FSimpleMulticastDelegate* AGHOHeroCharacterBase::GetTargetCancelInteractionDelegate(UPrimitiveComponent* InteractionComponent)
+{
+	return &InteractionCanceledDelegate;
+}
+
+
 
 void AGHOHeroCharacterBase::TurnAtRate(float Rate)
 {

@@ -36,6 +36,11 @@ public:
 	bool IsStun() const;
 	void CancelAbilitiesByStun();
 
+	bool IsInteracting() const;
+
+	void TryActivateRevive();
+	void CancelRevive();
+
 	/*
 	by GASDocumentation
 		Called from GHODamageExecCalculation. Broadcasts on ReceivedDamage whenever this ASC receives damage.
@@ -67,6 +72,8 @@ private:
 	FGameplayTag DeadTag;
 	FGameplayTag KnockedDownTag;
 	FGameplayTag StunTag;
+	FGameplayTag InteractingTag;
+	FGameplayTag ReviveTag;
 	FGameplayTag EffectRemoveOnDeathTag;
 
 	bool bCharacterAbilitiesGiven = false;

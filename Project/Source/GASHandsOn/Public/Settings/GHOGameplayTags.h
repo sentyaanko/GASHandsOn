@@ -52,4 +52,5 @@
 #define TAG_State_Dead									"State.Dead"
 #define TAG_State_Sprinting								"State.Sprinting"
 #define TAG_State_Sprinting_Removal						"State.Sprinting.Removal"
+#define TAG_State_Interacting							"State.Interacting"
 #define TAG_State_KnockedDown							"State.KnockedDown"
