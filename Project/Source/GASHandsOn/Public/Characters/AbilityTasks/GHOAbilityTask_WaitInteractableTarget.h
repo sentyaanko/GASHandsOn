@@ -14,10 +14,10 @@ by GASShooter
 	Performs a line trace on a timer, looking for an Actor that implements IGSInteractable that is available for interaction.
 	The StartLocations are hardcoded for GASShooter since we can be in first and third person so we have to check every time we trace. 
 	If you only have one start location, you should make it more generic with a parameter on your AbilityTask node.
-˜a–ó
-	ƒ^ƒCƒ}[‚Åƒ‰ƒCƒ“ƒgƒŒ[ƒX‚ðŽÀs‚µAƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‰Â”\‚È IGHOInteractable ‚ðŽÀ‘•‚µ‚½ƒAƒNƒ^[‚ðŒŸõ‚µ‚Ü‚·B
-	StartLocations ‚Í GASShooter ‚Å‚Íƒn[ƒhƒR[ƒh‚³‚ê‚Ä‚¢‚ÄAˆêlÌ‚ÆŽOlÌ‚ª‚ ‚é‚Ì‚ÅAƒgƒŒ[ƒX‚·‚é‚½‚Ñ‚Éƒ`ƒFƒbƒN‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
-	StartLocation ‚ª1‚Â‚µ‚©‚È‚¢ê‡‚ÍA AbilityTask ƒm[ƒh‚Éƒpƒ‰ƒ[ƒ^‚ðŽw’è‚µ‚ÄA‚æ‚èˆê”Ê“I‚È‚à‚Ì‚É‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
+å’Œè¨³
+	ã‚¿ã‚¤ãƒžãƒ¼ã§ãƒ©ã‚¤ãƒ³ãƒˆãƒ¬ãƒ¼ã‚¹ã‚’å®Ÿè¡Œã—ã€ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ã‚·ãƒ§ãƒ³å¯èƒ½ãª IGHOInteractable ã‚’å®Ÿè£…ã—ãŸã‚¢ã‚¯ã‚¿ãƒ¼ã‚’æ¤œç´¢ã—ã¾ã™ã€‚
+	StartLocations ã¯ GASShooter ã§ã¯ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ã¦ã€ä¸€äººç§°ã¨ä¸‰äººç§°ãŒã‚ã‚‹ã®ã§ã€ãƒˆãƒ¬ãƒ¼ã‚¹ã™ã‚‹ãŸã³ã«ãƒã‚§ãƒƒã‚¯ã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
+	StartLocation ãŒ1ã¤ã—ã‹ãªã„å ´åˆã¯ã€ AbilityTask ãƒŽãƒ¼ãƒ‰ã«ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æŒ‡å®šã—ã¦ã€ã‚ˆã‚Šä¸€èˆ¬çš„ãªã‚‚ã®ã«ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 */
 UCLASS()
 class GASHANDSON_API UGHOAbilityTask_WaitInteractableTarget : public UAbilityTask
@@ -32,11 +32,11 @@ public:
 		@param MaxRange How far to trace.
 		@param TimerPeriod Period of trace timer.
 		@param bShowDebug Draws debug lines for traces.
-	˜a–ó
-		InteractableTargets ‚ð’T‚·‚½‚ß‚Éƒ^ƒCƒ}[‚Åƒ‰ƒCƒ“ƒgƒŒ[ƒX‚ðŽÀs‚µ‚Ü‚·B
-		@param MaxRange ‚Ç‚±‚Ü‚ÅƒgƒŒ[ƒX‚·‚é‚©
-		@param TimerPeriod ƒgƒŒ[ƒXƒ^ƒCƒ}[‚ÌŽüŠú
-		@param bShowDebug ƒgƒŒ[ƒX‚ÌƒfƒoƒbƒOƒ‰ƒCƒ“‚ð•`‰æ‚·‚é‚©
+	å’Œè¨³
+		InteractableTargets ã‚’æŽ¢ã™ãŸã‚ã«ã‚¿ã‚¤ãƒžãƒ¼ã§ãƒ©ã‚¤ãƒ³ãƒˆãƒ¬ãƒ¼ã‚¹ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+		@param MaxRange ã©ã“ã¾ã§ãƒˆãƒ¬ãƒ¼ã‚¹ã™ã‚‹ã‹
+		@param TimerPeriod ãƒˆãƒ¬ãƒ¼ã‚¹ã‚¿ã‚¤ãƒžãƒ¼ã®å‘¨æœŸ
+		@param bShowDebug ãƒˆãƒ¬ãƒ¼ã‚¹ã®ãƒ‡ãƒãƒƒã‚°ãƒ©ã‚¤ãƒ³ã‚’æç”»ã™ã‚‹ã‹
 	*/
 	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true", HideSpawnParms = "Instigator"), Category = "Ability|Tasks")
 	static UGHOAbilityTask_WaitInteractableTarget* WaitForInteractableTarget(UGameplayAbility* OwningAbility, FName TaskInstanceName, FCollisionProfileName TraceProfile, float MaxRange = 200.0f, float TimerPeriod = 0.1f, bool bShowDebug = true);
@@ -47,9 +47,9 @@ public:
 	by Epic
 		Called to trigger the actual task once the delegates have been set up
 		Note that the default implementation does nothing and you don't have to call it
-	˜a–ó
-		ƒfƒŠƒQ[ƒg‚ªÝ’è‚³‚ê‚½ŒãAŽÀÛ‚Ìƒ^ƒXƒN‚Ì‹N“®‚ð‚·‚é‚½‚ß‚ÉŒÄ‚Ño‚³‚ê‚éB
-		‚È‚¨AƒfƒtƒHƒ‹ƒg‚ÌŽÀ‘•‚Å‚Í‰½‚à‚µ‚È‚¢‚Ì‚ÅA‚±‚ê‚ðŒÄ‚ÑdƒX•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
+	å’Œè¨³
+		ãƒ‡ãƒªã‚²ãƒ¼ãƒˆãŒè¨­å®šã•ã‚ŒãŸå¾Œã€å®Ÿéš›ã®ã‚¿ã‚¹ã‚¯ã®èµ·å‹•ã‚’ã™ã‚‹ãŸã‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
+		ãªãŠã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å®Ÿè£…ã§ã¯ä½•ã‚‚ã—ãªã„ã®ã§ã€ã“ã‚Œã‚’å‘¼ã³dã‚¹å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 	*/
 	virtual void Activate() override;
 
@@ -59,13 +59,13 @@ public:
 		IMPORTANT! Do NOT call directly! Call EndTask() or TaskOwnerEnded()
 		IMPORTANT! When overriding this function make sure to call Super::OnDestroy(bOwnerFinished) as the last thing,
 			since the function internally marks the task as "Pending Kill", and this may interfere with internal BP mechanics
-	˜a–ó
-		ƒ^ƒXƒN‚ÌI—¹‚ÆƒNƒŠ[ƒ“ƒAƒbƒv - ƒ^ƒXƒNŽ©g‚ªŒÄ‚Ño‚·‚±‚Æ‚àƒR[ƒi[‚ªI—¹‚·‚éê‡‚Íƒ^ƒXƒNƒI[ƒi[‚ªŒÄ‚Ño‚·‚±‚Æ‚ào—ˆ‚Ü‚·B
-		d—vI’¼ÚŒÄ‚Ño‚³‚È‚¢‚Å‚­‚¾‚³‚¢I EndTask() –”‚Í TaskOwnerEnded() ‚ðŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B
-		d—vI‚±‚ÌŠÖ”‚ðƒI[ƒo[ƒ‰ƒCƒh‚·‚éÛ‚É‚ÍAÅŒã‚É Super::OnDestroy(bInOwnerFinished) ‚ðŒÄ‚Ño‚·‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢B
-			‚È‚º‚È‚çA‚±‚ÌŠÖ”‚É‚Í“à•”“I‚Éƒ^ƒXƒN‚ðu Pending Kill v‚Æƒ}[ƒN‚µ‚Ä‚¨‚èA BP ‚Ì“à•”ƒƒJƒjƒNƒX‚ÉŽxá‚ð‚«‚½‚·‰Â”\«‚ª‚ ‚é‚©‚ç‚Å‚·B
-	‰ðà
-		’¼Ú‚ÌŠî’ê‚ÌƒAƒNƒZƒXŽw’èŽq‚ª‚¨‚©‚µ‚¢B‚±‚ÌƒNƒ‰ƒX‚Å‚Íª‚Á‚±‚É‡‚í‚¹‚Ü‚·B
+	å’Œè¨³
+		ã‚¿ã‚¹ã‚¯ã®çµ‚äº†ã¨ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ— - ã‚¿ã‚¹ã‚¯è‡ªèº«ãŒå‘¼ã³å‡ºã™ã“ã¨ã‚‚ã‚³ãƒ¼ãƒŠãƒ¼ãŒçµ‚äº†ã™ã‚‹å ´åˆã¯ã‚¿ã‚¹ã‚¯ã‚ªãƒ¼ãƒŠãƒ¼ãŒå‘¼ã³å‡ºã™ã“ã¨ã‚‚å‡ºæ¥ã¾ã™ã€‚
+		é‡è¦ï¼ç›´æŽ¥å‘¼ã³å‡ºã•ãªã„ã§ãã ã•ã„ï¼ EndTask() åˆã¯ TaskOwnerEnded() ã‚’å‘¼ã³å‡ºã—ã¦ãã ã•ã„ã€‚
+		é‡è¦ï¼ã“ã®é–¢æ•°ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã™ã‚‹éš›ã«ã¯ã€æœ€å¾Œã« Super::OnDestroy(bInOwnerFinished) ã‚’å‘¼ã³å‡ºã™ã‚ˆã†ã«ã—ã¦ãã ã•ã„ã€‚
+			ãªãœãªã‚‰ã€ã“ã®é–¢æ•°ã«ã¯å†…éƒ¨çš„ã«ã‚¿ã‚¹ã‚¯ã‚’ã€Œ Pending Kill ã€ã¨ãƒžãƒ¼ã‚¯ã—ã¦ãŠã‚Šã€ BP ã®å†…éƒ¨ãƒ¡ã‚«ãƒ‹ã‚¯ã‚¹ã«æ”¯éšœã‚’ããŸã™å¯èƒ½æ€§ãŒã‚ã‚‹ã‹ã‚‰ã§ã™ã€‚
+	è§£èª¬
+		ç›´æŽ¥ã®åŸºåº•ã®ã‚¢ã‚¯ã‚»ã‚¹æŒ‡å®šå­ãŒãŠã‹ã—ã„ã€‚ã“ã®ã‚¯ãƒ©ã‚¹ã§ã¯æ ¹ã£ã“ã«åˆã‚ã›ã¾ã™ã€‚
 		UGameplayTask(protected) > UAbilityTask(public) > UGHOAbilityTask_WaitReceiveDamage(protected)
 	*/
 	virtual void OnDestroy(bool AbilityEnded) override;

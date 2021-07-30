@@ -17,8 +17,8 @@ UGHOAbilityTask_WaitInteractableTarget* UGHOAbilityTask_WaitInteractableTarget::
 		return nullptr;
 	//by GASShooter
 	//	Register for task list here, providing a given FName as a key
-	//˜a–ó
-	//	—^‚¦‚ç‚ê‚½ FName ‚ğƒL[‚Æ‚µ‚Ä‚±‚±‚Åƒ^ƒXƒNƒŠƒXƒg‚É“o˜^‚µ‚Ü‚·B
+	//å’Œè¨³
+	//	ä¸ãˆã‚‰ã‚ŒãŸ FName ã‚’ã‚­ãƒ¼ã¨ã—ã¦ã“ã“ã§ã‚¿ã‚¹ã‚¯ãƒªã‚¹ãƒˆã«ç™»éŒ²ã—ã¾ã™ã€‚
 	UGHOAbilityTask_WaitInteractableTarget* MyObj = NewAbilityTask<UGHOAbilityTask_WaitInteractableTarget>(OwningAbility, TaskInstanceName);
 	MyObj->Initialize(OwningAbility, TaskInstanceName, TraceProfile, MaxRange, TimerPeriod, bShowDebug);
 	return MyObj;
@@ -86,24 +86,24 @@ void UGHOAbilityTask_WaitInteractableTarget::LineTrace(FHitResult& OutHitResult,
 		{
 			//by GASShooter
 			//	If bLookForInteractableActor is false, we're looking for an endpoint to trace to
-			//˜a–ó
-			//	bLookForInteractableActor ‚ª false ‚Ìê‡AƒgƒŒ[ƒX‚·‚éƒGƒ“ƒhƒ|ƒCƒ“ƒg‚ğ’T‚µ‚Ü‚·B
+			//å’Œè¨³
+			//	bLookForInteractableActor ãŒ false ã®å ´åˆã€ãƒˆãƒ¬ãƒ¼ã‚¹ã™ã‚‹ã‚¨ãƒ³ãƒ‰ãƒã‚¤ãƒ³ãƒˆã‚’æ¢ã—ã¾ã™ã€‚
 			if (bLookForInteractableActor && Hit.Actor.IsValid())
 			{
 				//by GASShooter
 				//	bLookForInteractableActor is true, hit component must overlap COLLISION_INTERACTABLE trace channel
 				//	This is so that a big Actor like a computer can have a small interactable button.
-				//˜a–ó
-				//	bLookForInteractableActor ‚ª true ‚Ìê‡AƒqƒbƒgƒRƒ“ƒ|[ƒlƒ“ƒg‚Í COLLISION_INTERACTABLE ƒgƒŒ[ƒXƒ`ƒƒƒ“ƒlƒ‹‚Æd‚È‚ç‚È‚­‚Ä‚Í‚È‚ç‚È‚¢I
-				//	‚±‚ê‚ÍƒRƒ“ƒsƒ…[ƒ^‚Ì‚æ‚¤‚È‘å‚«‚ÈƒAƒNƒ^[‚É¬‚³‚ÈƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚Èƒ{ƒ^ƒ“‚ğ‚à‚½‚¹‚é‚½‚ß‚Å‚·B
+				//å’Œè¨³
+				//	bLookForInteractableActor ãŒ true ã®å ´åˆã€ãƒ’ãƒƒãƒˆã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯ COLLISION_INTERACTABLE ãƒˆãƒ¬ãƒ¼ã‚¹ãƒãƒ£ãƒ³ãƒãƒ«ã¨é‡ãªã‚‰ãªãã¦ã¯ãªã‚‰ãªã„ï¼
+				//	ã“ã‚Œã¯ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã®ã‚ˆã†ãªå¤§ããªã‚¢ã‚¯ã‚¿ãƒ¼ã«å°ã•ãªã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªãƒœã‚¿ãƒ³ã‚’ã‚‚ãŸã›ã‚‹ãŸã‚ã§ã™ã€‚
 				//	This is so that a big Actor like a computer can have a small interactable button.
 				if (Hit.Component.IsValid() && Hit.Component.Get()->GetCollisionResponseToChannel(COLLISION_INTERACTABLE)
 					== ECollisionResponse::ECR_Overlap)
 				{
 					//by GASShooter
 					//	Component/Actor must be available to interact
-					//˜a–ó
-					//	ƒRƒ“ƒ|[ƒlƒ“ƒg/ƒAƒNƒ^[‚ªƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚Å‚ ‚é‚±‚Æ
+					//å’Œè¨³
+					//	ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ/ã‚¢ã‚¯ã‚¿ãƒ¼ãŒã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ã§ã‚ã‚‹ã“ã¨
 					bool bIsInteractable = Hit.Actor.Get()->Implements<UGHOInteractable>();
 
 					if (bIsInteractable && IGHOInteractable::Execute_IsAvailableForInteraction(Hit.Actor.Get(), Hit.Component.Get()))
@@ -111,8 +111,8 @@ void UGHOAbilityTask_WaitInteractableTarget::LineTrace(FHitResult& OutHitResult,
 						OutHitResult = Hit;
 						//by GASShooter
 						//	treat it as a blocking hit
-						//˜a–ó
-						//	ƒuƒƒbƒLƒ“ƒOƒqƒbƒg‚Æ‚µ‚Äˆµ‚¤
+						//å’Œè¨³
+						//	ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°ãƒ’ãƒƒãƒˆã¨ã—ã¦æ‰±ã†
 						OutHitResult.bBlockingHit = true;
 						return;
 					}
@@ -121,8 +121,8 @@ void UGHOAbilityTask_WaitInteractableTarget::LineTrace(FHitResult& OutHitResult,
 				OutHitResult.TraceEnd = Hit.Location;
 				//by GASShooter
 				//	False means it isn't valid to interact with
-				//˜a–ó
-				//	False ‚ÍƒCƒ“ƒ^ƒ‰ƒNƒg‚ª—LŒø‚Å‚È‚¢‚±‚Æ‚ğˆÓ–¡‚µ‚Ü‚·B
+				//å’Œè¨³
+				//	False ã¯ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆãŒæœ‰åŠ¹ã§ãªã„ã“ã¨ã‚’æ„å‘³ã—ã¾ã™ã€‚
 				OutHitResult.bBlockingHit = false;
 				return;
 			}
@@ -131,14 +131,14 @@ void UGHOAbilityTask_WaitInteractableTarget::LineTrace(FHitResult& OutHitResult,
 			//	This is for the first line trace to get an end point to trace to
 			//	!Hit.Actor.IsValid() implies we didn't hit anything so return the endpoint as a blocking hit
 			//	Or if we hit something else
-			//˜a–ó
-			//	‚±‚ê‚ÍuÅ‰‚Ìƒ‰ƒCƒ“ƒgƒŒ[ƒX‚ÅƒGƒ“ƒhƒ|ƒCƒ“ƒg‚ğæ“¾‚µA !Hit.Actor.IsValid() ‚ÉƒgƒŒ[ƒX‚µ‚½v‚Æ‚«‚Ì‚½‚ß‚Ì‚à‚Ì‚ÅA‚»‚ê‚Í‰½‚àƒqƒbƒg‚µ‚Ä‚¢‚È‚¢‚±‚Æ‚ğˆÓ–¡‚·‚é‚Ì‚ÅAƒGƒ“ƒhƒ|ƒCƒ“ƒg‚ğƒuƒƒbƒNƒqƒbƒg‚Æ‚µ‚Ä•Ô‚µ‚Ü‚·B
-			//	‚ ‚é‚¢‚Í‰½‚©‘¼‚Ì‚à‚Ì‚Éƒqƒbƒg‚µ‚½
+			//å’Œè¨³
+			//	ã“ã‚Œã¯ã€Œæœ€åˆã®ãƒ©ã‚¤ãƒ³ãƒˆãƒ¬ãƒ¼ã‚¹ã§ã‚¨ãƒ³ãƒ‰ãƒã‚¤ãƒ³ãƒˆã‚’å–å¾—ã—ã€ !Hit.Actor.IsValid() ã«ãƒˆãƒ¬ãƒ¼ã‚¹ã—ãŸã€ã¨ãã®ãŸã‚ã®ã‚‚ã®ã§ã€ãã‚Œã¯ä½•ã‚‚ãƒ’ãƒƒãƒˆã—ã¦ã„ãªã„ã“ã¨ã‚’æ„å‘³ã™ã‚‹ã®ã§ã€ã‚¨ãƒ³ãƒ‰ãƒã‚¤ãƒ³ãƒˆã‚’ãƒ–ãƒ­ãƒƒã‚¯ãƒ’ãƒƒãƒˆã¨ã—ã¦è¿”ã—ã¾ã™ã€‚
+			//	ã‚ã‚‹ã„ã¯ä½•ã‹ä»–ã®ã‚‚ã®ã«ãƒ’ãƒƒãƒˆã—ãŸ
 			OutHitResult = Hit;
 			//by GASShooter
 			//	treat it as a blocking hit
-			//˜a–ó
-			//	ƒuƒƒbƒLƒ“ƒOƒqƒbƒg‚Æ‚µ‚Äˆµ‚¤
+			//å’Œè¨³
+			//	ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°ãƒ’ãƒƒãƒˆã¨ã—ã¦æ‰±ã†
 			OutHitResult.bBlockingHit = true;
 			return;
 		}
@@ -149,8 +149,8 @@ void UGHOAbilityTask_WaitInteractableTarget::AimWithPlayerController(const AActo
 {
 	//by GASShooter
 	//	Server and launching client only
-	//˜a–ó
-	//	ƒT[ƒo[‚Æ‹N“®ƒNƒ‰ƒCƒAƒ“ƒg‚Ì‚İ
+	//å’Œè¨³
+	//	ã‚µãƒ¼ãƒãƒ¼ã¨èµ·å‹•ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®ã¿
 	if (!Ability)
 	{
 		return;
@@ -160,8 +160,8 @@ void UGHOAbilityTask_WaitInteractableTarget::AimWithPlayerController(const AActo
 
 	//by GASShooter
 	//	Default to TraceStart if no PlayerController
-	//˜a–ó
-	//	PlayerController ‚ª‚È‚¢ê‡‚ÍƒfƒtƒHƒ‹ƒg‚Å TraceStart ‚É‚È‚è‚Ü‚·B
+	//å’Œè¨³
+	//	PlayerController ãŒãªã„å ´åˆã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ TraceStart ã«ãªã‚Šã¾ã™ã€‚
 	FVector ViewStart = TraceStart;
 	FRotator ViewRot(0.0f);
 	if (PC)
@@ -195,8 +195,8 @@ void UGHOAbilityTask_WaitInteractableTarget::AimWithPlayerController(const AActo
 		{
 			//by GASShooter
 			//	Convert to angles and use original pitch
-			//˜a–ó
-			//	Šp“x‚É•ÏŠ·‚µ‚ÄŒ³‚Ìƒsƒbƒ`‚ğg—p
+			//å’Œè¨³
+			//	è§’åº¦ã«å¤‰æ›ã—ã¦å…ƒã®ãƒ”ãƒƒãƒã‚’ä½¿ç”¨
 			const FRotator OriginalAimRot = OriginalAimDir.Rotation();
 
 			FRotator AdjustedAimRot = AdjustedAimDir.Rotation();
@@ -215,8 +215,8 @@ bool UGHOAbilityTask_WaitInteractableTarget::ClipCameraRayToAbilityRange(FVector
 	const float DotToCenter = FVector::DotProduct(CameraToCenter, CameraDirection);
 	//by GASShooter
 	//	If this fails, we're pointed away from the center, but we might be inside the sphere and able to find a good exit point.
-	//˜a–ó
-	//	‚±‚ê‚É¸”s‚µ‚½ê‡A’†S‚©‚ç—£‚ê‚Ä‚Í‚¢‚Ü‚·‚ªA‹…‘Ì‚Ì“à‘¤‚É‹‚ÄA‚¤‚Ü‚­oŒû‚ğŒ©‚Â‚¯‚ç‚ê‚é‚©‚à‚µ‚ê‚Ü‚¹‚ñB
+	//å’Œè¨³
+	//	ã“ã‚Œã«å¤±æ•—ã—ãŸå ´åˆã€ä¸­å¿ƒã‹ã‚‰é›¢ã‚Œã¦ã¯ã„ã¾ã™ãŒã€çƒä½“ã®å†…å´ã«å±…ã¦ã€ã†ã¾ãå‡ºå£ã‚’è¦‹ã¤ã‘ã‚‰ã‚Œã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
 	if (DotToCenter >= 0)
 	{
 		const float DistanceSquared = CameraToCenter.SizeSquared() - (DotToCenter * DotToCenter);
@@ -226,13 +226,13 @@ bool UGHOAbilityTask_WaitInteractableTarget::ClipCameraRayToAbilityRange(FVector
 			const float DistanceFromCamera = FMath::Sqrt(RadiusSquared - DistanceSquared);
 			//by GASShooter
 			//	Subtracting instead of adding will get the other intersection point
-			//˜a–ó
-			//	‰ÁZ‚·‚é‘ã‚í‚è‚ÉŒ¸Z‚·‚é‚ÆA‘¼‚ÌŒğ“_‚ª“¾‚ç‚ê‚Ü‚·B
+			//å’Œè¨³
+			//	åŠ ç®—ã™ã‚‹ä»£ã‚ã‚Šã«æ¸›ç®—ã™ã‚‹ã¨ã€ä»–ã®äº¤ç‚¹ãŒå¾—ã‚‰ã‚Œã¾ã™ã€‚
 			const float DistanceAlongRay = DotToCenter + DistanceFromCamera;
 			//by GASShooter
 			//	Cam aim point clipped to range sphere
-			//˜a–ó
-			//	ƒJƒƒ‰‚ÌƒGƒCƒ€ƒ|ƒCƒ“ƒg‚ª”ÍˆÍ‚Ì‹…‚ÉƒNƒŠƒbƒv‚³‚ê‚é
+			//å’Œè¨³
+			//	ã‚«ãƒ¡ãƒ©ã®ã‚¨ã‚¤ãƒ ãƒã‚¤ãƒ³ãƒˆãŒç¯„å›²ã®çƒã«ã‚¯ãƒªãƒƒãƒ—ã•ã‚Œã‚‹
 			ClippedPosition = CameraLocation + (DistanceAlongRay * CameraDirection);
 			return true;
 		}
@@ -258,8 +258,8 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 #if 0 // TODO: first person view
 	//by GASShooter
 	//	Check player's perspective, could be 1P or 3P
-	//˜a–ó
-	//	ƒvƒŒƒCƒ„[‚Ìn“_‚ğŠm”F‚·‚éA1P ‚Ü‚½‚Í 3P ‚Ì‰Â”\«‚ª‚ ‚éB
+	//å’Œè¨³
+	//	ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å§‹ç‚¹ã‚’ç¢ºèªã™ã‚‹ã€1P ã¾ãŸã¯ 3P ã®å¯èƒ½æ€§ãŒã‚ã‚‹ã€‚
 	AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(SourceActor);
 	if (Hero->IsInFirstPersonPerspective())
 	{
@@ -279,14 +279,14 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 
 	//by GASShooter
 	//	Calculate TraceEnd
-	//˜a–ó
-	//	TraceEnd ‚ğŒvZ‚µ‚Ü‚·B
+	//å’Œè¨³
+	//	TraceEnd ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
 	FVector TraceStart = StartLocation.GetTargetingTransform().GetLocation();
 	FVector TraceEnd;
 	//by GASShooter
 	//	Effective on server and launching client only
-	//˜a–ó
-	//	ƒT[ƒo[‚Æ‹N“®ƒNƒ‰ƒCƒAƒ“ƒg‚Ì‚İ‚Å—LŒø
+	//å’Œè¨³
+	//	ã‚µãƒ¼ãƒãƒ¼ã¨èµ·å‹•ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®ã¿ã§æœ‰åŠ¹
 	AimWithPlayerController(SourceActor, Params, TraceStart, TraceEnd);
 
 	// ------------------------------------------------------
@@ -297,15 +297,15 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 	//by GASShooter
 	//	Default to end of trace line if we don't hit a valid, available Interactable Actor
 	//	bBlockingHit = valid, available Interactable Actor
-	//˜a–ó
-	//	—LŒø‚Å—˜—p‰Â”\‚ÈƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒAƒNƒ^[‚Éƒqƒbƒg‚µ‚È‚©‚Á‚½ê‡AƒfƒtƒHƒ‹ƒg‚Å‚ÍƒgƒŒ[ƒXƒ‰ƒCƒ“‚ÌI‚í‚è‚É‚È‚è‚Ü‚·B
-	//	bBlockingHit = valid ‚ÅA—˜—p‰Â”\‚ÈƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒAƒNƒ^[‚Å‚·B
+	//å’Œè¨³
+	//	æœ‰åŠ¹ã§åˆ©ç”¨å¯èƒ½ãªã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¢ã‚¯ã‚¿ãƒ¼ã«ãƒ’ãƒƒãƒˆã—ãªã‹ã£ãŸå ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ©ã‚¤ãƒ³ã®çµ‚ã‚ã‚Šã«ãªã‚Šã¾ã™ã€‚
+	//	bBlockingHit = valid ã§ã€åˆ©ç”¨å¯èƒ½ãªã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¢ã‚¯ã‚¿ãƒ¼ã§ã™ã€‚
 	if (!ReturnHitResult.bBlockingHit)
 	{
 		//by GASShooter
 		//	No valid, available Interactable Actor
-		//˜a–ó
-		//	—LŒø‚Å—˜—p‰Â”\‚ÈƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒAƒNƒ^[‚ª‚ ‚è‚Ü‚¹‚ñB
+		//å’Œè¨³
+		//	æœ‰åŠ¹ã§åˆ©ç”¨å¯èƒ½ãªã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¢ã‚¯ã‚¿ãƒ¼ãŒã‚ã‚Šã¾ã›ã‚“ã€‚
 
 		ReturnHitResult.Location = TraceEnd;
 		if (TargetData.Num() > 0 && TargetData.Get(0)->GetHitResult()->Actor.Get())
@@ -313,9 +313,9 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 			//by GASShooter
 			//	Previous trace had a valid Interactable Actor, now we don't have one
 			//	Broadcast last valid target
-			//˜a–ó
-			//	ˆÈ‘O‚ÌƒgƒŒ[ƒX‚É‚Í—LŒø‚ÈƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒAƒNƒ^[‚ª‚ ‚è‚Ü‚µ‚½‚ªAŒ»İ‚Å‚Í‚¢‚Ü‚¹‚ñB
-			//	ÅŒã‚Ì—LŒø‚Èƒ^[ƒQƒbƒg‚ğƒuƒ[ƒhƒLƒƒƒXƒg‚µ‚Ü‚·B
+			//å’Œè¨³
+			//	ä»¥å‰ã®ãƒˆãƒ¬ãƒ¼ã‚¹ã«ã¯æœ‰åŠ¹ãªã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¢ã‚¯ã‚¿ãƒ¼ãŒã‚ã‚Šã¾ã—ãŸãŒã€ç¾åœ¨ã§ã¯ã„ã¾ã›ã‚“ã€‚
+			//	æœ€å¾Œã®æœ‰åŠ¹ãªã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
 			LostInteractableTarget.Broadcast(TargetData);
 		}
 
@@ -325,8 +325,8 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 	{
 		//by GASShooter
 		//	Valid, available Interactable Actor
-		//˜a–ó
-		//	—LŒø‚Å—˜—p‰Â”\‚ÈƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒAƒNƒ^[‚ª‚ ‚è‚Ü‚·B
+		//å’Œè¨³
+		//	æœ‰åŠ¹ã§åˆ©ç”¨å¯èƒ½ãªã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¢ã‚¯ã‚¿ãƒ¼ãŒã‚ã‚Šã¾ã™ã€‚
 
 		bool bBroadcastNewTarget = true;
 
@@ -338,8 +338,8 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 			{
 				//by GASShooter
 				//	Old target is the same as the new target, don't broadcast the target
-				//˜a–ó
-				//	ŒÃ‚¢ƒ^[ƒQƒbƒg‚ÍV‚µ‚¢ƒ^[ƒQƒbƒg‚Æ“¯‚¶‚È‚Ì‚ÅAƒ^[ƒQƒbƒg‚ğƒuƒ[ƒhƒLƒƒƒXƒg‚µ‚Ü‚¹‚ñB
+				//å’Œè¨³
+				//	å¤ã„ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¯æ–°ã—ã„ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨åŒã˜ãªã®ã§ã€ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã›ã‚“ã€‚
 				bBroadcastNewTarget = false;
 			}
 			else if (OldTarget)
@@ -347,9 +347,9 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 				//by GASShooter
 				//	Old target exists and is different from the new target
 				//	Broadcast last valid target
-				//˜a–ó
-				//	ŒÃ‚¢ƒ^[ƒQƒbƒg‚ª‘¶İ‚µAV‚µ‚¢ƒ^[ƒQƒbƒg‚Æ‚ÍˆÙ‚È‚è‚Ü‚·B
-				//	ÅŒã‚Ì—LŒø‚Èƒ^[ƒQƒbƒg‚ğƒuƒ[ƒhƒLƒƒƒXƒg‚µ‚Ü‚·B
+				//å’Œè¨³
+				//	å¤ã„ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒå­˜åœ¨ã—ã€æ–°ã—ã„ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã¯ç•°ãªã‚Šã¾ã™ã€‚
+				//	æœ€å¾Œã®æœ‰åŠ¹ãªã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
 				LostInteractableTarget.Broadcast(TargetData);
 			}
 		}
@@ -358,8 +358,8 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 		{
 			//by GASShooter
 			//	Broadcast new valid target
-			//˜a–ó
-			//	V‚µ‚¢—LŒø‚Èƒ^[ƒQƒbƒg‚ğƒuƒ[ƒhƒLƒƒƒXƒg‚µ‚Ü‚·B
+			//å’Œè¨³
+			//	æ–°ã—ã„æœ‰åŠ¹ãªã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
 			TargetData = MakeTargetData(ReturnHitResult);
 			FoundNewInteractableTarget.Broadcast(TargetData);
 		}
@@ -387,8 +387,8 @@ FGameplayAbilityTargetDataHandle UGHOAbilityTask_WaitInteractableTarget::MakeTar
 	/**
 	by GASShooter
 		Note : This will be cleaned up by the FGameplayAbilityTargetDataHandle(via an internal TSharedPtr)
-	˜a–ó
-		’F‚±‚ê‚Í FGameplayAbilityTargetDataHandle ‚É‚æ‚Á‚Äi TSharedPtr ‚ğ‰î‚µ‚ÄjƒNƒŠ[ƒ“ƒAƒbƒv‚³‚ê‚Ü‚·B
+	å’Œè¨³
+		æ³¨ï¼šã“ã‚Œã¯ FGameplayAbilityTargetDataHandle ã«ã‚ˆã£ã¦ï¼ˆ TSharedPtr ã‚’ä»‹ã—ã¦ï¼‰ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã•ã‚Œã¾ã™ã€‚
 	*/
 	return StartLocation.MakeTargetDataHandleFromHitResult(Ability, HitResult);
 }

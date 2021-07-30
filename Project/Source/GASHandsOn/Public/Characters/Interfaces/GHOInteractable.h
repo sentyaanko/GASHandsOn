@@ -17,8 +17,8 @@ class UGHOInteractable : public UInterface
 /**
 by GASShooter
 	Interface for Actors that can be interacted with through the GameplayAbilitySystem.
-˜a–ó
-	GameplayAbilitySystem ‚ğ’Ê‚µ‚ÄƒCƒ“ƒ^ƒ‰ƒNƒg‚·‚é‚±‚Æ‚ª‚Å‚«‚éƒAƒNƒ^[‚Ì‚½‚ß‚ÌƒCƒ“ƒ^[ƒtƒFƒCƒXB
+å’Œè¨³
+	GameplayAbilitySystem ã‚’é€šã—ã¦ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã™ã‚‹ã“ã¨ãŒã§ãã‚‹ã‚¢ã‚¯ã‚¿ãƒ¼ã®ãŸã‚ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã€‚
 */
 class GASHANDSON_API IGHOInteractable
 {
@@ -32,10 +32,10 @@ public:
 		Is this object available for player interaction at right now?
 	
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÍŒ»İƒvƒŒƒCƒ„[‚ª‘€ì‚Å‚«‚éó‘Ô‚É‚ ‚é‚©H
+	å’Œè¨³
+		ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ç¾åœ¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ“ä½œã§ãã‚‹çŠ¶æ…‹ã«ã‚ã‚‹ã‹ï¼Ÿ
 
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	bool IsAvailableForInteraction(UPrimitiveComponent* InteractionComponent) const;
@@ -46,10 +46,10 @@ public:
 		How long does the player need to hold down the interact button to interact with this?
 		
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		ƒvƒŒƒCƒ„[‚Í‚Ç‚Ì‚­‚ç‚¢‚ÌŠÔAƒCƒ“ƒ^ƒ‰ƒNƒgƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚ÎA‚±‚ê‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚ª‚Å‚«‚é‚©H
+	å’Œè¨³
+		ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¯ã©ã®ãã‚‰ã„ã®æ™‚é–“ã€ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã„ã‚Œã°ã€ã“ã‚Œã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆãŒã§ãã‚‹ã‹ï¼Ÿ
 
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	float GetInteractionDuration(UPrimitiveComponent* InteractionComponent) const;
@@ -68,18 +68,18 @@ public:
 		The downed player's reviving animation will be in sync with the local player's Interact Duration Timer.
 		
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		PreInteract() ‚ğŒÄ‚Ño‚·‘O‚ÉA“¯Šú‚·‚×‚«‚©A‚ÆA’N‚ª“¯Šú‚·‚×‚«‚©B
-		ƒfƒtƒHƒ‹ƒg‚Å‚ÍA false ‚Æ OnlyServerWait ‚Å‚·B
-		OnlyServerWait - ƒNƒ‰ƒCƒAƒ“ƒg‚ª predictively i—\‘ª“Gj‚É PreInteract() ‚ğŒÄ‚Ño‚µ‚Ü‚·B
-		OnlyClientWait - ƒNƒ‰ƒCƒAƒ“ƒg‚ÍAƒT[ƒo[‚ª PreInteract() ‚ğŒÄ‚Ño‚·‚Ì‚ğ‘Ò‚¿‚Ü‚·B
-		                 ‚±‚ê‚ÍA‘¼‚Ì ASC(player) ‚ÌƒAƒrƒŠƒeƒB‚ğ‹N“®’†‚ÉAƒAƒNƒVƒ‡ƒ“‚âƒAƒjƒ[ƒVƒ‡ƒ“‚ğ Interact Duration ƒ^ƒCƒ}[‚Æ“¯Šú‚³‚¹‚½‚¢ê‡‚É•Ö—˜‚Å‚·B
-		BothWait - ƒNƒ‰ƒCƒAƒ“ƒg‚ÆƒT[ƒo[‚ÍAPreInteract() ‚ğŒÄ‚Ño‚·‘O‚ÉA‚¨Œİ‚¢‚É‘Ò‹@‚µ‚Ü‚·B
+	å’Œè¨³
+		PreInteract() ã‚’å‘¼ã³å‡ºã™å‰ã«ã€åŒæœŸã™ã¹ãã‹ã€ã¨ã€èª°ãŒåŒæœŸã™ã¹ãã‹ã€‚
+		ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ false ã¨ OnlyServerWait ã§ã™ã€‚
+		OnlyServerWait - ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒ predictively ï¼ˆäºˆæ¸¬æ•µï¼‰ã« PreInteract() ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
+		OnlyClientWait - ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¯ã€ã‚µãƒ¼ãƒãƒ¼ãŒ PreInteract() ã‚’å‘¼ã³å‡ºã™ã®ã‚’å¾…ã¡ã¾ã™ã€‚
+		                 ã“ã‚Œã¯ã€ä»–ã® ASC(player) ã®ã‚¢ãƒ“ãƒªãƒ†ã‚£ã‚’èµ·å‹•ä¸­ã«ã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ Interact Duration ã‚¿ã‚¤ãƒãƒ¼ã¨åŒæœŸã•ã›ãŸã„å ´åˆã«ä¾¿åˆ©ã§ã™ã€‚
+		BothWait - ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨ã‚µãƒ¼ãƒãƒ¼ã¯ã€PreInteract() ã‚’å‘¼ã³å‡ºã™å‰ã«ã€ãŠäº’ã„ã«å¾…æ©Ÿã—ã¾ã™ã€‚
 
-		ƒvƒŒƒCƒ„[‚Ì‘h¶‚É‚Í OnlyClientWait ‚ğg—p‚µA‘h¶‚·‚éƒvƒŒƒCƒ„[‚ªƒT[ƒo[‚Æ“¯Šú‚·‚é‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·B‘¼‚ÌƒvƒŒƒCƒ„[‚ªÀs‚µ‚½ƒAƒrƒŠƒeƒB‚Í locally predict iƒ[ƒJƒ‹—\‘ªj‚Å‚«‚È‚¢‚½‚ß‚Å‚·B
-		ƒ_ƒEƒ“‚µ‚½ƒvƒŒƒCƒ„[‚Ì‘h¶ƒAƒjƒ[ƒVƒ‡ƒ“‚ÍAƒ[ƒJƒ‹ƒvƒŒƒCƒ„[‚Ì Interact Duration ƒ^ƒCƒ}[‚É“¯Šú‚µ‚Ü‚·B
+		ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è˜‡ç”Ÿã«ã¯ OnlyClientWait ã‚’ä½¿ç”¨ã—ã€è˜‡ç”Ÿã™ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚µãƒ¼ãƒãƒ¼ã¨åŒæœŸã™ã‚‹ã‚ˆã†ã«ã—ã¦ã„ã¾ã™ã€‚ä»–ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå®Ÿè¡Œã—ãŸã‚¢ãƒ“ãƒªãƒ†ã‚£ã¯ locally predict ï¼ˆãƒ­ãƒ¼ã‚«ãƒ«äºˆæ¸¬ï¼‰ã§ããªã„ãŸã‚ã§ã™ã€‚
+		ãƒ€ã‚¦ãƒ³ã—ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è˜‡ç”Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¯ã€ãƒ­ãƒ¼ã‚«ãƒ«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã® Interact Duration ã‚¿ã‚¤ãƒãƒ¼ã«åŒæœŸã—ã¾ã™ã€‚
 
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	void GetPreInteractSyncType(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const;
@@ -97,17 +97,17 @@ public:
 		Revive's PostInteract() will only run code on the server so it's fine for the client to be "finished" ahead of the server.
 		
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		PostInteract() ‚ğŒÄ‚Ño‚·‘O‚ÉA“¯Šú‚·‚×‚«‚©A‚ÆA’N‚ª“¯Šú‚·‚×‚«‚©B
-		ƒfƒtƒHƒ‹ƒg‚Å‚ÍA false ‚Æ OnlyServerWait ‚Å‚·B
-		OnlyServerWait - ƒNƒ‰ƒCƒAƒ“ƒg‚ª predictively i—\‘ª“Gj‚É PostInteract() ‚ğŒÄ‚Ño‚µ‚Ü‚·B
-		OnlyClientWait - ƒNƒ‰ƒCƒAƒ“ƒg‚ÍAƒT[ƒo[‚ª PostInteract() ‚ğŒÄ‚Ño‚·‚Ì‚ğ‘Ò‚¿‚Ü‚·B
-		BothWait - ƒNƒ‰ƒCƒAƒ“ƒg‚ÆƒT[ƒo[‚ÍAPostInteract() ‚ğŒÄ‚Ño‚·‘O‚ÉA‚¨Œİ‚¢‚É‘Ò‹@‚µ‚Ü‚·B
+	å’Œè¨³
+		PostInteract() ã‚’å‘¼ã³å‡ºã™å‰ã«ã€åŒæœŸã™ã¹ãã‹ã€ã¨ã€èª°ãŒåŒæœŸã™ã¹ãã‹ã€‚
+		ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ false ã¨ OnlyServerWait ã§ã™ã€‚
+		OnlyServerWait - ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒ predictively ï¼ˆäºˆæ¸¬æ•µï¼‰ã« PostInteract() ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
+		OnlyClientWait - ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¯ã€ã‚µãƒ¼ãƒãƒ¼ãŒ PostInteract() ã‚’å‘¼ã³å‡ºã™ã®ã‚’å¾…ã¡ã¾ã™ã€‚
+		BothWait - ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨ã‚µãƒ¼ãƒãƒ¼ã¯ã€PostInteract() ã‚’å‘¼ã³å‡ºã™å‰ã«ã€ãŠäº’ã„ã«å¾…æ©Ÿã—ã¾ã™ã€‚
 
-		ƒvƒŒƒCƒ„[‚Ì‘h¶‚É‚Í OnlyServerWait ‚ğg—p‚µA Interaction Duration ‚ªI—¹‚µ‚½Œã‚ÅƒNƒ‰ƒCƒAƒ“ƒg‚ªƒT[ƒo[‚ğ‘Ò‚½‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·B
-		‘h¶‚Ì PostInteract() ‚ÍAƒT[ƒo[ã‚Å‚Ì‚İƒR[ƒh‚ğÀs‚·‚éi‚æ‚¤‚ÉÀ‘•‚µ‚Ä‚¢‚éj‚Ì‚ÅAƒNƒ‰ƒCƒAƒ“ƒg‚ªƒT[ƒo[‚æ‚èæ‚ÉuI—¹v‚µ‚Ä‚à–â‘è‚ ‚è‚Ü‚¹‚ñB
+		ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è˜‡ç”Ÿã«ã¯ OnlyServerWait ã‚’ä½¿ç”¨ã—ã€ Interaction Duration ãŒçµ‚äº†ã—ãŸå¾Œã§ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒã‚µãƒ¼ãƒãƒ¼ã‚’å¾…ãŸãªã„ã‚ˆã†ã«ã—ã¦ã„ã¾ã™ã€‚
+		è˜‡ç”Ÿã® PostInteract() ã¯ã€ã‚µãƒ¼ãƒãƒ¼ä¸Šã§ã®ã¿ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ï¼ˆã‚ˆã†ã«å®Ÿè£…ã—ã¦ã„ã‚‹ï¼‰ã®ã§ã€ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒã‚µãƒ¼ãƒãƒ¼ã‚ˆã‚Šå…ˆã«ã€Œçµ‚äº†ã€ã—ã¦ã‚‚å•é¡Œã‚ã‚Šã¾ã›ã‚“ã€‚
 
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	void GetPostInteractSyncType(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const;
@@ -128,22 +128,22 @@ public:
 		
 		@param InteractingActor The Actor interacting with this Actor. It will be the AvatarActor from a GameplayAbility.
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		‚±‚ÌƒAƒNƒ^[‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚µ‚Ü‚·B
-		‚±‚ÌŠÖ”‚Í Interact Duration ƒ^ƒCƒ}[‚ªŠJn‚·‚é‘O‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B
-		‚±‚ÌŠÖ”‚Å‚ÍA (predictively i—\‘ª‰Â”\j‚Ü‚½‚Í‚»‚¤‚Å‚Í‚È‚¢) GameplayEffects ‚Ì“K—pA (predictively i—\‘ª‰Â”\j‚Ü‚½‚Í‚»‚¤‚Å‚Í‚È‚¢) GameplayAbilities ‚Ì‹N“®‚È‚Ç‚Ìˆ—‚ğs‚¢‚Ü‚·B
+	å’Œè¨³
+		ã“ã®ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã—ã¾ã™ã€‚
+		ã“ã®é–¢æ•°ã¯ Interact Duration ã‚¿ã‚¤ãƒãƒ¼ãŒé–‹å§‹ã™ã‚‹å‰ã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
+		ã“ã®é–¢æ•°ã§ã¯ã€ (predictively ï¼ˆäºˆæ¸¬å¯èƒ½ï¼‰ã¾ãŸã¯ãã†ã§ã¯ãªã„) GameplayEffects ã®é©ç”¨ã€ (predictively ï¼ˆäºˆæ¸¬å¯èƒ½ï¼‰ã¾ãŸã¯ãã†ã§ã¯ãªã„) GameplayAbilities ã®èµ·å‹•ãªã©ã®å‡¦ç†ã‚’è¡Œã„ã¾ã™ã€‚
 		
-		‚±‚ÌŠÖ”‚ğg—p‚µ‚ÄA PostInteract() ‚Å predictively i—\‘ª“Ij‚ÉƒAƒNƒeƒBƒu‰»‚³‚ê‚éƒAƒrƒŠƒeƒB‚ğ•t—^‚µ‚ÄA AbilitySpec ‚ÌƒŒƒvƒŠƒP[ƒVƒ‡ƒ“ŠÔ‚ğ‰B‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+		ã“ã®é–¢æ•°ã‚’ä½¿ç”¨ã—ã¦ã€ PostInteract() ã§ predictively ï¼ˆäºˆæ¸¬çš„ï¼‰ã«ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–ã•ã‚Œã‚‹ã‚¢ãƒ“ãƒªãƒ†ã‚£ã‚’ä»˜ä¸ã—ã¦ã€ AbilitySpec ã®ãƒ¬ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æ™‚é–“ã‚’éš ã™ã“ã¨ãŒã§ãã¾ã™ã€‚
 		
-		predictively i—\‘ª“Ij‚É‰½‚©‚ğs‚¢‚½‚¢ê‡‚ÍA InteractingActor ‚©‚ç ASC ‚ğæ“¾‚µA ƒXƒR[ƒv•t‚« Prediction i—\‘ªjƒL[ ‚ğg—p‚µ‚Ü‚·B 
+		predictively ï¼ˆäºˆæ¸¬çš„ï¼‰ã«ä½•ã‹ã‚’è¡Œã„ãŸã„å ´åˆã¯ã€ InteractingActor ã‹ã‚‰ ASC ã‚’å–å¾—ã—ã€ ã‚¹ã‚³ãƒ¼ãƒ—ä»˜ã Prediction ï¼ˆäºˆæ¸¬ï¼‰ã‚­ãƒ¼ ã‚’ä½¿ç”¨ã—ã¾ã™ã€‚ 
 		
-		ƒvƒŒƒCƒ„[‚Ì‘h¶‚Å‚ÍA PreInteract() ‚ğA Interact Duration ‚Æ“¯‚¶ŠúŠÔ‘±‚­ƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶‚·‚éƒAƒrƒŠƒeƒB‚Ì‹N“®‚Ég—p‚µ‚Ä‚¢‚Ü‚·B
-		‚±‚ÌƒAƒrƒŠƒeƒB‚ªI—¹‚·‚é‚ÆA PostInteract() ‚ÅƒvƒŒƒCƒ„[‚ğ‘h¶‚³‚¹‚Ü‚·B
+		ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è˜‡ç”Ÿã§ã¯ã€ PreInteract() ã‚’ã€ Interact Duration ã¨åŒã˜æœŸé–“ç¶šãã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿã™ã‚‹ã‚¢ãƒ“ãƒªãƒ†ã‚£ã®èµ·å‹•ã«ä½¿ç”¨ã—ã¦ã„ã¾ã™ã€‚
+		ã“ã®ã‚¢ãƒ“ãƒªãƒ†ã‚£ãŒçµ‚äº†ã™ã‚‹ã¨ã€ PostInteract() ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è˜‡ç”Ÿã•ã›ã¾ã™ã€‚
 		Player revives use PreInteract() to trigger a ability that plays an animation that lasts the same duration as the Interact Duration.
 		If this ability finishes, it will revive the player in PostInteract().
 		
-		@param InteractingActor ‚±‚ÌƒAƒNƒ^[‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚·‚éƒAƒNƒ^[B‚±‚ê‚Í GameplayAbility ‚Ì AvatarActor ‚É‚È‚è‚Ü‚·B
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractingActor ã“ã®ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã™ã‚‹ã‚¢ã‚¯ã‚¿ãƒ¼ã€‚ã“ã‚Œã¯ GameplayAbility ã® AvatarActor ã«ãªã‚Šã¾ã™ã€‚
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	void PreInteract(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent);
@@ -162,18 +162,18 @@ public:
 		
 		@param InteractingActor The Actor interacting with this Actor. It will be the AvatarActor from a GameplayAbility.
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		‚±‚ÌƒAƒNƒ^[‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚µ‚Ü‚·B
-		‚±‚ÌŠÖ”‚Í Interact Duration ƒ^ƒCƒ}[‚ªŠ®—¹‚µ‚½Œã‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B
-		‚±‚ÌŠÖ”‚Å‚ÍA (predictively i—\‘ª‰Â”\j‚Ü‚½‚Í‚»‚¤‚Å‚Í‚È‚¢) GameplayEffects ‚Ì“K—pA (predictively i—\‘ª‰Â”\j‚Ü‚½‚Í‚»‚¤‚Å‚Í‚È‚¢) GameplayAbilities ‚Ì‹N“®‚È‚Ç‚Ìˆ—‚ğs‚¢‚Ü‚·B
+	å’Œè¨³
+		ã“ã®ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã—ã¾ã™ã€‚
+		ã“ã®é–¢æ•°ã¯ Interact Duration ã‚¿ã‚¤ãƒãƒ¼ãŒå®Œäº†ã—ãŸå¾Œã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
+		ã“ã®é–¢æ•°ã§ã¯ã€ (predictively ï¼ˆäºˆæ¸¬å¯èƒ½ï¼‰ã¾ãŸã¯ãã†ã§ã¯ãªã„) GameplayEffects ã®é©ç”¨ã€ (predictively ï¼ˆäºˆæ¸¬å¯èƒ½ï¼‰ã¾ãŸã¯ãã†ã§ã¯ãªã„) GameplayAbilities ã®èµ·å‹•ãªã©ã®å‡¦ç†ã‚’è¡Œã„ã¾ã™ã€‚
 
-		predictively i—\‘ª“Ij‚É‰½‚©‚ğs‚¢‚½‚¢ê‡‚ÍA InteractingActor ‚©‚ç ASC ‚ğæ“¾‚µA ƒXƒR[ƒv•t‚« Prediction i—\‘ªjƒL[ ‚ğg—p‚µ‚Ü‚·B
+		predictively ï¼ˆäºˆæ¸¬çš„ï¼‰ã«ä½•ã‹ã‚’è¡Œã„ãŸã„å ´åˆã¯ã€ InteractingActor ã‹ã‚‰ ASC ã‚’å–å¾—ã—ã€ ã‚¹ã‚³ãƒ¼ãƒ—ä»˜ã Prediction ï¼ˆäºˆæ¸¬ï¼‰ã‚­ãƒ¼ ã‚’ä½¿ç”¨ã—ã¾ã™ã€‚
 
-		GameplayAbility ‚ğ predictively i—\‘ª“Ij‚É‹N“®‚·‚é•K—v‚ª‚ ‚éê‡AƒvƒŒƒCƒ„[‚Ì ASC ‚É–‘O‚ÉƒAƒrƒŠƒeƒB‚ª•t—^‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚è‚Ü‚·B
-		ƒQ[ƒ€ŠJn‚É‘S‚Ä‚Ì predictive i—\‘ªj‰Â”\‚ÈƒAƒrƒŠƒeƒB‚ğ•t—^‚µ‚½‚­‚È‚¢ê‡‚ÍA PreInteract() ‚Å•t—^‚·‚é‚±‚Æ‚ÅAƒCƒ“ƒ^ƒ‰ƒNƒg‚É•K—v‚ÈŠÔ‚Ì’†‚É AbilitySpec ‚ÌƒŒƒvƒŠƒP[ƒVƒ‡ƒ“ŠÔ‚ğ‰B‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+		GameplayAbility ã‚’ predictively ï¼ˆäºˆæ¸¬çš„ï¼‰ã«èµ·å‹•ã™ã‚‹å¿…è¦ãŒã‚ã‚‹å ´åˆã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã® ASC ã«äº‹å‰ã«ã‚¢ãƒ“ãƒªãƒ†ã‚£ãŒä»˜ä¸ã•ã‚Œã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+		ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ã«å…¨ã¦ã® predictive ï¼ˆäºˆæ¸¬ï¼‰å¯èƒ½ãªã‚¢ãƒ“ãƒªãƒ†ã‚£ã‚’ä»˜ä¸ã—ãŸããªã„å ´åˆã¯ã€ PreInteract() ã§ä»˜ä¸ã™ã‚‹ã“ã¨ã§ã€ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã«å¿…è¦ãªæ™‚é–“ã®ä¸­ã« AbilitySpec ã®ãƒ¬ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æ™‚é–“ã‚’éš ã™ã“ã¨ãŒã§ãã¾ã™ã€‚
 
-		@param InteractingActor ‚±‚ÌƒAƒNƒ^[‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚·‚éƒAƒNƒ^[B‚±‚ê‚Í GameplayAbility ‚Ì AvatarActor ‚É‚È‚è‚Ü‚·B
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractingActor ã“ã®ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã™ã‚‹ã‚¢ã‚¯ã‚¿ãƒ¼ã€‚ã“ã‚Œã¯ GameplayAbility ã® AvatarActor ã«ãªã‚Šã¾ã™ã€‚
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	void PostInteract(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent);
@@ -185,11 +185,11 @@ public:
 		This will be called if the player releases input early.
 		
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		is’†‚ÌƒCƒ“ƒ^ƒ‰ƒNƒg‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚·B’Êí‚ÍA Interact Duration ƒ^ƒCƒ}[‚ğ‘Ò‚Á‚Ä‚¢‚éŠÔ‚É PreInteract() ‚Å‹N‚±‚Á‚Ä‚¢‚é–‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚·B
-		‚±‚ê‚ÍAƒvƒŒƒCƒ„[‚Ì“ü—Í‚ÌŠJ•ú‚ª‘‚©‚Á‚½ê‡‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B
+	å’Œè¨³
+		é€²è¡Œä¸­ã®ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã™ã€‚é€šå¸¸ã¯ã€ Interact Duration ã‚¿ã‚¤ãƒãƒ¼ã‚’å¾…ã£ã¦ã„ã‚‹é–“ã« PreInteract() ã§èµ·ã“ã£ã¦ã„ã‚‹äº‹ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã™ã€‚
+		ã“ã‚Œã¯ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å…¥åŠ›ã®é–‹æ”¾ãŒæ—©ã‹ã£ãŸå ´åˆã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
 
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
 	void CancelInteraction(UPrimitiveComponent* InteractionComponent);
@@ -200,10 +200,10 @@ public:
 		Returns a delegate for GA_Interact to bind to that fires when this Actor is canceling the interactiong (e.g. died).
 		
 		@param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
-	˜a–ó
-		GA_Interact ‚ªƒoƒCƒ“ƒh‚Å‚«‚é‚æ‚¤‚ÉAƒAƒNƒ^[‚ªƒCƒ“ƒ^ƒ‰ƒNƒg‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½i—á‚¦‚Î€–S‚µ‚½j‚É‹N“®‚·‚éƒfƒŠƒQ[ƒg‚ğ•Ô‚µ‚Ü‚·B
+	å’Œè¨³
+		GA_Interact ãŒãƒã‚¤ãƒ³ãƒ‰ã§ãã‚‹ã‚ˆã†ã«ã€ã‚¢ã‚¯ã‚¿ãƒ¼ãŒã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ãŸæ™‚ï¼ˆä¾‹ãˆã°æ­»äº¡ã—ãŸæ™‚ï¼‰ã«èµ·å‹•ã™ã‚‹ãƒ‡ãƒªã‚²ãƒ¼ãƒˆã‚’è¿”ã—ã¾ã™ã€‚
 		
-		@param InteractionComponent UPrimitiveComponent ‚ÍƒAƒNƒ^[‚ª•¡”‚Ì“Æ—§‚µ‚½ƒCƒ“ƒ^ƒ‰ƒNƒg‰Â”\‚ÈƒGƒŠƒA‚ğ‚Á‚Ä‚¢‚éê‡‚Ég—p‚µ‚Ü‚·B
+		@param InteractionComponent UPrimitiveComponent ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¤‡æ•°ã®ç‹¬ç«‹ã—ãŸã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯èƒ½ãªã‚¨ãƒªã‚¢ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ã—ã¾ã™ã€‚
 	*/
 	virtual FSimpleMulticastDelegate* GetTargetCancelInteractionDelegate(UPrimitiveComponent* InteractionComponent);
 
@@ -212,10 +212,10 @@ public:
 		Registers an Actor interacting with this Interactable. 
 		Used to send a GameplayEvent to them when this Interactable wishes to cancel interaction prematurely (e.g. a reviving player dies mid-revival). 
 		Not meant to be overriden.
-	˜a–ó
-		‚±‚Ì Interactable ‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚·‚éƒAƒNƒ^[‚ğ“o˜^‚·‚éB
-		‚±‚Ì Interactable ‚ªƒCƒ“ƒ^ƒ‰ƒNƒg‚ğ‘Šú‚ÉƒLƒƒƒ“ƒZƒ‹‚µ‚½‚¢ê‡i—á‚¦‚Î‘h¶’†‚ÌƒvƒŒƒCƒ„[‚ª‘h¶’†‚É€–S‚µ‚½ê‡j‚É GameplayEvent ‚ğ‘—‚é‚½‚ß‚Ég—p‚µ‚Ü‚·B
-		overriden ‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
+	å’Œè¨³
+		ã“ã® Interactable ã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã™ã‚‹ã‚¢ã‚¯ã‚¿ãƒ¼ã‚’ç™»éŒ²ã™ã‚‹ã€‚
+		ã“ã® Interactable ãŒã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’æ—©æœŸã«ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ãŸã„å ´åˆï¼ˆä¾‹ãˆã°è˜‡ç”Ÿä¸­ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè˜‡ç”Ÿä¸­ã«æ­»äº¡ã—ãŸå ´åˆï¼‰ã« GameplayEvent ã‚’é€ã‚‹ãŸã‚ã«ä½¿ç”¨ã—ã¾ã™ã€‚
+		overriden ã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable|Do Not Override")
 	void RegisterInteracter(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor);
@@ -225,9 +225,9 @@ public:
 	by GASShooter
 		Unregisters an interacting Actor from this Interactable. 
 		Not meant to be overriden.
-	˜a–ó
-		‚±‚Ì Interactable ‚ÆƒCƒ“ƒ^ƒ‰ƒNƒg‚·‚éƒAƒNƒ^[‚Ì“o˜^‚ğ‰ğœ‚·‚éB
-		overriden ‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
+	å’Œè¨³
+		ã“ã® Interactable ã¨ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã™ã‚‹ã‚¢ã‚¯ã‚¿ãƒ¼ã®ç™»éŒ²ã‚’è§£é™¤ã™ã‚‹ã€‚
+		overriden ã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable|Do Not Override")
 	void UnregisterInteracter(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor);
@@ -237,9 +237,9 @@ public:
 	by GASShooter
 		Interactable (or an external Actor, not the Interacter) wants to cancel the interaction (e.g. the reviving player dies mid-revival). 
 		Not meant to be overriden.
-	˜a–ó
-		Interactable i‚Ü‚½‚Í Interacter ‚Å‚Í‚È‚¢ŠO•”‚ÌƒAƒNƒ^[j‚ªƒCƒ“ƒ^ƒ‰ƒNƒg‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½‚¢ê‡i—á‚¦‚Î‘h¶’†‚ÌƒvƒŒƒCƒ„[‚ª‘h¶’†‚É€–S‚µ‚½ê‡j‚Ég—p‚µ‚Ü‚·B
-		overriden ‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
+	å’Œè¨³
+		Interactable ï¼ˆã¾ãŸã¯ Interacter ã§ã¯ãªã„å¤–éƒ¨ã®ã‚¢ã‚¯ã‚¿ãƒ¼ï¼‰ãŒã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ãŸã„å ´åˆï¼ˆä¾‹ãˆã°è˜‡ç”Ÿä¸­ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè˜‡ç”Ÿä¸­ã«æ­»äº¡ã—ãŸå ´åˆï¼‰ã«ä½¿ç”¨ã—ã¾ã™ã€‚
+		overriden ã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable|Do Not Override")
 	void InteractableCancelInteraction(UPrimitiveComponent* InteractionComponent);
