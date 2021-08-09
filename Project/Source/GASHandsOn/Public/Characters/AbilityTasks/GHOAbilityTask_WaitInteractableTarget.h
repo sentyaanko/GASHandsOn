@@ -15,7 +15,7 @@ by GASShooter
 	The StartLocations are hardcoded for GASShooter since we can be in first and third person so we have to check every time we trace. 
 	If you only have one start location, you should make it more generic with a parameter on your AbilityTask node.
 和訳
-	タイマーでライントレースを実行し、インタラクション可能な IGHOInteractable を実装したアクターを検索します。
+	タイマーでライントレースを実行し、インタラクト可能な IGHOInteractable を実装したアクターを検索します。
 	StartLocations は GASShooter ではハードコードされていて、一人称と三人称があるので、トレースするたびにチェックしなければなりません。
 	StartLocation が1つしかない場合は、 AbilityTask ノードにパラメータを指定して、より一般的なものにする必要があります。
 */

@@ -2,6 +2,7 @@
 
 
 #include "Characters/AbilityTasks/GHOAbilityTask_WaitInteractableTarget.h"
+#include "DrawDebugHelpers.h"
 #include "Characters/Interfaces/GHOInteractable.h"
 #include "Settings/GHOCollisions.h"
 #include "Characters/GHOHeroCharacterBase.h"
