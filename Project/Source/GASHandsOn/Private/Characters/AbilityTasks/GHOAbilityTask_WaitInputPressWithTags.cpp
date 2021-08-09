@@ -49,7 +49,12 @@ void UGHOAbilityTask_WaitInputPressWithTags::Activate()
 			}
 		}
 
+#if 1
+		//解説
+		//	UAbilityTask_WaitInputPress との差異
+		//	行っていることは同じですが、拡張の際に同じコードが必要となったので関数化しています。
 		SetDelegate();
+#endif
 	}
 }
 
@@ -62,6 +67,10 @@ void UGHOAbilityTask_WaitInputPressWithTags::OnPressCallback()
 		EndTask();
 		return;
 	}
+
+#if 1
+	//解説
+	//	GASShooter で機能拡張している部分です。
 
 	//by GASShooter
 	//	TODO move this into a tag query
@@ -85,14 +94,20 @@ void UGHOAbilityTask_WaitInputPressWithTags::OnPressCallback()
 		Reset();
 		return;
 	}
+#endif
 
+#if 1
+	//解説
+	//	UAbilityTask_WaitInputPress との差異
+	//	行っていることは同じですが、拡張の際に同じコードが必要となったので関数化しています。
 	RemoveDelegate();
+#endif
 
 	FScopedPredictionWindow ScopedPrediction(AbilitySystemComponent, IsPredictingClient());
 
 	if (IsPredictingClient())
 	{
-		//by GASShooter
+		//by Epic
 		//	Tell the server about this
 		//解説
 		//	サーバーにこれを伝える
@@ -103,7 +118,7 @@ void UGHOAbilityTask_WaitInputPressWithTags::OnPressCallback()
 		AbilitySystemComponent->ConsumeGenericReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, GetAbilitySpecHandle(), GetActivationPredictionKey());
 	}
 
-	//by GASShooter
+	//by Epic
 	//	We are done. Kill us so we don't keep getting broadcast messages
 	//解説
 	//	終わりました。キルすればブロードキャストメッセージを受け取り続けることはなくなります。
@@ -115,14 +130,33 @@ void UGHOAbilityTask_WaitInputPressWithTags::OnPressCallback()
 	EndTask();
 }
 
+//解説
+//	以下は GASShooter で追加している関数です。
+
 void UGHOAbilityTask_WaitInputPressWithTags::OnDestroy(bool AbilityEnded)
 {
 	RemoveDelegate();
 
+	//解説
+	//	>	//by Eipc
+	//	>	//	Called when the ability task is waiting on remote player data. 
+	//	>	//	IF the remote player ends the ability prematurely, and a task with this set is still running, the ability is killed.
+	//	>	//和訳
+	//	>	//	アビリティタスクがリモートプレイヤーのデータを待っている時に呼び出されます。
+	//	>	//	リモートプレイヤーがアビリティを早期に終了させ、これが設定されたタスクがまだ実行されている場合、そのアビリティはキルされます。
+	//	>	void SetWaitingOnRemotePlayerData();
+	//	>	void ClearWaitingOnRemotePlayerData();
+	//	>	virtual bool IsWaitingOnRemotePlayerdata() const override;
+	//	呼び出している関数は Clear なので、 リモートプレイヤーがアビリティを早期に終了させた際にキルされないようにしています。
+	//	同様なことを行っているアビリティタスクが UE4 のソース内にもないため、行っている理由は不明です。
+	//		TODO:理解するためには、前提としてネットワークを通じて GameplayAbility がどのように実行されているかを理解していることが必要なようなので、確認は一旦保留します。
 	ClearWaitingOnRemotePlayerData();
 
 	Super::OnDestroy(AbilityEnded);
 }
+
+//解説
+//	以下は共通部分をくくりだして関数化したものたちです。
 
 void UGHOAbilityTask_WaitInputPressWithTags::Reset()
 {
