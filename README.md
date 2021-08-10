@@ -169,7 +169,12 @@ Gameplay Ability System Hands On Project.
 * v0.1.5
 	* Hero の KnockDwon の組み込み
 	* 詳細は [./Documents/0.1.5.Ability-KnockDown.md](./Documents/0.1.5.Ability-KnockDown.md) を参照
-
+* v0.1.6
+	* `GameplayPrediction.h` に記載されている Epic による Gameplay Prediction に関するコメントの和訳追加
+	* 詳細は [./Documents/GameplayPrediction.md](./Documents/GameplayPrediction.md) ([和訳](./Documents/GameplayPrediction.jp.md)) を参照
+	* インタラクトシステム の組み込み
+	* Hero の Revive の組み込み
+	* 詳細は [./Documents/0.1.6.Ability-Interact-Revive.md](./Documents/0.1.6.Ability-Interact-Revive.md) を参照
 
 
 -----

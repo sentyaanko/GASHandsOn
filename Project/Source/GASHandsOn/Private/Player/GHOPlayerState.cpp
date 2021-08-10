@@ -108,6 +108,51 @@ void AGHOPlayerState::ShowAbilityConfirmCancelText(bool bShowText)
 	}
 }
 
+void AGHOPlayerState::ShowInteractionPrompt(float InteractionDuration)
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->ShowInteractionPrompt(InteractionDuration);
+		}
+	}
+}
+
+void AGHOPlayerState::HideInteractionPrompt()
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->HideInteractionPrompt();
+		}
+	}
+}
+
+void AGHOPlayerState::StartInteractionTimer(float InteractionDuration)
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->StartInteractionTimer(InteractionDuration);
+		}
+	}
+}
+
+void AGHOPlayerState::StopInteractionTimer()
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->StopInteractionTimer();
+		}
+	}
+}
+
+
 void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 {
 	const float Health = Data.NewValue;

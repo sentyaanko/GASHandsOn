@@ -15,7 +15,71 @@ UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 	DeadTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead));
 	KnockedDownTag = FGameplayTag::RequestGameplayTag(TAG_State_KnockedDown);
 	StunTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun));
+	InteractingTag = FGameplayTag::RequestGameplayTag(TAG_State_Interacting);
+	InteractingRemovalTag = FGameplayTag::RequestGameplayTag(TAG_State_Interacting_Removal);
+	ReviveTag = FGameplayTag::RequestGameplayTag(TAG_Ability_Revive);
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName(TAG_Effect_RemoveOnDeath));
+}
+
+void UGHOAbilitySystemComponent::AbilityLocalInputPressed(int32 InputID)
+{
+	//解説
+	//	この関数はほぼ UAbilitySystemComponent のコピーです。
+	//	#if で囲われた部分のみ異なります。
+	// Consume the input if this InputID is overloaded with GenericConfirm/Cancel and the GenericConfim/Cancel callback is bound
+	if (IsGenericConfirmInputBound(InputID))
+	{
+		LocalInputConfirm();
+		return;
+	}
+
+	if (IsGenericCancelInputBound(InputID))
+	{
+		LocalInputCancel();
+		return;
+	}
+
+	// ---------------------------------------------------------
+
+	ABILITYLIST_SCOPE_LOCK();
+	for (FGameplayAbilitySpec& Spec : ActivatableAbilities.Items)
+	{
+		if (Spec.InputID == InputID)
+		{
+			if (Spec.Ability)
+			{
+				Spec.InputPressed = true;
+				if (Spec.IsActive())
+				{
+					if (Spec.Ability->bReplicateInputDirectly && IsOwnerActorAuthoritative() == false)
+					{
+						ServerSetInputPressed(Spec.Handle);
+					}
+
+					AbilitySpecInputPressed(Spec);
+
+					// Invoke the InputPressed event. This is not replicated here. If someone is listening, they may replicate the InputPressed event to the server.
+					InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, Spec.ActivationInfo.GetActivationPredictionKey());
+				}
+				else
+				{
+#if 0
+					// Ability is not active, so try to activate it
+					TryActivateAbility(Spec.Handle);
+#else
+					if (UGHOGameplayAbility* GA = Cast<UGHOGameplayAbility>(Spec.Ability))
+					{
+						if (GA->IsActivateOnInput())
+						{
+							// Ability is not active, so try to activate it
+							TryActivateAbility(Spec.Handle);
+						}
+					}
+#endif
+				}
+			}
+		}
+	}
 }
 
 void UGHOAbilitySystemComponent::InitializeAttributes(class AGHOCharacterBase* InSourceObject)
@@ -155,8 +219,7 @@ void UGHOAbilitySystemComponent::Die()
 {
 	CancelAllAbilities();
 
-	FGameplayTagContainer EffectTagsToRemove;
-	EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+	FGameplayTagContainer EffectTagsToRemove(EffectRemoveOnDeathTag);
 	const int32 NumEffectsRemoved = RemoveActiveEffectsWithTags(EffectTagsToRemove);
 
 	AddLooseGameplayTag(DeadTag);
@@ -172,8 +235,7 @@ void UGHOAbilitySystemComponent::Down(const class UGameplayEffect* GameplayEffec
 {
 	CancelAllAbilities();
 
-	FGameplayTagContainer EffectTagsToRemove;
-	EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+	FGameplayTagContainer EffectTagsToRemove(EffectRemoveOnDeathTag);
 	int32 NumEffectsRemoved = RemoveActiveEffectsWithTags(EffectTagsToRemove);
 
 	ApplyGameplayEffectToSelf(GameplayEffect, 1.0f, MakeEffectContext());
@@ -186,13 +248,32 @@ bool UGHOAbilitySystemComponent::IsStun() const
 
 void UGHOAbilitySystemComponent::CancelAbilitiesByStun()
 {
-	FGameplayTagContainer AbilityTagsToCancel;
-	AbilityTagsToCancel.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability)));
+	FGameplayTagContainer AbilityTagsToCancel(FGameplayTag::RequestGameplayTag(FName(TAG_Ability)));
 
-	FGameplayTagContainer AbilityTagsToIgnore;
-	AbilityTagsToIgnore.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_NotCanceledByStun)));
+	FGameplayTagContainer AbilityTagsToIgnore(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_NotCanceledByStun)));
 
 	CancelAbilities(&AbilityTagsToCancel, &AbilityTagsToIgnore);
+}
+bool UGHOAbilitySystemComponent::IsInteracting() const
+{
+	return HasMatchingGameplayTag(InteractingTag);
+}
+
+bool UGHOAbilitySystemComponent::IsInteractingBeforeRemoval() const
+{
+	return GetTagCount(InteractingTag) > GetTagCount(InteractingRemovalTag);
+}
+
+void UGHOAbilitySystemComponent::TryActivateRevive()
+{
+	FGameplayTagContainer ReviveTags(ReviveTag);
+	TryActivateAbilitiesByTag(ReviveTags);
+}
+
+void UGHOAbilitySystemComponent::CancelRevive()
+{
+	FGameplayTagContainer ReviveTags(ReviveTag);
+	CancelAbilities(&ReviveTags);
 }
 
 void UGHOAbilitySystemComponent::ReceiveDamage(UGHOAbilitySystemComponent * SourceASC, float UnmitigatedDamage, float MitigatedDamage)
@@ -214,4 +295,55 @@ void UGHOAbilitySystemComponent::AddGameplayCueLocal(const FGameplayTag Gameplay
 void UGHOAbilitySystemComponent::RemoveGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters)
 {
 	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::Removed, GameplayCueParameters);
+}
+
+FActiveGameplayEffectHandle UGHOAbilitySystemComponent::BP_ApplyGameplayEffectToSelfWithPrediction(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level, FGameplayEffectContextHandle EffectContext)
+{
+	if (GameplayEffectClass)
+	{
+		if (!EffectContext.IsValid())
+		{
+			EffectContext = MakeEffectContext();
+		}
+
+		UGameplayEffect* GameplayEffect = GameplayEffectClass->GetDefaultObject<UGameplayEffect>();
+
+		if (CanPredict())
+		{
+			return ApplyGameplayEffectToSelf(GameplayEffect, Level, EffectContext, ScopedPredictionKey);
+		}
+
+		return ApplyGameplayEffectToSelf(GameplayEffect, Level, EffectContext);
+	}
+
+	return FActiveGameplayEffectHandle();
+}
+
+FActiveGameplayEffectHandle UGHOAbilitySystemComponent::BP_ApplyGameplayEffectToTargetWithPrediction(TSubclassOf<UGameplayEffect> GameplayEffectClass, UAbilitySystemComponent* Target, float Level, FGameplayEffectContextHandle Context)
+{
+	if (Target == nullptr)
+	{
+		ABILITY_LOG(Log, TEXT("UGHOAbilitySystemComponent::BP_ApplyGameplayEffectToTargetWithPrediction called with null Target. %s. Context: %s"), *GetFullName(), *Context.ToString());
+		return FActiveGameplayEffectHandle();
+	}
+
+	if (GameplayEffectClass == nullptr)
+	{
+		ABILITY_LOG(Error, TEXT("UGHOAbilitySystemComponent::BP_ApplyGameplayEffectToTargetWithPrediction called with null GameplayEffectClass. %s. Context: %s"), *GetFullName(), *Context.ToString());
+		return FActiveGameplayEffectHandle();
+	}
+
+	UGameplayEffect* GameplayEffect = GameplayEffectClass->GetDefaultObject<UGameplayEffect>();
+
+	if (CanPredict())
+	{
+		return ApplyGameplayEffectToTarget(GameplayEffect, Target, Level, Context, ScopedPredictionKey);
+	}
+
+	return ApplyGameplayEffectToTarget(GameplayEffect, Target, Level, Context);
+}
+
+int32 UGHOAbilitySystemComponent::K2_GetTagCount(FGameplayTag TagToCheck) const
+{
+	return GetTagCount(TagToCheck);
 }
