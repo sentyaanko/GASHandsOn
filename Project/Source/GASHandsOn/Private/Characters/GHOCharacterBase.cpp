@@ -148,6 +148,14 @@ bool AGHOCharacterBase::IsMovable()const
 		{
 			return false;
 		}
+		//by GASShooter
+		//	Don't move while interacting or being interacted on (revived)
+		//和訳
+		//	インタラクト中またはインタラクション（蘇生）をされている間は動かない
+		if (asc->IsInteractingBeforeRemoval())
+		{
+			return false;
+		}
 	}
 	else
 	{

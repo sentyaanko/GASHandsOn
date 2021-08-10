@@ -14,7 +14,7 @@ by GASDocumentation
 	Blueprint node to automatically register a listener for changes to a GameplayEffect's stack count based on an Asset or Granted tag on the Effect.
 	Useful to use in UI.
 和訳
-	Effect のアセット又は Granted タグに基づいて GameplayEffect のスタックカウントが変更された場合に自動的にリスナーを登録するブループリントノード
+	Effect のアセット又は Granted タグに基づいて GameplayEffect のスタックカウントが変更された場合にリスナーを自動的に登録するブループリントノード
 	UI での使用に便利です。
 */
 UCLASS(BlueprintType, meta = (ExposedAsyncProxy = AsyncTask))

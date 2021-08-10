@@ -34,7 +34,32 @@ public:
 	*/
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 
+	/**
+	by Epic
+		const function to see if ability is activatable. Callable by UI etc
+
+		Returns true if this ability can be activated right now. Has no side effects 
+	和訳
+		アビリティが起動可能かどうかを確認するための const 関数です。 UI などで呼び出し可能です。
+
+		このアビリティが今すぐにでも起動できる場合は true を返します。副作用はありません。
+	*/
+	virtual bool CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags = nullptr, const FGameplayTagContainer* TargetTags = nullptr, OUT FGameplayTagContainer* OptionalRelevantTags = nullptr) const override;
+
 	// End of UGameplayAbility interface
+
+public:
+	bool IsActivateOnInput()const { return bActivateOnInput; }
+
+protected:
+	/*
+	by GASShooter
+		Is the player's input currently pressed? Only works if the ability is bound to input.
+	和訳
+		プレイヤーの入力は現在押されているか？アビリティが入力にバインドされている場合のみ動作します。
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Ability")
+	virtual bool IsInputPressed() const;
 
 public:
 	/*
@@ -57,6 +82,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
 	EGHOAbilityInputID AbilityID = EGHOAbilityInputID::None;
 
+protected:
 	/*
 	by GASDocumentation
 		Tells an ability to activate immediately when its granted. 
@@ -67,5 +93,25 @@ public:
 	*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
 	bool bActivateAbilityOnGranted = false;
+
+	/*
+	by GASShooter
+		If true, this ability will activate when its bound input is pressed. 
+		Disable if you want to bind an ability to an input but not have it activate when pressed.
+	和訳
+		true の場合、このアビリティはバインドされた入力が押された時に起動します。
+		入力にアビリティを割り当てたいが、押されても起動しないようにしたい場合は無効にします。
+	*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	bool bActivateOnInput;
+
+	/*
+	by GASShooter
+		If true, only activate this ability if not interacting with something via GA_Interact.
+	和訳
+		true の場合、 GA_Interact を介して何かとインタラクトしていない場合にのみ、このアビリティを起動します。
+	*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	bool bCannotActivateWhileInteracting;
 
 };
