@@ -150,6 +150,8 @@ void UGHOAbilityTask_WaitInputPressWithTags::OnDestroy(bool AbilityEnded)
 	//	呼び出している関数は Clear なので、 リモートプレイヤーがアビリティを早期に終了させた際にキルされないようにしています。
 	//	同様なことを行っているアビリティタスクが UE4 のソース内にもないため、行っている理由は不明です。
 	//		TODO:理解するためには、前提としてネットワークを通じて GameplayAbility がどのように実行されているかを理解していることが必要なようなので、確認は一旦保留します。
+	//	SetDelegate() では SetWaitingOnRemotePlayerData() を呼び出しています。
+	//	SetWaitingOnRemotePlayerData() の件については（ UAbilityTask_WaitInputRelease のケースではありますが） GA_InteractActive のコメントにも情報があります。
 	ClearWaitingOnRemotePlayerData();
 
 	Super::OnDestroy(AbilityEnded);

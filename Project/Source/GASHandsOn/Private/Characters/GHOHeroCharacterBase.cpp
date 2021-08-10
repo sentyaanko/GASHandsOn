@@ -20,6 +20,7 @@
 #include "Settings/GHODefaultClasses.h"
 #include "AI/GHOHeroAIController.h"
 #include "Settings/GHOGameplayTags.h"
+#include "Settings/GHOCollisions.h"
 
 
 
@@ -67,9 +68,18 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 		ボーンとソケットのトランスフォームを使用して
 		発射物やその他の FX をスポーンすることができるようにします。
 	*/
+#if 0
 	GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionProfileName(FName("NoCollision"));
+#else
+	GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPose;
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->SetCollisionProfileName(FName("NoCollision"));
+	GetMesh()->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
+	GetMesh()->bCastHiddenShadow = true;
+	GetMesh()->bReceivesDecals = false;
+#endif
 
 	UIFloatingStatusBarComponent = CreateDefaultSubobject<UWidgetComponent>(FName("UIFloatingStatusBarComponent"));
 	UIFloatingStatusBarComponent->SetupAttachment(RootComponent);

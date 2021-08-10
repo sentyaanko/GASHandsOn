@@ -22,6 +22,22 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
 	void SetRespawnCountdown(float RespawnTimeRemaining);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
+	void ShowInteractionPrompt(float InteractionDuration);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
+	void HideInteractionPrompt();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
+	void StartInteractionTimer(float InteractionDuration);
+
+	//GASShooter
+	//	Interaction interrupted, cancel and hide HUD interact timer
+	//和訳
+	//	インタラクトが割り込まれた、キャンセルし、 HUD のインタラクトタイマーを非表示にする。
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StopInteractionTimer();
+
 	/**
 	* Attribute setters
 	*/

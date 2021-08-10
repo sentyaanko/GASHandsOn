@@ -43,6 +43,22 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
 	void ShowAbilityConfirmCancelText(bool bShowText);
 
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
+	void ShowInteractionPrompt(float InteractionDuration);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
+	void HideInteractionPrompt();
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
+	void StartInteractionTimer(float InteractionDuration);
+
+	//GASShooter
+	//	Interaction interrupted, cancel and hide HUD interact timer
+	//和訳
+	//	インタラクトが割り込まれた、キャンセルし、 HUD のインタラクトタイマーを非表示にする。
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
+	void StopInteractionTimer();
+
 private:
 	/*
 	by Epic
