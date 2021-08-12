@@ -5,6 +5,7 @@
 #include "Player/GHOPlayerState.h"
 #include "AbilitySystemComponent.h"
 #include "UI/GHOHUDWidget.h"
+#include "UI/GHOHUDReticle.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
 #include "Characters/GHOCharacterBase.h"
 #include "Settings/GHODefaultClasses.h"
@@ -83,6 +84,66 @@ void AGHOPlayerController::OnPossess(APawn* aPawn)
 	if (AGHOPlayerState* playerState = GetPlayerState<AGHOPlayerState>())
 	{
 		playerState->GetAbilitySystemComponent()->InitAbilityActorInfo(playerState, aPawn);
+	}
+}
+
+void AGHOPlayerController::SetEquippedWeaponPrimaryIconFromSprite(UPaperSprite* InSprite)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetEquippedWeaponSprite(InSprite);
+	}
+}
+
+void AGHOPlayerController::SetEquippedWeaponStatusText(const FText& StatusText)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetEquippedWeaponStatusText(StatusText);
+	}
+}
+
+void AGHOPlayerController::SetPrimaryClipAmmo(int32 ClipAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetPrimaryClipAmmo(ClipAmmo);
+	}
+}
+
+void AGHOPlayerController::SetPrimaryReserveAmmo(int32 ReserveAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetPrimaryReserveAmmo(ReserveAmmo);
+	}
+}
+
+void AGHOPlayerController::SetSecondaryClipAmmo(int32 SecondaryClipAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetSecondaryClipAmmo(SecondaryClipAmmo);
+	}
+}
+
+void AGHOPlayerController::SetSecondaryReserveAmmo(int32 SecondaryReserveAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetSecondaryReserveAmmo(SecondaryReserveAmmo);
+	}
+}
+
+void AGHOPlayerController::SetHUDReticle(TSubclassOf<UGHOHUDReticle> ReticleClass)
+{
+	//by GASShooter
+	//	!GetWorld()->bIsTearingDown Stops an error when quitting PIE while targeting when the EndAbility resets the HUD reticle
+	//和訳
+	//	"!GetWorld()->bIsTearingDown" は EndAbility で HUD レティクルをリセットする時、ターゲティング中に PIE を終了する時にエラーが発生するのを止める。
+	if (UIHUDWidget && GetWorld() && !GetWorld()->bIsTearingDown)
+	{
+		UIHUDWidget->SetReticle(ReticleClass);
 	}
 }
 

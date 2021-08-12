@@ -39,6 +39,35 @@ public:
 	void StopInteractionTimer();
 
 	/**
+	* Weapon info
+	*/
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetEquippedWeaponSprite(UPaperSprite* Sprite);
+
+	//by GASShooter
+	//	Things like fire mode for rifle
+	//和訳
+	//	ライフルの射撃モード等
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetEquippedWeaponStatusText(const FText& StatusText);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetPrimaryClipAmmo(int32 ClipAmmo);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetSecondaryClipAmmo(int32 SecondaryClipAmmo);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetSecondaryReserveAmmo(int32 SecondaryReserveAmmo);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetReticle(TSubclassOf<class UGHOHUDReticle> ReticleClass);
+
+	/**
 	* Attribute setters
 	*/
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")

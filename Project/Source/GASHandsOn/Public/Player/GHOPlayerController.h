@@ -7,6 +7,9 @@
 #include "UI/GHOFloatingDamageTextComponent.h"
 #include "GHOPlayerController.generated.h"
 
+class UPaperSprite;
+
+
 /**
  * 
  */
@@ -30,6 +33,31 @@ protected:
 public:
 	void CreateHUD();
 	class UGHOHUDWidget* GetHUD() { return UIHUDWidget; }
+
+	/**
+	* Weapon HUD info
+	*/
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetEquippedWeaponPrimaryIconFromSprite(UPaperSprite* InSprite);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetEquippedWeaponStatusText(const FText& StatusText);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetPrimaryClipAmmo(int32 ClipAmmo);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetSecondaryClipAmmo(int32 SecondaryClipAmmo);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetSecondaryReserveAmmo(int32 SecondaryReserveAmmo);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetHUDReticle(TSubclassOf<class UGHOHUDReticle> ReticleClass);
 
 	/*
 	解説
