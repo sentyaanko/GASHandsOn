@@ -63,7 +63,7 @@ public:
 	virtual bool IsAlive() const;
 
 	/**
-	* Getters for attributes from GSAttributeSetBase
+	* Getters for attributes from GHOAttributeSetBase
 	**/
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")

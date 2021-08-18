@@ -8,10 +8,10 @@
 /**
 by GASShooter
 	Reusable, configurable line trace TargetActor.
-	Meant to be used with GSAT_WaitTargetDataUsingActor instead of the default WaitTargetData AbilityTask as the default one will destroy the TargetActor.
+	Meant to be used with GHOAbilityTask_WaitTargetDataUsingActor instead of the default WaitTargetData AbilityTask as the default one will destroy the TargetActor.
 和訳
 	再利用可能で設定可能なライントレース TargetActor 。
-	デフォルトの WaitTargetData アビリティタスクでは TargetActor が破壊されてしまうので、 GHOAT_WaitTargetDataUsingActor と一緒に使うことを想定しています。
+	デフォルトの WaitTargetData アビリティタスクでは TargetActor が破壊されてしまうので、 GHOAbilityTask_WaitTargetDataUsingActor と一緒に使うことを想定しています。
  */
 
 AGHOGATA_LineTrace::AGHOGATA_LineTrace()

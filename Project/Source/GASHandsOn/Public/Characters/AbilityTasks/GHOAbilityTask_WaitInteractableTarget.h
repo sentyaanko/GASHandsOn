@@ -11,7 +11,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitInteractableTargetDelegate, con
 
 /**
 by GASShooter
-	Performs a line trace on a timer, looking for an Actor that implements IGSInteractable that is available for interaction.
+	Performs a line trace on a timer, looking for an Actor that implements IGHOInteractable that is available for interaction.
 	The StartLocations are hardcoded for GASShooter since we can be in first and third person so we have to check every time we trace. 
 	If you only have one start location, you should make it more generic with a parameter on your AbilityTask node.
 和訳

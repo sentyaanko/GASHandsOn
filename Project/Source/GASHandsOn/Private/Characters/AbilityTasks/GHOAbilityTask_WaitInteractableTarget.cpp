@@ -250,7 +250,7 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 	if (!SourceActor)
 	{
 		// Hero is dead
-		//UE_LOG(LogTemp, Error, TEXT("%s %s SourceActor was null"), *FString(__FUNCTION__), *UGSBlueprintFunctionLibrary::GetPlayerEditorWindowRole(GetWorld()));
+		//UE_LOG(LogTemp, Error, TEXT("%s %s SourceActor was null"), *FString(__FUNCTION__), *UGHOBlueprintFunctionLibrary::GetPlayerEditorWindowRole(GetWorld()));
 		return;
 	}
 

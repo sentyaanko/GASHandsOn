@@ -378,7 +378,7 @@ TArray<FHitResult> AGHOGATA_Trace::PerformTrace(AActor* InSourceActor)
 
 	ActorsToIgnore.Add(InSourceActor);
 
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(AGSGATA_LineTrace), bTraceComplex);
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(AGHOGATA_LineTrace), bTraceComplex);
 	Params.bReturnPhysicalMaterial = true;
 	Params.AddIgnoredActors(ActorsToIgnore);
 	Params.bIgnoreBlocks = bIgnoreBlockingHits;

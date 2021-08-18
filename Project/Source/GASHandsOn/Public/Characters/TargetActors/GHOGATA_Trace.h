@@ -14,7 +14,7 @@
 /**
 by GASShooter
 	Reusable, configurable trace TargetActor. Subclass with your own trace shapes.
-	Meant to be used with GSAT_WaitTargetDataUsingActor instead of the default WaitTargetData AbilityTask as the default one will destroy the TargetActor.
+	Meant to be used with GHOAT_WaitTargetDataUsingActor instead of the default WaitTargetData AbilityTask as the default one will destroy the TargetActor.
 和訳
 	再利用可能で設定可能なトレース TargetActor 。独自のトレース形状を持つサブクラスがあります。
 	デフォルトの WaitTargetData アビリティタスクでは TargetActor が破壊されてしまうので、 GHOAT_WaitTargetDataUsingActor と一緒に使うことを想定しています。
