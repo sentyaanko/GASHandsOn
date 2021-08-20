@@ -39,6 +39,7 @@ public:
 
 public:
 	class UGHOAttributeSetBase* GetAttributeSetBase()const;
+	class UGHOAttributeSetAmmo* GetAttributeSetAmmo()const;
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
 	void ShowAbilityConfirmCancelText(bool bShowText);
@@ -94,6 +95,9 @@ private:
 
 	UPROPERTY()
 	class UGHOAttributeSetBase* AttributeSetBase;
+
+	UPROPERTY()
+	class UGHOAttributeSetAmmo* AttributeSetAmmo;
 
 	FDelegateHandle HealthChangedDelegateHandle;
 	FDelegateHandle HealthMaxChangedDelegateHandle;

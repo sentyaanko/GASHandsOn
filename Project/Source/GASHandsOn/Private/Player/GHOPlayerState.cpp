@@ -4,6 +4,7 @@
 #include "Player/GHOPlayerState.h"
 #include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetAmmo.h"
 #include "Characters/GHOHeroCharacterBase.h"
 #include "Player/GHOPlayerController.h"
 #include "UI/GHOHUDWidget.h"
@@ -45,6 +46,8 @@ AGHOPlayerState::AGHOPlayerState()
 		AttributeSet を AbilitySystemComponent に自動的に登録します。
 	*/
 	AttributeSetBase = CreateDefaultSubobject< UGHOAttributeSetBase>(TEXT("AttributeSetBase"));
+
+	AttributeSetAmmo = CreateDefaultSubobject<UGHOAttributeSetAmmo>(TEXT("AmmoAttributeSet"));
 
 	/*
 	by GASDocumentation
@@ -96,6 +99,12 @@ UGHOAttributeSetBase* AGHOPlayerState::GetAttributeSetBase()const
 {
 	return AttributeSetBase;
 }
+
+UGHOAttributeSetAmmo* AGHOPlayerState::GetAttributeSetAmmo()const
+{
+	return AttributeSetAmmo;
+}
+
 
 void AGHOPlayerState::ShowAbilityConfirmCancelText(bool bShowText)
 {
