@@ -1,0 +1,31 @@
+/'
+SimulatedProxy での CurrentWeapon の初期化
+Case1 PlayerState -> CurrentWeapon の順にレプリケーションされた場合
+'/
+@startuml CurrentWeapon-Initialize-SimulatedProxy-Case1
+autoactivate on
+Authority -> SimulatedProxy : replicate PlayerState
+return
+hnote over SimulatedProxy #FFAAAA: sync PlayerState with Authority
+SimulatedProxy -> SimulatedProxy : OnRep_PlayerState
+hnote over SimulatedProxy #AAAAFF: CurrentWeapon is not active
+return
+|||
+Authority -> SimulatedProxy : replicate Inventory
+return
+hnote over SimulatedProxy #FFAAAA: sync Inventory with Authority
+SimulatedProxy -> SimulatedProxy : OnRep_Inventory
+return
+|||
+hnote over Authority #AAFFAA: CurrentWeapon will only send to simulated actors.
+Authority -> SimulatedProxy: replicate CurrentWeapon
+return
+hnote over SimulatedProxy #FFAAAA: sync CurrentWeapon with Authority
+SimulatedProxy -> SimulatedProxy: OnRep_CurrentWeapon(LastWeapon)
+rnote over SimulatedProxy : bChangedWeaponLocally = false
+SimulatedProxy -> SimulatedProxy: SetCurrentWeapon(CurrentWeapon)
+rnote over SimulatedProxy : set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+return
+return
+
+@enduml

@@ -1,0 +1,37 @@
+/'
+CurrentWeapon の変更
+'/
+@startuml CurrentWeapon-Change
+autoactivate on
+AutonomousProxy -> AutonomousProxy: EquipWeapon(NewWeapon)
+AutonomousProxy -> AutonomousProxy: RPCServerEquipWeapon(NewWeapon)
+return
+AutonomousProxy -> AutonomousProxy: SetCurrentWeapon(NewWeapon)
+rnote over AutonomousProxy : locally update CurrentWeapon to NewWeapon
+return
+rnote over AutonomousProxy : bChangedWeaponLocally = true
+return
+
+AutonomousProxy -> Authority: rpc RPCServerEquipWeapon(NewWeapon)
+return
+Authority -> Authority : RPCServerEquipWeapon(NewWeapon)
+Authority -> Authority : EquipWeapon(NewWeapon)
+Authority -> Authority: SetCurrentWeapon(NewWeapon)
+rnote over Authority: CurrentWeapon = NewWeapon
+hnote over Authority #FFAAAA: sync CurrentWeapon with AutonomousProxy
+return
+return
+return
+hnote over Authority #AAFFAA: CurrentWeapon will only send to simulated actors.
+
+Authority -> SimulatedProxy: replicate CurrentWeapon
+return
+hnote over SimulatedProxy #FFAAAA: sync CurrentWeapon with Authority
+SimulatedProxy -> SimulatedProxy: OnRep_CurrentWeapon(LastWeapon)
+rnote over SimulatedProxy : bChangedWeaponLocally = false
+SimulatedProxy -> SimulatedProxy: SetCurrentWeapon(CurrentWeapon)
+rnote over SimulatedProxy : set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+return
+return
+
+@enduml
