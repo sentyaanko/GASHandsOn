@@ -3,35 +3,90 @@ CurrentWeapon の変更
 '/
 @startuml CurrentWeapon-Change
 autoactivate on
-AutonomousProxy -> AutonomousProxy: EquipWeapon(NewWeapon)
-AutonomousProxy -> AutonomousProxy: RPCServerEquipWeapon(NewWeapon)
-return
-AutonomousProxy -> AutonomousProxy: SetCurrentWeapon(NewWeapon)
-rnote over AutonomousProxy : locally update CurrentWeapon to NewWeapon
-return
-rnote over AutonomousProxy : bChangedWeaponLocally = true
+AutonomousProxy -> AutonomousProxy: exec GA_NextWeapon / GA_PreviousWeapon LocalPredicted
+	AutonomousProxy -> AutonomousProxy: NextWeapon() / PreviousWeapon()
+		AutonomousProxy -> AutonomousProxy: EquipWeapon(NewWeapon)
+			group This may not be necessary.
+				AutonomousProxy -> AutonomousProxy: RPCServerEquipWeapon(NewWeapon)
+				return
+			end
+			AutonomousProxy -> AutonomousProxy: SetCurrentWeapon(NewWeapon)
+				rnote over AutonomousProxy: locally update CurrentWeapon to NewWeapon
+			return
+		rnote over AutonomousProxy: bChangedWeaponLocally = true
+		return
+	return
+	AutonomousProxy -> AutonomousProxy: ApplyGameplayEffectToOwner(GE_WeaponIsChangingDelayReplicationTag)
+		rnote over AutonomousProxy: Set `Ability.Weapon.IsChangingDelayReplication` Tag
+	return
 return
 
-AutonomousProxy -> Authority: rpc RPCServerEquipWeapon(NewWeapon)
+AutonomousProxy -> Authority: CallServerTryActivateAbility(GA_NextWeapon / GA_PreviousWeapon)
 return
-Authority -> Authority : RPCServerEquipWeapon(NewWeapon)
-Authority -> Authority : EquipWeapon(NewWeapon)
-Authority -> Authority: SetCurrentWeapon(NewWeapon)
-rnote over Authority: CurrentWeapon = NewWeapon
-hnote over Authority #FFAAAA: sync CurrentWeapon with AutonomousProxy
+Authority -> Authority: exec GA_NextWeapon / GA_PreviousWeapon
+	Authority -> Authority: NextWeapon() / PreviousWeapon()
+		Authority -> Authority: EquipWeapon(NewWeapon)
+			Authority -> Authority: SetCurrentWeapon(NewWeapon)
+				rnote over Authority: CurrentWeapon = NewWeapon
+				hnote over Authority #FFAAAA: sync CurrentWeapon with AutonomousProxy
+			return
+		return
+	return
+	Authority -> Authority: ApplyGameplayEffectToOwner(GE_WeaponIsChangingDelayReplicationTag)
+		rnote over Authority: Set `Ability.Weapon.IsChangingDelayReplication` Tag
+	return
 return
-return
-return
+
+group This may not be necessary. [Because the Authority's CurrentWeapon has been updated in GA_NextWeapon / GA_PreviousWeapon.]
+	AutonomousProxy -> Authority: rpc RPCServerEquipWeapon(NewWeapon)
+	return
+	Authority -> Authority: RPCServerEquipWeapon(NewWeapon)
+		Authority -> Authority: EquipWeapon(NewWeapon)
+			Authority -> Authority: SetCurrentWeapon(NewWeapon)
+				rnote over Authority: CurrentWeapon = NewWeapon
+				hnote over Authority #FFAAAA: sync CurrentWeapon with AutonomousProxy
+			return
+		return
+	return
+end
+
 hnote over Authority #AAFFAA: CurrentWeapon will only send to simulated actors.
 
 Authority -> SimulatedProxy: replicate CurrentWeapon
 return
 hnote over SimulatedProxy #FFAAAA: sync CurrentWeapon with Authority
 SimulatedProxy -> SimulatedProxy: OnRep_CurrentWeapon(LastWeapon)
-rnote over SimulatedProxy : bChangedWeaponLocally = false
-SimulatedProxy -> SimulatedProxy: SetCurrentWeapon(CurrentWeapon)
-rnote over SimulatedProxy : set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+	rnote over SimulatedProxy: bChangedWeaponLocally = false
+	SimulatedProxy -> SimulatedProxy: SetCurrentWeapon(CurrentWeapon)
+		rnote over SimulatedProxy: set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+	return
 return
+
+... 1.5 seconds later ...
+
+Authority -> Authority: remove GE_WeaponIsChangingDelayReplicationTag(expired)
+	rnote over Authority: remove `Ability.Weapon.IsChangingDelayReplication` Tag
+return
+rnote over Authority: Call `Ability.Weapon.IsChangingDelayReplication` Tag change callback
+Authority -> Authority: WeaponChangingDelayReplicationTagChanged()
+	Authority -> Authority: RPCClientSyncCurrentWeapon(CurrentWeapon)
+	return
+return
+
+rnote over Authority: InWeapon = CurrentWeapon
+hnote over Authority #AAFFAA: RPCClient*** will only send to autonomous actors.
+Authority -> AutonomousProxy: rpc RPCClientSyncCurrentWeapon(InWeapon)
+return
+
+AutonomousProxy -> AutonomousProxy: RPCClientSyncCurrentWeapon(InWeapon)
+	rnote over AutonomousProxy: LastWeapon = CurrentWeapon\nCurrentWeapon = InWeapon
+	hnote over AutonomousProxy #FFAAAA: sync CurrentWeapon with Authority
+	AutonomousProxy -> AutonomousProxy: OnRep_CurrentWeapon(LastWeapon)
+		rnote over AutonomousProxy: bChangedWeaponLocally = false
+		AutonomousProxy -> AutonomousProxy: SetCurrentWeapon(CurrentWeapon)
+			rnote over AutonomousProxy: set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+		return
+	return
 return
 
 @enduml

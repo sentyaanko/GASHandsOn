@@ -9,23 +9,23 @@ Authority -> SimulatedProxy: replicate CurrentWeapon
 return
 hnote over SimulatedProxy #FFAAAA: sync CurrentWeapon with Authority
 SimulatedProxy -> SimulatedProxy: OnRep_CurrentWeapon(LastWeapon)
-rnote over SimulatedProxy : bChangedWeaponLocally = false
-SimulatedProxy -> SimulatedProxy: SetCurrentWeapon(CurrentWeapon)
-hnote over SimulatedProxy #AAAAFF: PlayerState and ASC is not active
-return
+	rnote over SimulatedProxy: bChangedWeaponLocally = false
+	SimulatedProxy -> SimulatedProxy: SetCurrentWeapon(CurrentWeapon)
+		hnote over SimulatedProxy #AAAAFF: PlayerState and ASC is not active
+	return
 return
 |||
-Authority -> SimulatedProxy : replicate PlayerState
+Authority -> SimulatedProxy: replicate PlayerState
 return
 hnote over SimulatedProxy #FFAAAA: sync PlayerState with Authority
-SimulatedProxy -> SimulatedProxy : OnRep_PlayerState
-rnote over SimulatedProxy : set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+SimulatedProxy -> SimulatedProxy: OnRep_PlayerState
+	rnote over SimulatedProxy: set CurrentWeapon's owner,\nASC delegates and GameplayTags.
 return
 |||
-Authority -> SimulatedProxy : replicate Inventory
+Authority -> SimulatedProxy: replicate Inventory
 return
 hnote over SimulatedProxy #FFAAAA: sync Inventory with Authority
-SimulatedProxy -> SimulatedProxy : OnRep_Inventory
+SimulatedProxy -> SimulatedProxy: OnRep_Inventory
 return
 
 @enduml
