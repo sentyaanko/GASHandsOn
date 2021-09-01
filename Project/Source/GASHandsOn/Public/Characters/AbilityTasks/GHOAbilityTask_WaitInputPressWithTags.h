@@ -77,8 +77,8 @@ public:
 	*/
 	virtual void OnDestroy(bool AbilityEnded) override;
 
-	// End of UObject interface
-
+	// End of UGameplayTask interface
+	
 protected:
 	/**
 	by GASShooter

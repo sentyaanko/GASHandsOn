@@ -62,7 +62,7 @@ protected:
 	*/
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
-	// End of UObject interface
+	// End of UGameplayTask interface
 
 private:
 	UFUNCTION()

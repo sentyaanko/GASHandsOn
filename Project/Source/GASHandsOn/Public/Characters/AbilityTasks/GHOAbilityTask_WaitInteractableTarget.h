@@ -70,7 +70,7 @@ public:
 	*/
 	virtual void OnDestroy(bool AbilityEnded) override;
 
-	// End of UObject interface
+	// End of UGameplayTask interface
 
 protected:
 	/** Traces as normal, but will manually filter all hit actors */
