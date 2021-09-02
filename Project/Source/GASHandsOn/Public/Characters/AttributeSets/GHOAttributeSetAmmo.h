@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
+#include "AbilitySystemComponent.h"
 #include "GameplayTagContainer.h"
 #include "GHOAttributeSetMacros.h"
 #include "GHOAttributeSetAmmo.generated.h"
