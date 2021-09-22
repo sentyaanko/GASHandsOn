@@ -21,6 +21,11 @@ UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName(TAG_Effect_RemoveOnDeath));
 }
 
+UGHOAbilitySystemComponent* UGHOAbilitySystemComponent::GetAbilitySystemComponentFromActor(const AActor* Actor, bool LookForComponent)
+{
+	return Cast<UGHOAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor, LookForComponent));
+}
+
 void UGHOAbilitySystemComponent::AbilityLocalInputPressed(int32 InputID)
 {
 	//解説
@@ -281,6 +286,26 @@ void UGHOAbilitySystemComponent::ReceiveDamage(UGHOAbilitySystemComponent * Sour
 	ReceivedDamage.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
 }
 
+void UGHOAbilitySystemComponent::K2_AddLooseGameplayTag(const FGameplayTag& GameplayTag, int32 Count)
+{
+	AddLooseGameplayTag(GameplayTag, Count);
+}
+
+void UGHOAbilitySystemComponent::K2_AddLooseGameplayTags(const FGameplayTagContainer& GameplayTags, int32 Count)
+{
+	AddLooseGameplayTags(GameplayTags, Count);
+}
+
+void UGHOAbilitySystemComponent::K2_RemoveLooseGameplayTag(const FGameplayTag& GameplayTag, int32 Count)
+{
+	RemoveLooseGameplayTag(GameplayTag, Count);
+}
+
+void UGHOAbilitySystemComponent::K2_RemoveLooseGameplayTags(const FGameplayTagContainer& GameplayTags, int32 Count)
+{
+	RemoveLooseGameplayTags(GameplayTags, Count);
+}
+
 void UGHOAbilitySystemComponent::ExecuteGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters)
 {
 	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::Executed, GameplayCueParameters);
@@ -347,3 +372,46 @@ int32 UGHOAbilitySystemComponent::K2_GetTagCount(FGameplayTag TagToCheck) const
 {
 	return GetTagCount(TagToCheck);
 }
+
+FGameplayAbilitySpecHandle UGHOAbilitySystemComponent::FindAbilitySpecHandleForClass(TSubclassOf<UGameplayAbility> AbilityClass, UObject* OptionalSourceObject)
+{
+	ABILITYLIST_SCOPE_LOCK();
+	for (FGameplayAbilitySpec& Spec : ActivatableAbilities.Items)
+	{
+		TSubclassOf<UGameplayAbility> SpecAbilityClass = Spec.Ability->GetClass();
+		if (SpecAbilityClass == AbilityClass)
+		{
+			if (!OptionalSourceObject || (OptionalSourceObject && Spec.SourceObject == OptionalSourceObject))
+			{
+				return Spec.Handle;
+			}
+		}
+	}
+
+	return FGameplayAbilitySpecHandle();
+}
+
+bool UGHOAbilitySystemComponent::BatchRPCTryActivateAbility(FGameplayAbilitySpecHandle InAbilityHandle, bool EndAbilityImmediately)
+{
+	bool AbilityActivated = false;
+	if (InAbilityHandle.IsValid())
+	{
+		FScopedServerAbilityRPCBatcher GHOAbilityRPCBatcher(this, InAbilityHandle);
+		AbilityActivated = TryActivateAbility(InAbilityHandle, true);
+
+		if (EndAbilityImmediately)
+		{
+			FGameplayAbilitySpec* AbilitySpec = FindAbilitySpecFromHandle(InAbilityHandle);
+			if (AbilitySpec)
+			{
+				UGHOGameplayAbility* GHOAbility = Cast<UGHOGameplayAbility>(AbilitySpec->GetPrimaryInstance());
+				GHOAbility->ExternalEndAbility();
+			}
+		}
+
+		return AbilityActivated;
+	}
+
+	return AbilityActivated;
+}
+
