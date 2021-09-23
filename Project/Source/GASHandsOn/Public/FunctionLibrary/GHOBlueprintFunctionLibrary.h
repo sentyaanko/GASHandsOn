@@ -13,7 +13,7 @@
  * 
  */
 UCLASS()
-class UGHOBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class GASHANDSON_API UGHOBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	
