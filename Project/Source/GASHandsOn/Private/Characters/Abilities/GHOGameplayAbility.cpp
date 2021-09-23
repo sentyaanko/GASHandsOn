@@ -230,3 +230,96 @@ FGHOGameplayEffectContainerSpec UGHOGameplayAbility::MakeEffectContainerSpecFrom
 	}
 	return ReturnSpec;
 }
+
+#if 0 //for multiple USkeletalMeshComponents on the AvatarActor
+UAnimMontage* UGHOGameplayAbility::GetCurrentMontageForMesh(USkeletalMeshComponent* InMesh)
+{
+	FAbilityMeshMontage AbilityMeshMontage;
+	if (FindAbillityMeshMontage(InMesh, AbilityMeshMontage))
+	{
+		return AbilityMeshMontage.Montage;
+	}
+
+	return nullptr;
+}
+
+void UGHOGameplayAbility::SetCurrentMontageForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* InCurrentMontage)
+{
+	ensure(IsInstantiated());
+
+	FAbilityMeshMontage AbilityMeshMontage;
+	if (FindAbillityMeshMontage(InMesh, AbilityMeshMontage))
+	{
+		AbilityMeshMontage.Montage = InCurrentMontage;
+	}
+	else
+	{
+		CurrentAbilityMeshMontages.Add(FAbilityMeshMontage(InMesh, InCurrentMontage));
+	}
+}
+
+bool UGHOGameplayAbility::FindAbillityMeshMontage(USkeletalMeshComponent* InMesh, FAbilityMeshMontage& InAbilityMeshMontage)
+{
+	for (FAbilityMeshMontage& MeshMontage : CurrentAbilityMeshMontages)
+	{
+		if (MeshMontage.Mesh == InMesh)
+		{
+			InAbilityMeshMontage = MeshMontage;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void UGHOGameplayAbility::MontageJumpToSectionForMesh(USkeletalMeshComponent* InMesh, FName SectionName)
+{
+	check(CurrentActorInfo);
+
+	UGHOAbilitySystemComponent* const AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponentFromActorInfo_Checked());
+	if (AbilitySystemComponent->IsAnimatingAbilityForAnyMesh(this))
+	{
+		AbilitySystemComponent->CurrentMontageJumpToSectionForMesh(InMesh, SectionName);
+	}
+}
+
+void UGHOGameplayAbility::MontageSetNextSectionNameForMesh(USkeletalMeshComponent* InMesh, FName FromSectionName, FName ToSectionName)
+{
+	check(CurrentActorInfo);
+
+	UGHOAbilitySystemComponent* const AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponentFromActorInfo_Checked());
+	if (AbilitySystemComponent->IsAnimatingAbilityForAnyMesh(this))
+	{
+		AbilitySystemComponent->CurrentMontageSetNextSectionNameForMesh(InMesh, FromSectionName, ToSectionName);
+	}
+}
+
+void UGHOGameplayAbility::MontageStopForMesh(USkeletalMeshComponent* InMesh, float OverrideBlendOutTime)
+{
+	check(CurrentActorInfo);
+
+	UGHOAbilitySystemComponent* const AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent.Get());
+	if (AbilitySystemComponent != nullptr)
+	{
+		// We should only stop the current montage if we are the animating ability
+		if (AbilitySystemComponent->IsAnimatingAbilityForAnyMesh(this))
+		{
+			AbilitySystemComponent->CurrentMontageStopForMesh(InMesh, OverrideBlendOutTime);
+		}
+	}
+}
+
+void UGHOGameplayAbility::MontageStopForAllMeshes(float OverrideBlendOutTime)
+{
+	check(CurrentActorInfo);
+
+	UGHOAbilitySystemComponent* const AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent.Get());
+	if (AbilitySystemComponent != nullptr)
+	{
+		if (AbilitySystemComponent->IsAnimatingAbilityForAnyMesh(this))
+		{
+			AbilitySystemComponent->StopAllCurrentMontages(OverrideBlendOutTime);
+		}
+	}
+}
+#endif

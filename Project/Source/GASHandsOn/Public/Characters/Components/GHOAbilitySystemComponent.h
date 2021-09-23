@@ -8,6 +8,77 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, UGHOAbilitySystemComponent*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
 
+#if 0 //for multiple USkeletalMeshComponents on the AvatarActor
+class USkeletalMeshComponent;
+
+/**
+by Epic
+	Data about montages that were played locally (all montages in case of server. predictive montages in case of client). Never replicated directly.
+和訳
+	ローカルで再生されたモンタージュのデータ（サーバーの場合は全モンタージュ、クライアントの場合は predictive （予測）モンタージュ ）。直接複製されることはありません。
+解説
+	Engine\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Public\Abilities\GameplayAbilityTypes.h
+	で定義されている FGameplayAbilityLocalAnimMontage を拡張するための構造体。
+*/
+USTRUCT()
+struct GASHANDSON_API FGameplayAbilityLocalAnimMontageForMesh
+{
+	GENERATED_BODY();
+
+public:
+	UPROPERTY()
+	USkeletalMeshComponent* Mesh;
+
+	UPROPERTY()
+	FGameplayAbilityLocalAnimMontage LocalMontageInfo;
+
+	FGameplayAbilityLocalAnimMontageForMesh() : Mesh(nullptr), LocalMontageInfo()
+	{
+	}
+
+	FGameplayAbilityLocalAnimMontageForMesh(USkeletalMeshComponent* InMesh)
+		: Mesh(InMesh), LocalMontageInfo()
+	{
+	}
+
+	FGameplayAbilityLocalAnimMontageForMesh(USkeletalMeshComponent* InMesh, FGameplayAbilityLocalAnimMontage& InLocalMontageInfo)
+		: Mesh(InMesh), LocalMontageInfo(InLocalMontageInfo)
+	{
+	}
+};
+
+/**
+by Epic
+	Data about montages that is replicated to simulated clients.
+和訳
+	simulated clients にレプリケーションされる、モンタージュに関するデータ。
+解説
+	Engine\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Public\Abilities\GameplayAbilityTypes.h
+	で定義されている FGameplayAbilityRepAnimMontage を拡張するための構造体。
+*/
+USTRUCT()
+struct GASHANDSON_API FGameplayAbilityRepAnimMontageForMesh
+{
+	GENERATED_BODY();
+
+public:
+	UPROPERTY()
+	USkeletalMeshComponent* Mesh;
+
+	UPROPERTY()
+	FGameplayAbilityRepAnimMontage RepMontageInfo;
+
+	FGameplayAbilityRepAnimMontageForMesh() : Mesh(nullptr), RepMontageInfo()
+	{
+	}
+
+	FGameplayAbilityRepAnimMontageForMesh(USkeletalMeshComponent* InMesh)
+		: Mesh(InMesh), RepMontageInfo()
+	{
+	}
+};
+#endif
+
 /**
  * 
  */
@@ -28,10 +99,73 @@ public:
 	*/
 	static UGHOAbilitySystemComponent* GetAbilitySystemComponentFromActor(const AActor* Actor, bool LookForComponent = false);
 
+#if 0 //for multiple USkeletalMeshComponents on the AvatarActor
+	// UObject interface
+public:
+	/*
+	by Epic
+		Returns properties that are replicated for the lifetime of the actor channel
+	和訳
+		アクターチャンネルのライフタイム中にレプリケーションされるプロパティを返します。
+	*/
+	virtual void GetLifetimeReplicatedProps(TArray< class FLifetimeProperty > & OutLifetimeProps) const override;
+
+	// End of UObject interface
+
+	// UActorComponent interface
+public:
+	/**
+	by Epic
+		Function called every frame on this ActorComponent. 
+		Override this function to implement custom logic to be executed every frame.
+		Only executes if the component is registered, and also PrimaryComponentTick.bCanEverTick must be set to true.
+	
+		@param DeltaTime - The time since the last tick.
+		@param TickType - The kind of tick this is, for example, are we paused, or 'simulating' in the editor
+		@param ThisTickFunction - Internal tick function struct that caused this to run
+	和訳
+		この ActorComponent でフレームごとに呼び出される関数です。
+		この関数をオーバーライドして、フレームごとに実行されるカスタムロジックを実装します。
+		コンポーネントが登録されていて、 PrimaryComponentTick.bCanEverTick が true に設定されている場合のみ実行されます。
+
+		@param DeltaTime - 最後の tick からの時間。
+		@param TickType - これがどのような種類の tick なのか。たとえば、一時停止しているのか、エディタでシミュレートしているか、など。
+		@param ThisTickFunction - これを実行する原因となった内部の tick function 構造体。
+	*/
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	// End of UActorComponent interface
+
+
+	// UGameplayTasksComponent interface
+public:
+	/*
+	by Epic
+		retrieves information whether this component should be ticking taken current activity into consideration
+	和訳
+		現在のアクティビティを考慮して、このコンポーネントが Tick するべきかどうかの情報を取得します。
+	*/
+	virtual bool GetShouldTick() const override;
+
+	// End of UGameplayTasksComponent interface
+#endif
+	
 	// UAbilitySystemComponent interface
 public:
 	/** Called to handle ability bind input */
 	virtual void AbilityLocalInputPressed(int32 InputID)override;
+
+#if 0 //for multiple USkeletalMeshComponents on the AvatarActor
+	/*
+	by Epic
+		Initialized the Abilities' ActorInfo - the structure that holds information about who we are acting on and who controls us.
+			OwnerActor is the actor that logically owns this component.
+			AvatarActor is what physical actor in the world we are acting on. Usually a Pawn but it could be a Tower, Building, Turret, etc, may be the same as Owner
+	和訳
+		現在のアクティビティを考慮して、このコンポーネントが Tick するべきかどうかの情報を取得します。
+	*/
+	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
+#endif
 
 	// End of UAbilitySystemComponent interface
 
@@ -208,6 +342,279 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Abilities")
 	/*virtual*/ bool BatchRPCTryActivateAbility(FGameplayAbilitySpecHandle InAbilityHandle, bool EndAbilityImmediately);
+#if 0 //for multiple USkeletalMeshComponents on the AvatarActor
+	// ----------------------------------------------------------------------------------------------------------------
+	/**
+	by GASShooter
+		AnimMontage Support for multiple USkeletalMeshComponents on the AvatarActor.
+		Only one ability can be animating at a time though?
+	和訳
+		AvatarActor で複数の USkeletalMeshComponents を持つものの AnimMontage のサポートです。
+		一度に一つのアビリティだけにアニメートできます？
+
+	解説
+		これらの関数群は UAbilitySystemComponent で定義されている、名前に ForMesh がつかない関数群を拡張したものです。
+		全てを使用しているわけではないですが、関連している機能としてほぼ一式実装されています。
+		機能の違いから、(StopAllCurrentMontages / GetCurrentMontages)が追加され、(SetMontageRepAnimPositionMethod)が実装されていません。
+		関数の説明コメントもほぼ Epic のもののままです（複数形に直されているぐらい）。
+	*/
+	/**
+	by Epic
+		Plays a montage and handles replication and prediction based on passed in ability/activation info
+	和訳
+		モンタージュを再生し、渡されたアビリティ/アクティベーション情報に基づいてレプリケーションや prediction （予測）を処理します。
+	*/
+	virtual float PlayMontageForMesh(UGameplayAbility* AnimatingAbility, class USkeletalMeshComponent* InMesh, FGameplayAbilityActivationInfo ActivationInfo, UAnimMontage* Montage, float InPlayRate, FName StartSectionName = NAME_None, bool bReplicateMontage = true);
+
+	/**
+	by Epic
+		Plays a montage without updating replication/prediction structures. Used by simulated proxies when replication tells them to play a montage.
+	和訳
+		レプリケーション/ prediction （予測）構造体を更新せずにモンタージュを再生します。レプリケーションがモンタージュの再生を指示したときに、 simulated proxies が使用します。
+	*/
+	virtual float PlayMontageSimulatedForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* Montage, float InPlayRate, FName StartSectionName = NAME_None);
+
+	/**
+	by Epic
+		Stops whatever montage is currently playing. Expectation is caller should only be stopping it if they are the current animating ability (or have good reason not to check)
+	和訳
+		現在再生しているモンタージュがなんであれ停止します。期待されるのは、呼び出し側が現在のアビリティのアニメーションを行っている場合にのみ停止させることです。（又は確認しない正当な理由がある場合）
+	*/
+	virtual void CurrentMontageStopForMesh(USkeletalMeshComponent* InMesh, float OverrideBlendOutTime = -1.0f);
+
+	/**
+	by GASShooter
+		Stops all montages currently playing
+	和訳
+		再生中のモンタージュを全て停止します。
+	*/
+	virtual void StopAllCurrentMontages(float OverrideBlendOutTime = -1.0f);
+
+	/**
+	by Epic
+		Stops current montage if it's the one given as the Montage param
+	和訳
+		現在のモンタージュが Montage パラメータとして渡されたものだった場合、停止します。
+	*/
+	virtual void StopMontageIfCurrentForMesh(USkeletalMeshComponent* InMesh, const UAnimMontage& Montage, float OverrideBlendOutTime = -1.0f);
+
+	/**
+	by Epic
+		Clear the animating ability that is passed in, if it's still currently animating
+	和訳
+		渡されたアビリティのアニメーションがまだアニメーションしている場合はクリアする。
+	*/
+	virtual void ClearAnimatingAbilityForAllMeshes(UGameplayAbility* Ability);
+
+	/**
+	by Epic
+		Jumps current montage to given section. Expectation is caller should only be stopping it if they are the current animating ability (or have good reason not to check)
+	和訳
+		現在のモンタージュを指定されたセクションにジャンプします。期待されるのは、呼び出し側が現在のアビリティのアニメーションを行っている場合にのみ停止させることです。（又は確認しない正当な理由がある場合）
+	*/
+	virtual void CurrentMontageJumpToSectionForMesh(USkeletalMeshComponent* InMesh, FName SectionName);
+
+	/**
+	by Epic
+		Sets current montages next section name. Expectation is caller should only be stopping it if they are the current animating ability (or have good reason not to check)
+	和訳
+		現在のモンタージュの次のセクション名を設定します。期待されるのは、呼び出し側が現在のアビリティのアニメーションを行っている場合にのみ停止させることです。（又は確認しない正当な理由がある場合）
+	*/
+	virtual void CurrentMontageSetNextSectionNameForMesh(USkeletalMeshComponent* InMesh, FName FromSectionName, FName ToSectionName);
+
+	/**
+	by Epic
+		Sets current montage's play rate
+	和訳
+		現在のモンタージュの再生速度を設定します。
+	*/
+	virtual void CurrentMontageSetPlayRateForMesh(USkeletalMeshComponent* InMesh, float InPlayRate);
+
+	/**
+	by Epic
+		Returns true if the passed in ability is the current animating ability
+	和訳
+		渡されたアビリティが現在のアニメーションのアビリティであれば ture を返します。
+	*/
+	bool IsAnimatingAbilityForAnyMesh(UGameplayAbility* Ability) const;
+
+	/**
+	by Epic
+		Returns the current animating ability
+	和訳
+		現在のアニメーションのアビリティを返します。
+	*/
+	UGameplayAbility* GetAnimatingAbilityFromAnyMesh();
+
+	/**
+	by GASShooter
+		Returns montages that are currently playing
+	和訳
+		現在再生中のモンタージュを返します。
+	*/
+	TArray<UAnimMontage*> GetCurrentMontages() const;
+
+	/**
+	by Epic
+		Returns the montage that is playing for the mesh
+	和訳
+		メッシュに再生されているモンタージュを返します。
+	*/
+	UAnimMontage* GetCurrentMontageForMesh(USkeletalMeshComponent* InMesh);
+
+	/**
+	by Epic
+		Get SectionID of currently playing AnimMontage
+	和訳
+		現在再生中の AnimMontage の SectionID を返します。
+	*/
+	int32 GetCurrentMontageSectionIDForMesh(USkeletalMeshComponent* InMesh);
+
+	/**
+	by Epic
+		Get SectionName of currently playing AnimMontage
+	和訳
+		現在再生中の AnimMontage の SectionName を返します。
+	*/
+	FName GetCurrentMontageSectionNameForMesh(USkeletalMeshComponent* InMesh);
+
+	/**
+	by Epic
+		Get length in time of current section
+	和訳
+		現在のセクションの時間の長さを取得します。
+	*/
+	float GetCurrentMontageSectionLengthForMesh(USkeletalMeshComponent* InMesh);
+
+	/**
+	by Epic
+		Returns amount of time left in current section
+	和訳
+		現在のセクションの残り時間を返します。
+	*/
+	float GetCurrentMontageSectionTimeLeftForMesh(USkeletalMeshComponent* InMesh);
+
+protected:
+	/**
+	by Epic
+		Set if montage rep happens while we don't have the animinstance associated with us yet
+	和訳
+		まだ AnimInstance が関連付けられていない状態でモンタージュ再生が行われた場合設定されます。
+	*/
+	UPROPERTY()
+	bool bPendingMontageRepForMesh;
+
+	/**
+	by Epic
+		Data structure for montages that were instigated locally (everything if server, predictive if client. replicated if simulated proxy)
+	by GASShooter
+		Will be max one element per skeletal mesh on the AvatarActor
+	和訳
+		ローカルでインスタンスされたモンタージュのデータ構造（サーバーなら everything 、クライアントなら predictive （予測）。 simulated proxy の場合はレプリケーションされます。）
+		AvatarActor のスケルタルメッシュ毎に最大一要素となります。
+	*/
+	UPROPERTY()
+	TArray<FGameplayAbilityLocalAnimMontageForMesh> LocalAnimMontageInfoForMeshes;
+
+	/**
+	by Epic
+		Data structure for replicating montage info to simulated clients
+	by GASShooter
+		Will be max one element per skeletal mesh on the AvatarActor
+	和訳
+		もんた＾樹情報をシミュレートされたクライアントに複製するためのデータ構造。
+		AvatarActor のスケルタルメッシュ毎に最大一要素となります。
+	*/
+	UPROPERTY(ReplicatedUsing = OnRep_ReplicatedAnimMontageForMesh)
+	TArray<FGameplayAbilityRepAnimMontageForMesh> RepAnimMontageInfoForMeshes;
+
+	/**
+	by GASShooter
+		Finds the existing FGameplayAbilityLocalAnimMontageForMesh for the mesh or creates one if it doesn't exist
+	和訳
+		メッシュの対となる既存の FGameplayAbilityLocalAnimMontageForMesh を検索します。存在しない場合は作成します。
+	*/
+	FGameplayAbilityLocalAnimMontageForMesh& GetLocalAnimMontageInfoForMesh(USkeletalMeshComponent* InMesh);
+	/**
+	by GASShooter
+		Finds the existing FGameplayAbilityRepAnimMontageForMesh for the mesh or creates one if it doesn't exist
+	和訳
+		メッシュの対となる既存の FGameplayAbilityRepAnimMontageForMeshを検索します。存在しない場合は作成します。
+	*/
+	FGameplayAbilityRepAnimMontageForMesh& GetGameplayAbilityRepAnimMontageForMesh(USkeletalMeshComponent* InMesh);
+
+	/**
+	by Epic
+		Called when a prediction key that played a montage is rejected
+	和訳
+		モンタージュを再生した予測キーが reject されたときに呼び出されます。
+	*/
+	void OnPredictiveMontageRejectedForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* PredictiveMontage);
+
+	/**
+	by Epic
+		Copy LocalAnimMontageInfo into RepAnimMontageInfo
+	和訳
+		LocalAnimMontageInfo を RepAnimMontageInfo にコピーします。
+	*/
+	void AnimMontage_UpdateReplicatedDataForMesh(USkeletalMeshComponent* InMesh);
+	void AnimMontage_UpdateReplicatedDataForMesh(FGameplayAbilityRepAnimMontageForMesh& OutRepAnimMontageInfo);
+
+	/**
+	by Epic
+		Copy over playing flags for duplicate animation data
+	和訳
+		重複するアニメーションデータの再生フラグを上書きします。
+	*/
+	void AnimMontage_UpdateForcedPlayFlagsForMesh(FGameplayAbilityRepAnimMontageForMesh& OutRepAnimMontageInfo);
+
+	UFUNCTION()
+	virtual void OnRep_ReplicatedAnimMontageForMesh();
+
+	/**
+	by Epic
+		Returns true if we are ready to handle replicated montage information
+	和訳
+		レプリケーションされたモンタージュ情報を扱う準備ができていれば true を返します。
+	*/
+	virtual bool IsReadyForReplicatedMontageForMesh();
+
+	/**
+	by Epic
+		RPC function called from CurrentMontageSetNextSectionName, replicates to other clients
+	和訳
+		CurrentMontageSetNextSectionName から呼び出される RPC 関数で、他のクライアントにレプリケーションする。
+	*/
+	UFUNCTION(Reliable, Server, WithValidation)
+	void RPCServerCurrentMontageSetNextSectionNameForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, float ClientPosition, FName SectionName, FName NextSectionName);
+	void RPCServerCurrentMontageSetNextSectionNameForMesh_Implementation(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, float ClientPosition, FName SectionName, FName NextSectionName);
+	bool RPCServerCurrentMontageSetNextSectionNameForMesh_Validate(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, float ClientPosition, FName SectionName, FName NextSectionName);
+
+	/**
+	by Epic
+		RPC function called from CurrentMontageJumpToSection, replicates to other clients
+	和訳
+		CurrentMontageJumpToSection から呼び出される RPC 関数で、他のクライアントにレプリケーションする。
+	*/
+	UFUNCTION(Reliable, Server, WithValidation)
+	void RPCServerCurrentMontageJumpToSectionNameForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, FName SectionName);
+	void RPCServerCurrentMontageJumpToSectionNameForMesh_Implementation(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, FName SectionName);
+	bool RPCServerCurrentMontageJumpToSectionNameForMesh_Validate(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, FName SectionName);
+
+	/**
+	by Epic
+		RPC function called from CurrentMontageSetPlayRate, replicates to other clients
+	和訳
+		CurrentMontageSetPlayRate から呼び出される RPC 関数で、他のクライアントにレプリケーションする。
+	*/
+	UFUNCTION(Reliable, Server, WithValidation)
+	void RPCServerCurrentMontageSetPlayRateForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, float InPlayRate);
+	void RPCServerCurrentMontageSetPlayRateForMesh_Implementation(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, float InPlayRate);
+	bool RPCServerCurrentMontageSetPlayRateForMesh_Validate(USkeletalMeshComponent* InMesh, UAnimMontage* ClientAnimMontage, float InPlayRate);
+
+	// End of `AnimMontage Support for multiple USkeletalMeshComponents on the AvatarActor.`
+	// ----------------------------------------------------------------------------------------------------------------
+#endif
 
 private:
 	FGameplayTag DeadTag;
