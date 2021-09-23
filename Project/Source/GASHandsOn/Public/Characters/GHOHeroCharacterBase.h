@@ -451,6 +451,12 @@ private:
 	void EquipWeapon(AGHOWeapon* NewWeapon);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	int32 GetPrimaryClipAmmo() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	int32 GetMaxPrimaryClipAmmo() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
 	int32 GetPrimaryReserveAmmo() const;
 
 

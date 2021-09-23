@@ -1112,6 +1112,26 @@ void AGHOHeroCharacterBase::EquipWeapon(AGHOWeapon* NewWeapon)
 	}
 }
 
+int32 AGHOHeroCharacterBase::GetPrimaryClipAmmo() const
+{
+	if (CurrentWeapon)
+	{
+		return CurrentWeapon->GetPrimaryClipAmmo();
+	}
+
+	return 0;
+}
+
+int32 AGHOHeroCharacterBase::GetMaxPrimaryClipAmmo() const
+{
+	if (CurrentWeapon)
+	{
+		return CurrentWeapon->GetMaxPrimaryClipAmmo();
+	}
+
+	return 0;
+}
+
 int32 AGHOHeroCharacterBase::GetPrimaryReserveAmmo() const
 {
 	if (CurrentWeapon && AttributeSetAmmo.IsValid())
