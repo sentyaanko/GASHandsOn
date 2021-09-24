@@ -298,6 +298,15 @@ public:
 	class UGHOFloatingStatusBarWidget* UIFloatingStatusBar;
 
 protected:
+	UPROPERTY(BlueprintReadOnly, Category = "GAGHandsOn|Camera")
+	float StartingCameraBoomTargetArmLength;
+
+	UPROPERTY(BlueprintReadOnly, Category = "GAGHandsOn|Camera")
+	FVector StartingCameraBoomRelativeLocation;
+
+	UPROPERTY(BlueprintReadOnly, Category = "GAGHandsOn|Camera")
+	float DefaultFOV;
+
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
 	TSubclassOf<UGameplayEffect> KnockDownEffect;
 

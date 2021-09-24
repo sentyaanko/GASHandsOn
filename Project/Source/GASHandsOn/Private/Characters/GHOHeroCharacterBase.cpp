@@ -45,6 +45,8 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	DefaultFOV = 90.f;
+
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
@@ -61,6 +63,7 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+	FollowCamera->FieldOfView = DefaultFOV;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -138,9 +141,8 @@ void AGHOHeroCharacterBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	//TODO: implement Camera Boom in C++
-	//StartingThirdPersonCameraBoomArmLength = ThirdPersonCameraBoom->TargetArmLength;
-	//StartingThirdPersonCameraBoomLocation = ThirdPersonCameraBoom->GetRelativeLocation();
+	StartingCameraBoomTargetArmLength = CameraBoom->TargetArmLength;
+	StartingCameraBoomRelativeLocation = CameraBoom->GetRelativeLocation();
 	//StartingThirdPersonMeshLocation = GetMesh()->GetRelativeLocation();
 
 	GetWorldTimerManager().SetTimerForNextTick(this, &AGHOHeroCharacterBase::SpawnDefaultInventory);
