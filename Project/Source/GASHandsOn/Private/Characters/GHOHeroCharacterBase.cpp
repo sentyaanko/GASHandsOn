@@ -164,7 +164,9 @@ void AGHOHeroCharacterBase::BeginPlay()
 	*/
 	InitializeFloatingStatusBar();
 
-	PostInitializeComponents();
+	//不要なはず。なぜ含まれていたか不明。
+	//8743b5fa4aecb4b891a8b1272efccd30d2d345df で紛れ込んでいた。
+	//PostInitializeComponents();
 }
 
 void AGHOHeroCharacterBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
