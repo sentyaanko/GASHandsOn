@@ -272,6 +272,9 @@ public:
 	FGameplayTag SecondaryAmmoType;
 
 
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "GASHandsOn|GHOWeapon")
+	FText WeaponName;
+
 	/**
 	by GASShooter
 		Things like fire mode for rifle

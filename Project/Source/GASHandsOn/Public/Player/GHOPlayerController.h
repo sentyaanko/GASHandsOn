@@ -42,13 +42,22 @@ public:
 	void SetEquippedWeaponPrimaryIconFromSprite(UPaperSprite* InSprite);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetEquippedWeaponName(const FText& WeaponName);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
 	void SetEquippedWeaponStatusText(const FText& StatusText);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetPrimaryAmmoType(const FGameplayTag& AmmoType);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
 	void SetPrimaryClipAmmo(int32 ClipAmmo);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
 	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
+	void SetSecondaryAmmoType(const FGameplayTag& AmmoType);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|UI")
 	void SetSecondaryClipAmmo(int32 SecondaryClipAmmo);

@@ -45,6 +45,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
 	void SetEquippedWeaponSprite(UPaperSprite* Sprite);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetEquippedWeaponName(const FText& WeaponName);
+
 	//by GASShooter
 	//	Things like fire mode for rifle
 	//和訳
@@ -53,10 +56,16 @@ public:
 	void SetEquippedWeaponStatusText(const FText& StatusText);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetPrimaryAmmoType(const FGameplayTag& AmmoType);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
 	void SetPrimaryClipAmmo(int32 ClipAmmo);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
 	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
+	void SetSecondaryAmmoType(const FGameplayTag& AmmoType);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
 	void SetSecondaryClipAmmo(int32 SecondaryClipAmmo);

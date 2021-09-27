@@ -95,11 +95,27 @@ void AGHOPlayerController::SetEquippedWeaponPrimaryIconFromSprite(UPaperSprite* 
 	}
 }
 
+void AGHOPlayerController::SetEquippedWeaponName(const FText& WeaponName)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetEquippedWeaponName(WeaponName);
+	}
+}
+
 void AGHOPlayerController::SetEquippedWeaponStatusText(const FText& StatusText)
 {
 	if (UIHUDWidget)
 	{
 		UIHUDWidget->SetEquippedWeaponStatusText(StatusText);
+	}
+}
+
+void AGHOPlayerController::SetPrimaryAmmoType(const FGameplayTag& AmmoType)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetPrimaryAmmoType(AmmoType);
 	}
 }
 
@@ -116,6 +132,14 @@ void AGHOPlayerController::SetPrimaryReserveAmmo(int32 ReserveAmmo)
 	if (UIHUDWidget)
 	{
 		UIHUDWidget->SetPrimaryReserveAmmo(ReserveAmmo);
+	}
+}
+
+void AGHOPlayerController::SetSecondaryAmmoType(const FGameplayTag& AmmoType)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetSecondaryAmmoType(AmmoType);
 	}
 }
 

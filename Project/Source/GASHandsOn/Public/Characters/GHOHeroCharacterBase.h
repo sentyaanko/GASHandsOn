@@ -468,6 +468,9 @@ private:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
 	int32 GetPrimaryReserveAmmo() const;
 
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	int32 GetSecondaryReserveAmmo() const;
+
 
 	UFUNCTION()
 	virtual void CurrentWeaponPrimaryClipAmmoChanged(int32 OldPrimaryClipAmmo, int32 NewPrimaryClipAmmo);

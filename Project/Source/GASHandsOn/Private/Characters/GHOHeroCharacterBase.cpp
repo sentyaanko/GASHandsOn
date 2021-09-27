@@ -869,9 +869,14 @@ void AGHOHeroCharacterBase::SetCurrentWeapon(AGHOWeapon* NewWeapon, AGHOWeapon* 
 			if (PC->IsLocalController())
 			{
 				PC->SetEquippedWeaponPrimaryIconFromSprite(CurrentWeapon->PrimaryIcon);
+				PC->SetEquippedWeaponName(CurrentWeapon->WeaponName);
 				PC->SetEquippedWeaponStatusText(CurrentWeapon->StatusText);
+				PC->SetPrimaryAmmoType(CurrentWeapon->PrimaryAmmoType);
 				PC->SetPrimaryClipAmmo(CurrentWeapon->GetPrimaryClipAmmo());
 				PC->SetPrimaryReserveAmmo(GetPrimaryReserveAmmo());
+				PC->SetSecondaryAmmoType(CurrentWeapon->SecondaryAmmoType);
+				PC->SetSecondaryClipAmmo(CurrentWeapon->GetSecondaryClipAmmo());
+				PC->SetSecondaryReserveAmmo(GetSecondaryReserveAmmo());
 				PC->SetHUDReticle(CurrentWeapon->GetPrimaryHUDReticleClass());
 			}
 		}
@@ -961,9 +966,14 @@ void AGHOHeroCharacterBase::UnEquipCurrentWeapon()
 		if (PC->IsLocalController())
 		{
 			PC->SetEquippedWeaponPrimaryIconFromSprite(nullptr);
+			PC->SetEquippedWeaponName(FText());
 			PC->SetEquippedWeaponStatusText(FText());
+			PC->SetPrimaryAmmoType(WeaponAmmoTypeNoneTag);
 			PC->SetPrimaryClipAmmo(0);
 			PC->SetPrimaryReserveAmmo(0);
+			PC->SetSecondaryAmmoType(WeaponAmmoTypeNoneTag);
+			PC->SetSecondaryClipAmmo(0);
+			PC->SetSecondaryReserveAmmo(0);
 			PC->SetHUDReticle(nullptr);
 		}
 	}
@@ -1143,6 +1153,22 @@ int32 AGHOHeroCharacterBase::GetPrimaryReserveAmmo() const
 	{
 		//FGameplayAttribute Attribute = AttributeSetAmmo->GetReserveAmmoAttributeFromTag(CurrentWeapon->PrimaryAmmoType);
 		FGameplayAttribute Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(CurrentWeapon->PrimaryAmmoType);
+		if (Attribute.IsValid())
+		{
+			return AbilitySystemComponent->GetNumericAttribute(Attribute);
+		}
+	}
+
+	return 0;
+}
+
+int32 AGHOHeroCharacterBase::GetSecondaryReserveAmmo() const
+{
+	if (CurrentWeapon && AttributeSetAmmo.IsValid())
+	//if (CurrentWeapon)
+	{
+		//FGameplayAttribute Attribute = AttributeSetAmmo->GetReserveAmmoAttributeFromTag(CurrentWeapon->SecondaryAmmoType);
+		FGameplayAttribute Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(CurrentWeapon->SecondaryAmmoType);
 		if (Attribute.IsValid())
 		{
 			return AbilitySystemComponent->GetNumericAttribute(Attribute);
