@@ -142,6 +142,9 @@ protected:
 		Allows C++ and Blueprint abilities to override how cost is checked in case they don't use a GE like weapon ammo
 	和訳
 		C++ 及びブループリントのアビリティで、武器の弾薬のように、 GEを使用しない場合のコストのチェック方法を上書きできるようにします。
+	解説
+		BlueprintImplementableEvent を使用すると、ブループリントでオーバーライドしない場合、戻り値が false として扱われる。
+		C++ の実装は無いが、、 BlueprintImplementableEvent ではなく、 BlueprintNativeEvent を使用する。
 	*/
 	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ability")
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
@@ -153,6 +156,8 @@ protected:
 		Allows C++ and Blueprint abilities to override how cost is applied in case they don't use a GE like weapon ammo
 	和訳
 		C++ 及びブループリントのアビリティで、武器の弾薬のように、 GEを使用しない場合のコストの適用方法を上書きできるようにします。
+	解説
+		BlueprintNativeEvent / BlueprintImplementableEvent については前述のとおり。
 	*/
 	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ability")
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
@@ -257,7 +262,6 @@ protected:
 	和訳
 		GameplayTag から GameplayEffectContainer へのマップ
 	*/
-	// 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GameplayEffects")
 	TMap<FGameplayTag, FGHOGameplayEffectContainer> EffectContainerMap;
 

@@ -133,18 +133,6 @@ void UGHOGameplayAbility::ExternalEndAbility()
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
-//解説
-//	GASShooter では BlueprintNativeEvent を使用しているため、 C++ の実装関数が必要。なのだが、実装が空。
-//	GASHandsOn では  BlueprintImplementableEvent を使用し、 C++ の実装をなくしている。
-//bool UGHOGameplayAbility::GHOCheckCost_Implementation(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const
-//{
-//	return true;
-//}
-//
-//void UGHOGameplayAbility::GHOApplyCost_Implementation(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
-//{
-//}
-
 FGHOGameplayEffectContainerSpec UGHOGameplayAbility::MakeEffectContainerSpec(FGameplayTag ContainerTag, const FGameplayEventData& EventData, int32 OverrideGameplayLevel)
 {
 	if (FGHOGameplayEffectContainer* FoundContainer = EffectContainerMap.Find(ContainerTag))
