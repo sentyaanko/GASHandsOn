@@ -323,4 +323,6 @@ protected:
 private:
 	void PostGameplayEffectExecute_Damage(const struct FGameplayEffectModCallbackData& Data);
 
+private:
+	FGameplayTag HeadShotTag;
 };

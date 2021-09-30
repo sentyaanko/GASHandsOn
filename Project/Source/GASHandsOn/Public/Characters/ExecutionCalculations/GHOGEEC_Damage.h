@@ -40,4 +40,7 @@ public:
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
 
 	// End of UGameplayEffectExecutionCalculation interface
+
+protected:
+	float HeadShotMultiplier;
 };

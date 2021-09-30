@@ -56,6 +56,8 @@ static const GHODamageStatics& DamageStatics()
 
 UGHOGEEC_Damage::UGHOGEEC_Damage()
 {
+	HeadShotMultiplier = 1.5f;
+
 	RelevantAttributesToCapture.Add(DamageStatics().DamageDef);
 	RelevantAttributesToCapture.Add(DamageStatics().ArmorDef);
 }
@@ -112,6 +114,25 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 		ここで任意のダメージブースターを乗算することが出来ます。
 	*/
 	float UnmitigatedDamage = Damage;
+
+	FGameplayTagContainer AssetTags;
+	Spec.GetAllAssetTags(AssetTags);
+
+	/*
+	by GASDocumentation
+		Check for headshot.
+		There's only one character mesh here, but you could have a function on your Character class to return the head bone name
+	和訳
+		ヘッドショットの確認をします。
+		ここではキャラクターのメッシュは一つしかありませんが、 Character クラスに頭の骨の名前を返す関数を指定しておくと良いでしょう。
+	*/
+	const FHitResult* Hit = Spec.GetContext().GetHitResult();
+	if (AssetTags.HasTagExact(FGameplayTag::RequestGameplayTag(FName(TAG_Effect_Damage_CanHeadShot))) && Hit && Hit->BoneName == "head")
+	{
+		UnmitigatedDamage *= HeadShotMultiplier;
+		FGameplayEffectSpec* MutableSpec = ExecutionParams.GetOwningSpecForPreExecuteMod();
+		MutableSpec->DynamicAssetTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Effect_Damage_HeadShot)));
+	}
 
 	const float MitigatedDamage = (UnmitigatedDamage) * (100 / (100 + Armor));
 
