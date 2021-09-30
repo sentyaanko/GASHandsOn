@@ -1,6 +1,7 @@
 // (C) Sentya Anko 2021
 
 #include "Characters/AbilityTasks/GHOAbilityTask_WaitTargetDataUsingActor.h"
+#include "AbilitySystemComponent.h"
 #include "Characters/TargetActors/GHOGATA_Trace.h"
 
 
@@ -117,7 +118,7 @@ void UGHOAbilityTask_WaitTargetDataUsingActor::OnTargetDataReadyCallback(const F
 解説
 	この関数は構成がちょっとだけ違う。
 
-	主に ScopedPrediction コンストラクタの第に引数。
+	主に ScopedPrediction コンストラクタの第二引数。
 */
 	check(AbilitySystemComponent);
 	if (!Ability)
@@ -254,7 +255,7 @@ void UGHOAbilityTask_WaitTargetDataUsingActor::FinalizeTargetActor() const
 			But then we wouldn't get to set ExposeOnSpawnParameters.
 		和訳
 			即座に確認された場合は、直ちにターゲティングを停止します。
-			Note これはちょっとまずいです : これを行うためには CDO の静的な関数を呼び出すクトができるはずです。
+			Note これはちょっとまずいです : これを行うためには CDO の静的な関数を呼び出すことができるはずです。
 			しかし、そうすると ExposeOnSpawnParameters を設定することができなくなります。
 		*/
 		if (ConfirmationType == EGameplayTargetingConfirmation::Instant)

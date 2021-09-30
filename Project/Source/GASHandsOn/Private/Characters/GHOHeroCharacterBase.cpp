@@ -612,7 +612,7 @@ void AGHOHeroCharacterBase::PlayKnockDownEffects()
 	//by GASShooter
 	//	Store perspective to restore on Revive
 	//和訳
-	//	蘇生時に復元する支店を保存する。
+	//	蘇生時に復元する視点を保存する。
 	//*/
 	//bWasInFirstPersonPerspectiveWhenKnockedDown = IsInFirstPersonPerspective();
 
