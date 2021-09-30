@@ -279,10 +279,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAGHandsOn|UI", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|UI", meta = (AllowPrivateAccess = "true"))
 	class UWidgetComponent* UIFloatingStatusBarComponent;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAGHandsOn|UI", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UGHOFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
 public:
@@ -298,25 +298,25 @@ public:
 	class UGHOFloatingStatusBarWidget* UIFloatingStatusBar;
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "GAGHandsOn|Camera")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Camera")
 	float StartingCameraBoomTargetArmLength;
 
-	UPROPERTY(BlueprintReadOnly, Category = "GAGHandsOn|Camera")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Camera")
 	FVector StartingCameraBoomRelativeLocation;
 
-	UPROPERTY(BlueprintReadOnly, Category = "GAGHandsOn|Camera")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Camera")
 	float DefaultFOV;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase")
 	TSubclassOf<UGameplayEffect> KnockDownEffect;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase")
 	TSubclassOf<UGameplayEffect> ReviveEffect;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|GHOHeroCharacterBase")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase")
 	TSubclassOf<UGameplayEffect> DeathEffect;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAGHandsOn|Abilities")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|Abilities")
 	float ReviveDuration;
 
 private:
