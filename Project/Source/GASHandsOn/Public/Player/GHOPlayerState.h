@@ -39,6 +39,7 @@ public:
 
 public:
 	class UGHOAttributeSetBase* GetAttributeSetBase()const;
+	class UGHOAttributeSetAmmo* GetAttributeSetAmmo()const;
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
 	void ShowAbilityConfirmCancelText(bool bShowText);
@@ -58,6 +59,8 @@ public:
 	//	インタラクトが割り込まれた、キャンセルし、 HUD のインタラクトタイマーを非表示にする。
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
 	void StopInteractionTimer();
+
+	int GetReservedAmmoWithTag(const struct FGameplayTag& tag);
 
 private:
 	/*
@@ -94,6 +97,9 @@ private:
 
 	UPROPERTY()
 	class UGHOAttributeSetBase* AttributeSetBase;
+
+	UPROPERTY()
+	class UGHOAttributeSetAmmo* AttributeSetAmmo;
 
 	FDelegateHandle HealthChangedDelegateHandle;
 	FDelegateHandle HealthMaxChangedDelegateHandle;

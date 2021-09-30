@@ -7,10 +7,13 @@
 #include "Characters/GHOCharacterBase.h"
 #include "Player/GHOPlayerController.h"
 #include "Net/UnrealNetwork.h"
+#include "Settings/GHOGameplayTags.h"
 
 
 UGHOAttributeSetBase::UGHOAttributeSetBase()
 {
+	// Cache tags
+	HeadShotTag = FGameplayTag::RequestGameplayTag(TAG_Effect_Damage_HeadShot);
 }
 
 void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimeProperty > & OutLifetimeProps) const
@@ -204,7 +207,8 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute_Damage(const struct FGamepl
 			{
 				if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(SourceController))
 				{
-					PC->RPCClientShowDamageText(LocalDamageDone, EGHOFloatingTextType::Damage, TargetCharacter);
+					EGHOFloatingTextType TextType = Data.EffectSpec.DynamicAssetTags.HasTag(HeadShotTag) ? EGHOFloatingTextType::Critical : EGHOFloatingTextType::Damage;
+					PC->RPCClientShowDamageText(LocalDamageDone, TextType, TargetCharacter);
 				}
 			}
 			if (!TargetCharacter->IsAlive())

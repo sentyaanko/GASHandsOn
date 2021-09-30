@@ -1,0 +1,33 @@
+/'
+CurrentWeapon の同期、 AutonomousProxy で MissPrediction した際
+'/
+@startuml CurrentWeapon-Sync-AutonomousProxy-MissPrediction
+autoactivate on
+AutonomousProxy -> AutonomousProxy: OnAbilityActivationFailed()
+	AutonomousProxy -> AutonomousProxy: RPCServerSyncCurrentWeapon()
+	return
+return
+
+AutonomousProxy -> Authority: rpc RPCServerSyncCurrentWeapon()
+return
+Authority -> Authority: RPCServerSyncCurrentWeapon()
+	Authority -> Authority: RPCClientSyncCurrentWeapon(CurrentWeapon)
+	return
+return
+rnote over Authority: InWeapon = CurrentWeapon
+hnote over Authority #AAFFAA: RPCClient*** will only send to autonomous actors.
+Authority -> AutonomousProxy: rpc RPCClientSyncCurrentWeapon(InWeapon)
+return
+
+AutonomousProxy -> AutonomousProxy: RPCClientSyncCurrentWeapon(InWeapon)
+	rnote over AutonomousProxy: LastWeapon = CurrentWeapon\nCurrentWeapon = InWeapon
+	hnote over AutonomousProxy #FFAAAA: sync CurrentWeapon with Authority
+	AutonomousProxy -> AutonomousProxy: OnRep_CurrentWeapon(LastWeapon)
+		rnote over AutonomousProxy: bChangedWeaponLocally = false
+		AutonomousProxy -> AutonomousProxy: SetCurrentWeapon(CurrentWeapon)
+			rnote over AutonomousProxy: set CurrentWeapon's owner,\nASC delegates and GameplayTags.
+		return
+	return
+return
+
+@enduml

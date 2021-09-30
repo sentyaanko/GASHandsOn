@@ -9,7 +9,7 @@
 
 Overview of Gameplay Ability Prediction
 
-High Level Goals:
+High Level Goals:  
 At the GameplayAbility level (implementing an ability) prediction is transparent. An ability says "Do X->Y->Z", and we will automatically predict the parts of that that we can. 
 We wish to avoid having logic such as "If Authority: Do X. Else: Do predictive version of X" in the ability itself.
 
@@ -25,7 +25,6 @@ What do we currently predict?
 	- Attribute modification	(EXCEPTIONS: Executions do not currently predict, only attribute modifiers)
 	- GameplayTag modification
  - Gameplay Cue events (both from within predictive gameplay effect and on their own)
-
  - Montages
  - Movement (built into UE4 UCharacterMovement)
 
