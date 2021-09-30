@@ -100,8 +100,8 @@ public:
 	FGameplayAttributeData MaxShotgunReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, MaxShotgunReserveAmmo)
 
-	static FGameplayAttribute GetReserveAmmoAttributeFromTag(FGameplayTag& PrimaryAmmoTag);
-	static FGameplayAttribute GetMaxReserveAmmoAttributeFromTag(FGameplayTag& PrimaryAmmoTag);
+	static FGameplayAttribute GetReserveAmmoAttributeFromTag(const FGameplayTag& PrimaryAmmoTag);
+	static FGameplayAttribute GetMaxReserveAmmoAttributeFromTag(const FGameplayTag& PrimaryAmmoTag);
 
 protected:
 	///*

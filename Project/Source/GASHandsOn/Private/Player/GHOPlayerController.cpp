@@ -7,7 +7,9 @@
 #include "UI/GHOHUDWidget.h"
 #include "UI/GHOHUDReticle.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetAmmo.h"
 #include "Characters/GHOCharacterBase.h"
+#include "Weapons/GHOWeapon.h"
 #include "Settings/GHODefaultClasses.h"
 
 
@@ -59,6 +61,23 @@ void AGHOPlayerController::CreateHUD()
 				アトリビュートの設定
 			*/
 			UIHUDWidget->SetParamter(attr->GetHUDParameter());
+		}
+		if (AGHOHeroCharacterBase* Hero = GetPawn<AGHOHeroCharacterBase>())
+		{
+			if (AGHOWeapon* CurrentWeapon = Hero->GetCurrentWeapon())
+			{
+				// PlayerState's Pawn isn't set up yet so we can't just call PS->GetPrimaryReserveAmmo()
+				UIHUDWidget->SetEquippedWeaponSprite(CurrentWeapon->PrimaryIcon);
+				UIHUDWidget->SetEquippedWeaponName(CurrentWeapon->WeaponName);
+				UIHUDWidget->SetEquippedWeaponStatusText(CurrentWeapon->StatusText);
+				UIHUDWidget->SetPrimaryAmmoType(CurrentWeapon->PrimaryAmmoType);
+				UIHUDWidget->SetPrimaryClipAmmo(CurrentWeapon->GetPrimaryClipAmmo());
+				UIHUDWidget->SetPrimaryReserveAmmo(playerState->GetReservedAmmoWithTag(CurrentWeapon->PrimaryAmmoType));
+				UIHUDWidget->SetSecondaryAmmoType(CurrentWeapon->SecondaryAmmoType);
+				UIHUDWidget->SetSecondaryClipAmmo(CurrentWeapon->GetSecondaryClipAmmo());
+				UIHUDWidget->SetSecondaryReserveAmmo(playerState->GetReservedAmmoWithTag(CurrentWeapon->SecondaryAmmoType));
+				UIHUDWidget->SetReticle(CurrentWeapon->GetPrimaryHUDReticleClass());
+			}
 		}
 	}
 }

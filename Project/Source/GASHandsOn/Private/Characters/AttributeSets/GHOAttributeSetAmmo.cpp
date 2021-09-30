@@ -53,7 +53,7 @@ void UGHOAttributeSetAmmo::PostGameplayEffectExecute(const FGameplayEffectModCal
 	}
 }
 
-FGameplayAttribute UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(FGameplayTag& PrimaryAmmoTag)
+FGameplayAttribute UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(const FGameplayTag& PrimaryAmmoTag)
 {
 	static FGameplayTag RifleAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rifle));
 	static FGameplayTag RocketAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rocket));
@@ -74,7 +74,7 @@ FGameplayAttribute UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(FGamepla
 	return FGameplayAttribute();
 }
 
-FGameplayAttribute UGHOAttributeSetAmmo::GetMaxReserveAmmoAttributeFromTag(FGameplayTag& PrimaryAmmoTag)
+FGameplayAttribute UGHOAttributeSetAmmo::GetMaxReserveAmmoAttributeFromTag(const FGameplayTag& PrimaryAmmoTag)
 {
 	static FGameplayTag RifleAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rifle));
 	static FGameplayTag RocketAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rocket));

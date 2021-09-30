@@ -60,6 +60,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOPlayerState|UI")
 	void StopInteractionTimer();
 
+	int GetReservedAmmoWithTag(const struct FGameplayTag& tag);
+
 private:
 	/*
 	by Epic

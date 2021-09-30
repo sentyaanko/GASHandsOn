@@ -161,6 +161,11 @@ void AGHOPlayerState::StopInteractionTimer()
 	}
 }
 
+int AGHOPlayerState::GetReservedAmmoWithTag(const FGameplayTag& tag)
+{
+	FGameplayAttribute Attribute = AttributeSetAmmo->GetReserveAmmoAttributeFromTag(tag);
+	return Attribute.IsValid() ? AbilitySystemComponent->GetNumericAttribute(Attribute): 0;
+}
 
 void AGHOPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 {

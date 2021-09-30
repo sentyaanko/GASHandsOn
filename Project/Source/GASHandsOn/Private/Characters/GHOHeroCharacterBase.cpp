@@ -1153,10 +1153,7 @@ int32 AGHOHeroCharacterBase::GetPrimaryReserveAmmo() const
 	{
 		//FGameplayAttribute Attribute = AttributeSetAmmo->GetReserveAmmoAttributeFromTag(CurrentWeapon->PrimaryAmmoType);
 		FGameplayAttribute Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(CurrentWeapon->PrimaryAmmoType);
-		if (Attribute.IsValid())
-		{
-			return AbilitySystemComponent->GetNumericAttribute(Attribute);
-		}
+		return Attribute.IsValid() ? AbilitySystemComponent->GetNumericAttribute(Attribute) : 0;
 	}
 
 	return 0;
@@ -1169,10 +1166,7 @@ int32 AGHOHeroCharacterBase::GetSecondaryReserveAmmo() const
 	{
 		//FGameplayAttribute Attribute = AttributeSetAmmo->GetReserveAmmoAttributeFromTag(CurrentWeapon->SecondaryAmmoType);
 		FGameplayAttribute Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(CurrentWeapon->SecondaryAmmoType);
-		if (Attribute.IsValid())
-		{
-			return AbilitySystemComponent->GetNumericAttribute(Attribute);
-		}
+		return Attribute.IsValid() ? AbilitySystemComponent->GetNumericAttribute(Attribute) : 0;
 	}
 
 	return 0;
