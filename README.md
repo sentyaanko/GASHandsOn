@@ -175,7 +175,10 @@ Gameplay Ability System Hands On Project.
 	* インタラクトシステム の組み込み
 	* Hero の Revive の組み込み
 	* 詳細は [./Documents/0.1.6.Ability-Interact-Revive.md](./Documents/0.1.6.Ability-Interact-Revive.md) を参照
-
+* v0.1.7
+	* Weapon の仕組みの組み込み
+	* Rifle の組み込み
+	* 詳細は [./Documents/0.1.7.System-Weapon.md](./Documents/0.1.7.System-Weapon.md) を参照
 
 -----
 おしまい。
