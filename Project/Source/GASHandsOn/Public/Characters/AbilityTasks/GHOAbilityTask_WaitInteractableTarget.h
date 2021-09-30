@@ -11,7 +11,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitInteractableTargetDelegate, con
 
 /**
 by GASShooter
-	Performs a line trace on a timer, looking for an Actor that implements IGSInteractable that is available for interaction.
+	Performs a line trace on a timer, looking for an Actor that implements IGHOInteractable that is available for interaction.
 	The StartLocations are hardcoded for GASShooter since we can be in first and third person so we have to check every time we trace. 
 	If you only have one start location, you should make it more generic with a parameter on your AbilityTask node.
 和訳
@@ -42,14 +42,14 @@ public:
 	static UGHOAbilityTask_WaitInteractableTarget* WaitForInteractableTarget(UGameplayAbility* OwningAbility, FName TaskInstanceName, FCollisionProfileName TraceProfile, float MaxRange = 200.0f, float TimerPeriod = 0.1f, bool bShowDebug = true);
 
 	// UGameplayTask interface
-public:
+protected:
 	/*
 	by Epic
 		Called to trigger the actual task once the delegates have been set up
 		Note that the default implementation does nothing and you don't have to call it
 	和訳
 		デリゲートが設定された後、実際のタスクの起動をするために呼び出される。
-		なお、デフォルトの実装では何もしないので、これを呼びdス必要はありません。
+		なお、デフォルトの実装では何もしないので、これを呼び出す必要はありません。
 	*/
 	virtual void Activate() override;
 
@@ -70,7 +70,7 @@ public:
 	*/
 	virtual void OnDestroy(bool AbilityEnded) override;
 
-	// End of UObject interface
+	// End of UGameplayTask interface
 
 protected:
 	/** Traces as normal, but will manually filter all hit actors */

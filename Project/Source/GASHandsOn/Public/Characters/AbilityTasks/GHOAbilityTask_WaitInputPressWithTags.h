@@ -49,7 +49,7 @@ public:
 	static UGHOAbilityTask_WaitInputPressWithTags* WaitInputPressWithTags(UGameplayAbility* OwningAbility, FGameplayTagContainer RequiredTags, FGameplayTagContainer IgnoredTags, bool bTestAlreadyPressed = false);
 
 	// UGameplayTask interface
-public:
+protected:
 	/*
 	by Epic
 		Called to trigger the actual task once the delegates have been set up
@@ -77,8 +77,8 @@ public:
 	*/
 	virtual void OnDestroy(bool AbilityEnded) override;
 
-	// End of UObject interface
-
+	// End of UGameplayTask interface
+	
 protected:
 	/**
 	by GASShooter

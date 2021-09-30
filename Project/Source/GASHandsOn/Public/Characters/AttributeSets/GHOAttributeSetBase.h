@@ -6,14 +6,8 @@
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
 #include "UI/GHOHUDWidgetParameter.h"
+#include "GHOAttributeSetMacros.h"
 #include "GHOAttributeSetBase.generated.h"
-
-// Uses macros from AttributeSet.h
-#define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
-	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
-	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
-	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
-	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
 
 /**
@@ -329,4 +323,6 @@ protected:
 private:
 	void PostGameplayEffectExecute_Damage(const struct FGameplayEffectModCallbackData& Data);
 
+private:
+	FGameplayTag HeadShotTag;
 };

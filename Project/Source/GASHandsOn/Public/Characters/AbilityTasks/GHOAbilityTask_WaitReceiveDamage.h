@@ -41,7 +41,7 @@ protected:
 		Note that the default implementation does nothing and you don't have to call it
 	和訳
 		デリゲートが設定された後、実際のタスクの起動をするために呼び出される。
-		なお、デフォルトの実装では何もしないので、これを呼びdス必要はありません。
+		なお、デフォルトの実装では何もしないので、これを呼び出す必要はありません。
 	*/
 	virtual void Activate() override;
 
@@ -62,7 +62,7 @@ protected:
 	*/
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
-	// End of UObject interface
+	// End of UGameplayTask interface
 
 private:
 	UFUNCTION()

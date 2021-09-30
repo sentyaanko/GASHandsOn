@@ -5,8 +5,11 @@
 #include "Player/GHOPlayerState.h"
 #include "AbilitySystemComponent.h"
 #include "UI/GHOHUDWidget.h"
+#include "UI/GHOHUDReticle.h"
 #include "Characters/AttributeSets/GHOAttributeSetBase.h"
+#include "Characters/AttributeSets/GHOAttributeSetAmmo.h"
 #include "Characters/GHOCharacterBase.h"
+#include "Weapons/GHOWeapon.h"
 #include "Settings/GHODefaultClasses.h"
 
 
@@ -59,6 +62,23 @@ void AGHOPlayerController::CreateHUD()
 			*/
 			UIHUDWidget->SetParamter(attr->GetHUDParameter());
 		}
+		if (AGHOHeroCharacterBase* Hero = GetPawn<AGHOHeroCharacterBase>())
+		{
+			if (AGHOWeapon* CurrentWeapon = Hero->GetCurrentWeapon())
+			{
+				// PlayerState's Pawn isn't set up yet so we can't just call PS->GetPrimaryReserveAmmo()
+				UIHUDWidget->SetEquippedWeaponSprite(CurrentWeapon->PrimaryIcon);
+				UIHUDWidget->SetEquippedWeaponName(CurrentWeapon->WeaponName);
+				UIHUDWidget->SetEquippedWeaponStatusText(CurrentWeapon->StatusText);
+				UIHUDWidget->SetPrimaryAmmoType(CurrentWeapon->PrimaryAmmoType);
+				UIHUDWidget->SetPrimaryClipAmmo(CurrentWeapon->GetPrimaryClipAmmo());
+				UIHUDWidget->SetPrimaryReserveAmmo(playerState->GetReservedAmmoWithTag(CurrentWeapon->PrimaryAmmoType));
+				UIHUDWidget->SetSecondaryAmmoType(CurrentWeapon->SecondaryAmmoType);
+				UIHUDWidget->SetSecondaryClipAmmo(CurrentWeapon->GetSecondaryClipAmmo());
+				UIHUDWidget->SetSecondaryReserveAmmo(playerState->GetReservedAmmoWithTag(CurrentWeapon->SecondaryAmmoType));
+				UIHUDWidget->SetReticle(CurrentWeapon->GetPrimaryHUDReticleClass());
+			}
+		}
 	}
 }
 
@@ -83,6 +103,90 @@ void AGHOPlayerController::OnPossess(APawn* aPawn)
 	if (AGHOPlayerState* playerState = GetPlayerState<AGHOPlayerState>())
 	{
 		playerState->GetAbilitySystemComponent()->InitAbilityActorInfo(playerState, aPawn);
+	}
+}
+
+void AGHOPlayerController::SetEquippedWeaponPrimaryIconFromSprite(UPaperSprite* InSprite)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetEquippedWeaponSprite(InSprite);
+	}
+}
+
+void AGHOPlayerController::SetEquippedWeaponName(const FText& WeaponName)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetEquippedWeaponName(WeaponName);
+	}
+}
+
+void AGHOPlayerController::SetEquippedWeaponStatusText(const FText& StatusText)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetEquippedWeaponStatusText(StatusText);
+	}
+}
+
+void AGHOPlayerController::SetPrimaryAmmoType(const FGameplayTag& AmmoType)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetPrimaryAmmoType(AmmoType);
+	}
+}
+
+void AGHOPlayerController::SetPrimaryClipAmmo(int32 ClipAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetPrimaryClipAmmo(ClipAmmo);
+	}
+}
+
+void AGHOPlayerController::SetPrimaryReserveAmmo(int32 ReserveAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetPrimaryReserveAmmo(ReserveAmmo);
+	}
+}
+
+void AGHOPlayerController::SetSecondaryAmmoType(const FGameplayTag& AmmoType)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetSecondaryAmmoType(AmmoType);
+	}
+}
+
+void AGHOPlayerController::SetSecondaryClipAmmo(int32 SecondaryClipAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetSecondaryClipAmmo(SecondaryClipAmmo);
+	}
+}
+
+void AGHOPlayerController::SetSecondaryReserveAmmo(int32 SecondaryReserveAmmo)
+{
+	if (UIHUDWidget)
+	{
+		UIHUDWidget->SetSecondaryReserveAmmo(SecondaryReserveAmmo);
+	}
+}
+
+void AGHOPlayerController::SetHUDReticle(TSubclassOf<UGHOHUDReticle> ReticleClass)
+{
+	//by GASShooter
+	//	!GetWorld()->bIsTearingDown Stops an error when quitting PIE while targeting when the EndAbility resets the HUD reticle
+	//和訳
+	//	"!GetWorld()->bIsTearingDown" は EndAbility で HUD レティクルをリセットする時、ターゲティング中に PIE を終了する時にエラーが発生するのを止める。
+	if (UIHUDWidget && GetWorld() && !GetWorld()->bIsTearingDown)
+	{
+		UIHUDWidget->SetReticle(ReticleClass);
 	}
 }
 

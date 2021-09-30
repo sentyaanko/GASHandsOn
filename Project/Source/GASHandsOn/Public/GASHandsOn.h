@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 
+#define ACTOR_ROLE_FSTRING *(FindObject<UEnum>(ANY_PACKAGE, TEXT("ENetRole"), true)->GetNameStringByValue(GetLocalRole()))
+#define GET_ACTOR_ROLE_FSTRING(Actor) *(FindObject<UEnum>(ANY_PACKAGE, TEXT("ENetRole"), true)->GetNameStringByValue(Actor->GetLocalRole()))
 
 UENUM(BlueprintType)
 enum class EGHOAbilityInputID : uint8
@@ -29,6 +31,18 @@ enum class EGHOAbilityInputID : uint8
 	// 9 Jump
 	Jump			UMETA(DisplayName = "Jump"),
 	// 10 Interact
-	Interact		UMETA(DisplayName = "Interact")
+	Interact		UMETA(DisplayName = "Interact"),
+	// 11 PrimaryFire
+	PrimaryFire		UMETA(DisplayName = "Primary Fire"),
+	// 12 SecondaryFire
+	SecondaryFire	UMETA(DisplayName = "Secondary Fire"),
+	// 13 Alternate Fire
+	AlternateFire	UMETA(DisplayName = "Alternate Fire"),
+	// 14 Reload
+	Reload			UMETA(DisplayName = "Reload"),
+	// 15 NextWeapon
+	NextWeapon		UMETA(DisplayName = "Next Weapon"),
+	// 16 PrevWeapon
+	PrevWeapon		UMETA(DisplayName = "Previous Weapon"),
 };
 
