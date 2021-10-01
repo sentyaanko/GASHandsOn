@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "GameplayTagContainer.h"
 #include "GHOHUDWidgetParameter.h"
 #include "GHOHUDWidget.generated.h"
 
@@ -56,7 +57,7 @@ public:
 	void SetEquippedWeaponStatusText(const FText& StatusText);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
-	void SetPrimaryAmmoType(const FGameplayTag& AmmoType);
+	void SetPrimaryAmmoType(const struct FGameplayTag& AmmoType);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
 	void SetPrimaryClipAmmo(int32 ClipAmmo);
@@ -65,7 +66,7 @@ public:
 	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
-	void SetSecondaryAmmoType(const FGameplayTag& AmmoType);
+	void SetSecondaryAmmoType(const struct FGameplayTag& AmmoType);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Weapon")
 	void SetSecondaryClipAmmo(int32 SecondaryClipAmmo);
