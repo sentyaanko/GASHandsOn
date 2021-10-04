@@ -43,7 +43,7 @@ public:
 	static bool IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystemComponent, FGameplayAbilitySpecHandle Handle);
 
 	/**
-	* FGSGameplayEffectContainerSpec
+	* FGHOGameplayEffectContainerSpec
 	*/
 
 	/*
@@ -54,5 +54,19 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Ability|Container", Meta = (AutoCreateRefTerm = "TargetData, HitResults, TargetActors"))
 	static void AddTargetsToEffectContainerSpec(UPARAM(ref) FGHOGameplayEffectContainerSpec& ContainerSpec, const TArray<FGameplayAbilityTargetDataHandle>& TargetData, const TArray<FHitResult>& HitResults, const TArray<AActor*>& TargetActors);
+
+	/**
+	* FGHOGameplayEffectContext
+	*/
+
+	// Returns TargetData
+	UFUNCTION(BlueprintCallable, Category = "Ability|EffectContext", Meta = (DisplayName = "GetTargetData"))
+	static FGameplayAbilityTargetDataHandle EffectContextGetTargetData(FGameplayEffectContextHandle EffectContext);
+
+	// Adds TargetData
+	UFUNCTION(BlueprintCallable, Category = "Ability|EffectContext", Meta = (DisplayName = "AddTargetData"))
+	static void EffectContextAddTargetData(FGameplayEffectContextHandle EffectContextHandle, const FGameplayAbilityTargetDataHandle& TargetData);
+
+
 
 };
