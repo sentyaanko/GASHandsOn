@@ -179,6 +179,9 @@ Gameplay Ability System Hands On Project.
 	* Weapon の仕組みの組み込み
 	* Rifle の組み込み
 	* 詳細は [./Documents/0.1.7.System-Weapon.md](./Documents/0.1.7.System-Weapon.md) を参照
+* v0.1.8
+	* Shotgun の組み込み
+	* 詳細は [./Documents/0.1.8.Weapon-Shotgun.md](./Documents/0.1.8.Weapon-Shotgun.md) を参照
 
 -----
 おしまい。
