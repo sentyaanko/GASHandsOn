@@ -55,6 +55,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Ability|Container", Meta = (AutoCreateRefTerm = "TargetData, HitResults, TargetActors"))
 	static void AddTargetsToEffectContainerSpec(UPARAM(ref) FGHOGameplayEffectContainerSpec& ContainerSpec, const TArray<FGameplayAbilityTargetDataHandle>& TargetData, const TArray<FHitResult>& HitResults, const TArray<AActor*>& TargetActors);
 
+	/*
+	by GASShooter
+		Applies container spec that was made from an ability
+	和訳
+		アビリティから作られた EffectContainerSpec を適用
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Ability|Container")
+	static TArray<FActiveGameplayEffectHandle> ApplyExternalEffectContainerSpec(const FGHOGameplayEffectContainerSpec& ContainerSpec);
+
 	/**
 	* FGHOGameplayEffectContext
 	*/

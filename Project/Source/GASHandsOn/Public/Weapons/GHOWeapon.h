@@ -21,6 +21,24 @@ class UGHOAbilitySystemComponent;
 class UGHOGameplayAbility;
 
 
+UCLASS(Blueprintable)
+class GASHANDSON_API UGHOWeaponDataAsset: public UDataAsset
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOWeapon|Ammo")
+	int32 AmmoCost;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOWeapon|Ammo")
+	float TimeBetweenShots;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOWeapon|Ammo")
+	float Damage;
+
+};
+
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponAmmoChangedDelegate, int32, OldValue, int32, NewValue);
 
 
