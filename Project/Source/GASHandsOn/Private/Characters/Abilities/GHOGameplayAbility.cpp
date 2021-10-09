@@ -6,6 +6,8 @@
 #include "Characters/Components/GHOAbilitySystemComponent.h"
 #include "Settings/GHOGameplayTags.h"
 #include "Characters/GHOHeroCharacterBase.h"
+#include "Player/GHOPlayerController.h"
+#include "Weapons/GHOWeapon.h"
 
 
 
@@ -98,6 +100,35 @@ bool UGHOGameplayAbility::GHOCheckCost_Implementation(const FGameplayAbilitySpec
 void UGHOGameplayAbility::GHOApplyCost_Implementation(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
 }
+
+void UGHOGameplayAbility::SetHUDReticle(TSubclassOf<UGHOHUDReticle> ReticleClass)
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(CurrentActorInfo->PlayerController))
+	{
+		PC->SetHUDReticle(ReticleClass);
+	}
+}
+
+void UGHOGameplayAbility::ResetHUDReticle()
+{
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(CurrentActorInfo->PlayerController))
+	{
+		PC->SetHUDReticle(GetCurrentWeaponHUDReticle());
+	}
+}
+
+TSubclassOf<class UGHOHUDReticle> UGHOGameplayAbility::GetCurrentWeaponHUDReticle()
+{
+	if (auto Hero = Cast<AGHOHeroCharacterBase>(CurrentActorInfo->AvatarActor))
+	{
+		if (auto Weapon = Hero->GetCurrentWeapon())
+		{
+			return Weapon->GetPrimaryHUDReticleClass();
+		}
+	}
+	return nullptr;
+}
+
 
 UObject* UGHOGameplayAbility::K2_GetSourceObject(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const
 {

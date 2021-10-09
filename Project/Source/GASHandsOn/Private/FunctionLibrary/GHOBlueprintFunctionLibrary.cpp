@@ -60,6 +60,25 @@ void UGHOBlueprintFunctionLibrary::AddTargetsToEffectContainerSpec(FGHOGameplayE
 	ContainerSpec.AddTargets(TargetData, HitResults, TargetActors);
 }
 
+TArray<FActiveGameplayEffectHandle> UGHOBlueprintFunctionLibrary::ApplyExternalEffectContainerSpec(const FGHOGameplayEffectContainerSpec& ContainerSpec)
+{
+	TArray<FActiveGameplayEffectHandle> AllEffects;
+
+	// Iterate list of gameplay effects
+	for (const FGameplayEffectSpecHandle& SpecHandle : ContainerSpec.TargetGameplayEffectSpecs)
+	{
+		if (SpecHandle.IsValid())
+		{
+			// If effect is valid, iterate list of targets and apply to all
+			for (TSharedPtr<FGameplayAbilityTargetData> Data : ContainerSpec.TargetData.Data)
+			{
+				AllEffects.Append(Data->ApplyGameplayEffectSpec(*SpecHandle.Data.Get()));
+			}
+		}
+	}
+	return AllEffects;
+}
+
 FGameplayAbilityTargetDataHandle UGHOBlueprintFunctionLibrary::EffectContextGetTargetData(FGameplayEffectContextHandle EffectContextHandle)
 {
 	if (FGHOGameplayEffectContext* EffectContext = static_cast<FGHOGameplayEffectContext*>(EffectContextHandle.Get()))

@@ -151,6 +151,14 @@ protected:
 	bool GHOCheckCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const;
 	virtual bool GHOCheckCost_Implementation(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const;
 
+	UFUNCTION(BlueprintCallable, Category = "Ability")
+	virtual void SetHUDReticle(TSubclassOf<class UGHOHUDReticle> ReticleClass);
+
+	UFUNCTION(BlueprintCallable, Category = "Ability")
+	virtual void ResetHUDReticle();
+
+	TSubclassOf<class UGHOHUDReticle> GetCurrentWeaponHUDReticle();
+
 	/*
 	by GASShooter
 		Allows C++ and Blueprint abilities to override how cost is applied in case they don't use a GE like weapon ammo
