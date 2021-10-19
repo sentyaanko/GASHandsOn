@@ -185,6 +185,11 @@ Gameplay Ability System Hands On Project.
 * v0.1.9
 	* RocketLauncher の組み込み
 	* 詳細は [./Documents/0.1.9.Weapon-RocketLauncher.md](./Documents/0.1.9.Weapon-RocketLauncher.md) を参照
+* v0.1.10
+	* 弾薬と武器をレベルに配置
+	* 武器変更 の組み込み
+	* 詳細は [./Documents/0.1.10.Weapon-RocketLauncher.md](./Documents/0.1.10.Weapon-RocketLauncher.md) を参照
+
 
 -----
 おしまい。
