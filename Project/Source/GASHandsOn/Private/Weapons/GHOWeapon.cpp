@@ -596,12 +596,12 @@ void AGHOWeapon::PickUpOnTouch(AGHOHeroCharacterBase* InCharacter)
 		WeaponMesh3P->SetVisibility(false, true);
 	}
 #else
-	//if (InCharacter->AddWeaponToInventory(this, true) && OwningCharacter->IsInFirstPersonPerspective())
-	//{
-		WeaponMesh->CastShadow = false;
-		WeaponMesh->SetVisibility(true, true);
-		WeaponMesh->SetVisibility(false, true);
-	//}
+	if (InCharacter->AddWeaponToInventory(this, true) /*&& OwningCharacter->IsInFirstPersonPerspective()*/ )
+	{
+		//WeaponMesh->CastShadow = false;
+		//WeaponMesh->SetVisibility(true, true);
+		//WeaponMesh->SetVisibility(false, true);
+	}
 #endif
 }
 

@@ -759,6 +759,82 @@ FName AGHOHeroCharacterBase::GetWeaponAttachPoint() const
 	return WeaponAttachPoint;
 }
 
+bool AGHOHeroCharacterBase::AddWeaponToInventory(AGHOWeapon* NewWeapon, bool bEquipWeapon)
+{
+	if (DoesWeaponExistInInventory(NewWeapon))
+	{
+		if (USoundCue* PickupSound = NewWeapon->GetPickupSound())
+		{
+			if (IsLocallyControlled())
+			{
+				UGameplayStatics::SpawnSoundAttached(PickupSound, GetRootComponent());
+			}
+		}
+
+		if (GetLocalRole() < ROLE_Authority)
+		{
+			return false;
+		}
+
+		/*
+		by gasshooter
+			create a dynamic instant gameplay effect to give the primary and secondary ammo
+		和訳
+			プライマリ弾とセカンダリ弾を与える動的な instant gameplay effect の生成
+		*/
+		UGameplayEffect* GEAmmo = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("Ammo")));
+		GEAmmo->DurationPolicy = EGameplayEffectDurationType::Instant;
+
+		if (NewWeapon->PrimaryAmmoType != WeaponAmmoTypeNoneTag)
+		{
+			const int32 Idx = GEAmmo->Modifiers.Num();
+			GEAmmo->Modifiers.SetNum(Idx + 1);
+
+			FGameplayModifierInfo& InfoPrimaryAmmo = GEAmmo->Modifiers[Idx];
+			InfoPrimaryAmmo.ModifierMagnitude = FScalableFloat(NewWeapon->GetPrimaryClipAmmo());
+			InfoPrimaryAmmo.ModifierOp = EGameplayModOp::Additive;
+			InfoPrimaryAmmo.Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(NewWeapon->PrimaryAmmoType);
+		}
+
+		if (NewWeapon->SecondaryAmmoType != WeaponAmmoTypeNoneTag)
+		{
+			const int32 Idx = GEAmmo->Modifiers.Num();
+			GEAmmo->Modifiers.SetNum(Idx + 1);
+
+			FGameplayModifierInfo& InfoSecondaryAmmo = GEAmmo->Modifiers[Idx];
+			InfoSecondaryAmmo.ModifierMagnitude = FScalableFloat(NewWeapon->GetSecondaryClipAmmo());
+			InfoSecondaryAmmo.ModifierOp = EGameplayModOp::Additive;
+			InfoSecondaryAmmo.Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(NewWeapon->SecondaryAmmoType);
+		}
+
+		if (GEAmmo->Modifiers.Num() > 0)
+		{
+			AbilitySystemComponent->ApplyGameplayEffectToSelf(GEAmmo, 1.0f, AbilitySystemComponent->MakeEffectContext());
+		}
+
+		NewWeapon->Destroy();
+
+		return false;
+	}
+
+	if (GetLocalRole() < ROLE_Authority)
+	{
+		return false;
+	}
+
+	Inventory.Weapons.Add(NewWeapon);
+	NewWeapon->SetOwningCharacter(this);
+	NewWeapon->AddAbilities();
+
+	if (bEquipWeapon)
+	{
+		EquipWeapon(NewWeapon);
+		RPCClientSyncCurrentWeapon(CurrentWeapon);
+	}
+
+	return true;
+}
+
 void AGHOHeroCharacterBase::OnRep_Inventory()
 {
 	if (GetLocalRole() == ROLE_AutonomousProxy && Inventory.Weapons.Num() > 0 && !CurrentWeapon)
@@ -979,82 +1055,6 @@ void AGHOHeroCharacterBase::UnEquipCurrentWeapon()
 	}
 }
 
-bool AGHOHeroCharacterBase::AddWeaponToInventory(AGHOWeapon* NewWeapon, bool bEquipWeapon)
-{
-	if (DoesWeaponExistInInventory(NewWeapon))
-	{
-		if (USoundCue* PickupSound = NewWeapon->GetPickupSound())
-		{
-			if (IsLocallyControlled())
-			{
-				UGameplayStatics::SpawnSoundAttached(PickupSound, GetRootComponent());
-			}
-		}
-
-		if (GetLocalRole() < ROLE_Authority)
-		{
-			return false;
-		}
-
-		/*
-		by gasshooter
-			create a dynamic instant gameplay effect to give the primary and secondary ammo
-		和訳
-			プライマリ弾とセカンダリ弾を与える動的な instant gameplay effect の生成
-		*/
-		UGameplayEffect* GEAmmo = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("Ammo")));
-		GEAmmo->DurationPolicy = EGameplayEffectDurationType::Instant;
-
-		if (NewWeapon->PrimaryAmmoType != WeaponAmmoTypeNoneTag)
-		{
-			const int32 Idx = GEAmmo->Modifiers.Num();
-			GEAmmo->Modifiers.SetNum(Idx + 1);
-
-			FGameplayModifierInfo& InfoPrimaryAmmo = GEAmmo->Modifiers[Idx];
-			InfoPrimaryAmmo.ModifierMagnitude = FScalableFloat(NewWeapon->GetPrimaryClipAmmo());
-			InfoPrimaryAmmo.ModifierOp = EGameplayModOp::Additive;
-			InfoPrimaryAmmo.Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(NewWeapon->PrimaryAmmoType);
-		}
-
-		if (NewWeapon->SecondaryAmmoType != WeaponAmmoTypeNoneTag)
-		{
-			const int32 Idx = GEAmmo->Modifiers.Num();
-			GEAmmo->Modifiers.SetNum(Idx + 1);
-
-			FGameplayModifierInfo& InfoSecondaryAmmo = GEAmmo->Modifiers[Idx];
-			InfoSecondaryAmmo.ModifierMagnitude = FScalableFloat(NewWeapon->GetSecondaryClipAmmo());
-			InfoSecondaryAmmo.ModifierOp = EGameplayModOp::Additive;
-			InfoSecondaryAmmo.Attribute = UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(NewWeapon->SecondaryAmmoType);
-		}
-
-		if (GEAmmo->Modifiers.Num() > 0)
-		{
-			AbilitySystemComponent->ApplyGameplayEffectToSelf(GEAmmo, 1.0f, AbilitySystemComponent->MakeEffectContext());
-		}
-
-		NewWeapon->Destroy();
-
-		return false;
-	}
-
-	if (GetLocalRole() < ROLE_Authority)
-	{
-		return false;
-	}
-
-	Inventory.Weapons.Add(NewWeapon);
-	NewWeapon->SetOwningCharacter(this);
-	NewWeapon->AddAbilities();
-
-	if (bEquipWeapon)
-	{
-		EquipWeapon(NewWeapon);
-		RPCClientSyncCurrentWeapon(CurrentWeapon);
-	}
-
-	return true;
-}
-
 bool AGHOHeroCharacterBase::RemoveWeaponFromInventory(AGHOWeapon* WeaponToRemove)
 {
 	if (DoesWeaponExistInInventory(WeaponToRemove))
@@ -1124,6 +1124,29 @@ void AGHOHeroCharacterBase::EquipWeapon(AGHOWeapon* NewWeapon)
 	{
 		SetCurrentWeapon(NewWeapon, CurrentWeapon);
 	}
+}
+
+void AGHOHeroCharacterBase::SwitchWeapon(bool bPrevious)
+{
+	const int32 WeaponNum = Inventory.Weapons.Num();
+	if (WeaponNum < 2)
+	{
+		return;
+	}
+
+	const int32 CurrentWeaponIndex = Inventory.Weapons.Find(CurrentWeapon);
+	UnEquipCurrentWeapon();
+
+	if (CurrentWeaponIndex == INDEX_NONE)
+	{
+		EquipWeapon(Inventory.Weapons[0]);
+	}
+	else
+	{
+		const int32 SwitchWeaponIndex = (bPrevious ? FMath::Abs(CurrentWeaponIndex - 1 + WeaponNum) : (CurrentWeaponIndex + 1)) % WeaponNum;
+		EquipWeapon(Inventory.Weapons[SwitchWeaponIndex]);
+	}
+
 }
 
 int32 AGHOHeroCharacterBase::GetPrimaryClipAmmo() const
@@ -1214,6 +1237,11 @@ void AGHOHeroCharacterBase::CurrentWeaponSecondaryReserveAmmoChanged(const FOnAt
 			PC->SetSecondaryReserveAmmo(Data.NewValue);
 		}
 	}
+}
+
+int32 AGHOHeroCharacterBase::GetNumWeapons() const
+{
+	return Inventory.Weapons.Num();
 }
 
 void AGHOHeroCharacterBase::WeaponChangingDelayReplicationTagChanged(const FGameplayTag CallbackTag, int32 NewCount)

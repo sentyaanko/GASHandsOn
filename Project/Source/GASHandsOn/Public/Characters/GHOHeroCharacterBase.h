@@ -363,6 +363,17 @@ public:
 
 	FName GetWeaponAttachPoint() const;
 
+	/*
+	by GASShooter
+		Adds a new weapon to the inventory.
+		Returns false if the weapon already exists in the inventory, true if it's a new weapon.
+	和訳
+		新しい武器をインベントリに追加します。
+		インベントリに既にその武器がある場合は false を、新しい武器の場合は true を返します。
+	*/
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	bool AddWeaponToInventory(AGHOWeapon* NewWeapon, bool bEquipWeapon = false);
+
 private:
 	UFUNCTION()
 	void OnRep_Inventory();
@@ -433,17 +444,6 @@ private:
 
 	/*
 	by GASShooter
-		Adds a new weapon to the inventory.
-		Returns false if the weapon already exists in the inventory, true if it's a new weapon.
-	和訳
-		新しい武器をインベントリに追加します。
-		インベントリに既にその武器がある場合は false を、新しい武器の場合は true を返します。
-	*/
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
-	bool AddWeaponToInventory(AGHOWeapon* NewWeapon, bool bEquipWeapon = false);
-
-	/*
-	by GASShooter
 		Removes a weapon from the inventory.
 		Returns true if the weapon exists and was removed. False if the weapon didn't exist in the inventory.
 	和訳
@@ -459,6 +459,14 @@ private:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
 	void EquipWeapon(AGHOWeapon* NewWeapon);
 
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	virtual void NextWeapon();
+//
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	virtual void PreviousWeapon();
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	virtual void SwitchWeapon(bool bPrevious);
+
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
 	int32 GetPrimaryClipAmmo() const;
 
@@ -471,6 +479,8 @@ private:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
 	int32 GetSecondaryReserveAmmo() const;
 
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	int32 GetNumWeapons() const;
 
 	UFUNCTION()
 	virtual void CurrentWeaponPrimaryClipAmmoChanged(int32 OldPrimaryClipAmmo, int32 NewPrimaryClipAmmo);
