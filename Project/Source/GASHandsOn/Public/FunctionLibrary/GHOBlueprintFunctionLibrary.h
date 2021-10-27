@@ -51,6 +51,9 @@ public:
 		Adds targets to a copy of the passed in effect container spec and returns it
 	和訳
 		ターゲットを渡された EffectContainerSpec のコピーに追加し、それを返します。
+	解説
+		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGBlueprintLibrary で作成されている機能を元に
+		GASShooter の GSBlueprintFunctionLibrary で拡張されたものです。
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Ability|Container", Meta = (AutoCreateRefTerm = "TargetData, HitResults, TargetActors"))
 	static void AddTargetsToEffectContainerSpec(UPARAM(ref) FGHOGameplayEffectContainerSpec& ContainerSpec, const TArray<FGameplayAbilityTargetDataHandle>& TargetData, const TArray<FHitResult>& HitResults, const TArray<AActor*>& TargetActors);
@@ -60,6 +63,10 @@ public:
 		Applies container spec that was made from an ability
 	和訳
 		アビリティから作られた EffectContainerSpec を適用
+	解説
+		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGBlueprintLibrary で作成されている機能を元に
+		GASShooter の GSBlueprintFunctionLibrary で拡張されたものです。
+		実装内容は同じです。
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Ability|Container")
 	static TArray<FActiveGameplayEffectHandle> ApplyExternalEffectContainerSpec(const FGHOGameplayEffectContainerSpec& ContainerSpec);

@@ -11,6 +11,9 @@ by GASShooter
 	このヘッダーは、プロジェクト全体で共有される、アビリティ固有の構造体や列挙体のためのものです。
 	どんなゲームでも、システムの拡張を扱うために、このようなファイルが必要になるでしょう。
 	このファイルは FGameplayEffectContext や FGameplayAbilityTargetData のサブクラスを置くのに適しています。
+補足
+	このファイルの内容は Epic のサンプルプロジェクトである ActionRPG の RPGAbilityTypes を元に作られている
+	GASShooter で拡張された GSAbilityTypes を元にしています。
 */
 
 #include "GameplayEffectTypes.h"
