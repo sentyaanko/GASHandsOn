@@ -71,7 +71,7 @@ public:
 	和訳
 		PreInteract() を呼び出す前に、同期すべきか、と、誰が同期すべきか。
 		デフォルトでは、 false と OnlyServerWait です。
-		OnlyServerWait - クライアントが predictively （予測敵）に PreInteract() を呼び出します。
+		OnlyServerWait - クライアントが predictively （予測的）に PreInteract() を呼び出します。
 		OnlyClientWait - クライアントは、サーバーが PreInteract() を呼び出すのを待ちます。
 		                 これは、他の ASC(player) のアビリティを起動中に、アクションやアニメーションを Interact Duration タイマーと同期させたい場合に便利です。
 		BothWait - クライアントとサーバーは、PreInteract() を呼び出す前に、お互いに待機します。
@@ -100,7 +100,7 @@ public:
 	和訳
 		PostInteract() を呼び出す前に、同期すべきか、と、誰が同期すべきか。
 		デフォルトでは、 false と OnlyServerWait です。
-		OnlyServerWait - クライアントが predictively （予測敵）に PostInteract() を呼び出します。
+		OnlyServerWait - クライアントが predictively （予測的）に PostInteract() を呼び出します。
 		OnlyClientWait - クライアントは、サーバーが PostInteract() を呼び出すのを待ちます。
 		BothWait - クライアントとサーバーは、PostInteract() を呼び出す前に、お互いに待機します。
 
