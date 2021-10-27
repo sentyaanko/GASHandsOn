@@ -189,6 +189,10 @@ Gameplay Ability System Hands On Project.
 	* 弾薬と武器をレベルに配置
 	* 武器変更 の組み込み
 	* 詳細は [./Documents/0.1.10.Weapon-RocketLauncher.md](./Documents/0.1.10.Weapon-RocketLauncher.md) を参照
+* v0.1.11
+	* ActionRPG で実装されている箇所にその旨をコメントに記載
+	* Chest の組み込み
+	* 詳細は [./Documents/0.1.11.Chest.md](./Documents/0.1.11.Chest.md) を参照
 
 
 -----
