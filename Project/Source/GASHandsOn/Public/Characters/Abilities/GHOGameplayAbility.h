@@ -177,6 +177,9 @@ protected:
 		Search for and make a gameplay effect container spec to be applied later, from the EffectContainerMap
 	和訳
 		GameplayEffectContainerSpec を EffectContainerMap から検索、（なければ）作成して、後から適用できるようにする、
+	解説
+		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGGameplayAbility で作成されている機能を元に
+		GASShooter の GSGameplayAbility で拡張されたものです。
 	*/
 	UFUNCTION(BlueprintCallable, Category = Ability, meta = (AutoCreateRefTerm = "EventData"))
 	/*virtual*/ FGHOGameplayEffectContainerSpec MakeEffectContainerSpec(FGameplayTag ContainerTag, const FGameplayEventData& EventData, int32 OverrideGameplayLevel = -1);
@@ -186,6 +189,9 @@ protected:
 		Applies a gameplay effect container spec that was previously created
 	和訳
 		以前に作成した、GameplayEffectContainerSpec を適用する。
+	解説
+		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGGameplayAbility で作成されている機能を元に
+		GASShooter の GSGameplayAbility で拡張されたものです。
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Ability")
 	/*virtual*/ TArray<FActiveGameplayEffectHandle> ApplyEffectContainerSpec(const FGHOGameplayEffectContainerSpec& ContainerSpec);
@@ -197,6 +203,8 @@ private:
 	和訳
 		受け取ったコンテナを使用して、 GameplayEffectContainerSpec を作成し、後から適用できるようにする。
 	解説
+		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGGameplayAbility で作成されている機能を元に
+		GASShooter の GSGameplayAbility で拡張されたものです。
 		GASShooter では Blueprint に公開していましたが、使用されていないため、 GASHandsOn では公開せず、 private に変更しています。
 	*/
 	//UFUNCTION(BlueprintCallable, Category = Ability, meta = (AutoCreateRefTerm = "EventData"))

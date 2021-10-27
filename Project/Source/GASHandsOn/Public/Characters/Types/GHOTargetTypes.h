@@ -2,6 +2,13 @@
 
 #pragma once
 
+/*
+補足
+	このファイルの内容は Epic のサンプルプロジェクトである ActionRPG の RPGTargetType を元に作られている
+	GASShooter で拡張された GSTargetType を元にしています。
+	クラス名が変わっているだけで、実装内容は同じです。
+*/
+
 #include "Abilities/GameplayAbilityTypes.h"
 #include "GHOTargetTypes.generated.h"
 
