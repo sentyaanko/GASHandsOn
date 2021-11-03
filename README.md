@@ -193,6 +193,9 @@ Gameplay Ability System Hands On Project.
 	* ActionRPG で実装されている箇所にその旨をコメントに記載
 	* Chest の組み込み
 	* 詳細は [./Documents/0.1.11.Chest.md](./Documents/0.1.11.Chest.md) を参照
+* v0.1.12
+	* Door の組み込み
+	* 詳細は [./Documents/0.1.12.Door.md](./Documents/0.1.12.Door.md) を参照
 
 
 -----
