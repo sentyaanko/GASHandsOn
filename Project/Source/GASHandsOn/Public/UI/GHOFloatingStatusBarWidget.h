@@ -23,4 +23,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
 	void SetManaPercentage(float InManaPercentage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
+	void SetShieldPercentage(float InShieldPercentage);
 };

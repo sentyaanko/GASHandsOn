@@ -130,4 +130,16 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Stamina")
 	void SetStaminaRegenRate(float StaminaRegenRate);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Shield")
+	void SetShield(float Shield);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Shield")
+	void SetShieldMax(float ShieldMax);
+
+	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Shield")
+	//void SetShieldPercentage(float ShieldPercentage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Shield")
+	void SetShieldRegenRate(float ShieldRegenRate);
 };

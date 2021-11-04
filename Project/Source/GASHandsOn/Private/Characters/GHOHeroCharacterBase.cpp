@@ -600,8 +600,7 @@ void AGHOHeroCharacterBase::KnockDown()
 	if (AttributeSetBase.IsValid())
 	{
 		AttributeSetBase->SetHealth(AttributeSetBase->GetHealthMax());
-		//TODO: shield attribute
-		//AttributeSetBase->SetShield(0.0f);
+		AttributeSetBase->SetShield(0.f);
 	}
 }
 
@@ -683,7 +682,17 @@ void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 	和訳
 		Simulated Proxy は BeginPlay が呼ばれたときにはまだ PlayerState を所持していないので、ここでもう一度呼び出します。
 	*/
+#if 0
+	/*
+	解説
+		アトリビュートの初期化の前にステータスバーを初期化するとステータスバーの初期値がおかしくなります。
+		(1)InitializeFloatingStatusBar()
+		と
+		(2)AttributeSetBase->InitializeAttributesOnSpawned()
+		の呼び出し順序を逆にしました(1,2 -> 2,1 に入れ替えました)。
+	*/
 	InitializeFloatingStatusBar();
+#endif
 
 	/*
 	解説
@@ -697,6 +706,11 @@ void AGHOHeroCharacterBase::InitializeAfterAbilitySystem()
 	{
 		AttributeSetBase->InitializeAttributesOnSpawned();
 	}
+
+#if 1
+	InitializeFloatingStatusBar();
+#endif
+
 }
 
 void AGHOHeroCharacterBase::BindASCInput()
@@ -740,10 +754,16 @@ void AGHOHeroCharacterBase::InitializeFloatingStatusBar()
 			{
 				UIFloatingStatusBarComponent->SetWidget(UIFloatingStatusBar);
 
+				//UE_LOG(LogTemp, Log, TEXT("%s Health;%f / %f"), *FString(__FUNCTION__), AttributeSetBase->GetHealth(), AttributeSetBase->GetHealthMax());
+				//UE_LOG(LogTemp, Log, TEXT("%s Mana;%f / %f"), *FString(__FUNCTION__), AttributeSetBase->GetMana(), AttributeSetBase->GetManaMax());
+				//UE_LOG(LogTemp, Log, TEXT("%s Stamina;%f / %f"), *FString(__FUNCTION__), AttributeSetBase->GetStamina(), AttributeSetBase->GetStaminaMax());
+				//UE_LOG(LogTemp, Log, TEXT("%s Shield;%f / %f"), *FString(__FUNCTION__), AttributeSetBase->GetShield(), AttributeSetBase->GetShieldMax());
 				// Setup the floating status bar
 				UIFloatingStatusBar->SetCharacterName(FText());
 				UIFloatingStatusBar->SetHealthPercentage(AttributeSetBase->GetHealth() / AttributeSetBase->GetHealthMax());
 				UIFloatingStatusBar->SetManaPercentage(AttributeSetBase->GetMana() / AttributeSetBase->GetManaMax());
+				UIFloatingStatusBar->SetShieldPercentage(AttributeSetBase->GetShield() / AttributeSetBase->GetShieldMax());
+				//UIFloatingStatusBar->SetShieldPercentage(AttributeSetBase->GetShield() / AttributeSetBase->GetShieldMax());
 			}
 		}
 	}

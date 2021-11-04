@@ -78,6 +78,9 @@ void AGHOPlayerState::BeginPlay()
 		StaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaAttribute()).AddUObject(this, &AGHOPlayerState::StaminaChanged);
 		StaminaMaxChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaMaxAttribute()).AddUObject(this, &AGHOPlayerState::StaminaMaxChanged);
 		StaminaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::StaminaRegenRateChanged);
+		ShieldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetShieldAttribute()).AddUObject(this, &AGHOPlayerState::ShieldChanged);
+		ShieldMaxChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetShieldMaxAttribute()).AddUObject(this, &AGHOPlayerState::ShieldMaxChanged);
+		ShieldRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetShieldRegenRateAttribute()).AddUObject(this, &AGHOPlayerState::ShieldRegenRateChanged);
 		XPChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetXPAttribute()).AddUObject(this, &AGHOPlayerState::XPChanged);
 		GoldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetGoldAttribute()).AddUObject(this, &AGHOPlayerState::GoldChanged);
 		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGHOPlayerState::CharacterLevelChanged);
@@ -335,6 +338,68 @@ void AGHOPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData& Data
 		if (UGHOHUDWidget* HUD = PC->GetHUD())
 		{
 			HUD->SetStaminaRegenRate(StaminaRegenRate);
+		}
+	}
+}
+
+void AGHOPlayerState::ShieldChanged(const FOnAttributeChangeData & Data)
+{
+	const float Shield = Data.NewValue;
+	const float ShieldMax = AttributeSetBase ? AttributeSetBase->GetShieldMax() : 1.f;
+
+	// Update floating status bar
+	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
+	{
+		if (UGHOFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		{
+			HeroFloatingStatusBar->SetShieldPercentage(Shield / ShieldMax);
+		}
+	}
+
+	/*
+	by GASDocumentation
+		Update the HUD
+		Handled in the UI itself using the AsyncTaskAttributeChanged node as an example how to do it in Blueprint
+	和訳
+		HUD の更新
+		AsyncTaskAttributeChanged ノードを使用して UI 自体で処理する。
+	*/
+}
+
+void AGHOPlayerState::ShieldMaxChanged(const FOnAttributeChangeData & Data)
+{
+	const float Shield = AttributeSetBase ? AttributeSetBase->GetShield() : 0.f;
+	const float ShieldMax = Data.NewValue;
+
+	// Update floating status bar
+	if (AGHOHeroCharacterBase* Hero = Cast<AGHOHeroCharacterBase>(GetPawn()))
+	{
+		if (UGHOFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar())
+		{
+			HeroFloatingStatusBar->SetShieldPercentage(Shield / ShieldMax);
+		}
+	}
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetShieldMax(ShieldMax);
+		}
+	}
+}
+
+void AGHOPlayerState::ShieldRegenRateChanged(const FOnAttributeChangeData & Data)
+{
+	float ShieldRegenRate = Data.NewValue;
+
+	// Update the HUD
+	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(GetOwner()))
+	{
+		if (UGHOHUDWidget* HUD = PC->GetHUD())
+		{
+			HUD->SetShieldRegenRate(ShieldRegenRate);
 		}
 	}
 }
