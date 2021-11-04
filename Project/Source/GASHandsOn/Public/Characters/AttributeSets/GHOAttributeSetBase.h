@@ -173,6 +173,38 @@ public:
 
 	/*
 	by GASDocumentation
+		Current shield acts like temporary health. 
+		When depleted, damage will drain regular health.
+	和訳
+		現在のシールド値で、一時的な Health のような働きをする。
+		枯渇すると、ダメージによって通常の Health を消耗する。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Shield", ReplicatedUsing = OnRep_Shield)
+	FGameplayAttributeData Shield;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Shield)
+
+	/*
+	by GASDocumentation
+		Maximum shield that we can have.
+	和訳
+		蓄えられるシールドの最大値。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Shield", ReplicatedUsing = OnRep_ShieldMax)
+	FGameplayAttributeData ShieldMax;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ShieldMax)
+
+	/*
+	by GASDocumentation
+		Shield regen rate will passively increase Shield every second
+	和訳
+		ShieldRegenRate は毎秒パッシブに Shield を増加します。
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Shield", ReplicatedUsing = OnRep_ShieldRegenRate)
+	FGameplayAttributeData ShieldRegenRate;
+	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ShieldRegenRate)
+
+	/*
+	by GASDocumentation
 		Armor reduces the amount of damage done by attackers
 	和訳
 		Armor は攻撃者から受けるダメージを軽減する。
@@ -298,6 +330,15 @@ protected:
 
 	UFUNCTION()
 	void OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate);
+
+	UFUNCTION()
+	void OnRep_Shield(const FGameplayAttributeData& OldShield);
+
+	UFUNCTION()
+	void OnRep_ShieldMax(const FGameplayAttributeData& OldShieldMax);
+
+	UFUNCTION()
+	void OnRep_ShieldRegenRate(const FGameplayAttributeData& OldShieldRegenRate);
 
 	UFUNCTION()
 	void OnRep_Armor(const FGameplayAttributeData& OldArmor);

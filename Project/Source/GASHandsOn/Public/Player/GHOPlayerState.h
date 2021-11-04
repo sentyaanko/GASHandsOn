@@ -78,6 +78,9 @@ private:
 	void StaminaChanged(const struct FOnAttributeChangeData& Data);
 	void StaminaMaxChanged(const struct FOnAttributeChangeData& Data);
 	void StaminaRegenRateChanged(const struct FOnAttributeChangeData& Data);
+	void ShieldChanged(const struct FOnAttributeChangeData& Data);
+	void ShieldMaxChanged(const struct FOnAttributeChangeData& Data);
+	void ShieldRegenRateChanged(const struct FOnAttributeChangeData& Data);
 	void CharacterLevelChanged(const struct FOnAttributeChangeData& Data);
 	void XPChanged(const struct FOnAttributeChangeData& Data);
 	void GoldChanged(const struct FOnAttributeChangeData& Data);
@@ -110,6 +113,9 @@ private:
 	FDelegateHandle StaminaChangedDelegateHandle;
 	FDelegateHandle StaminaMaxChangedDelegateHandle;
 	FDelegateHandle StaminaRegenRateChangedDelegateHandle;
+	FDelegateHandle ShieldChangedDelegateHandle;
+	FDelegateHandle ShieldMaxChangedDelegateHandle;
+	FDelegateHandle ShieldRegenRateChangedDelegateHandle;
 	FDelegateHandle CharacterLevelChangedDelegateHandle;
 	FDelegateHandle XPChangedDelegateHandle;
 	FDelegateHandle GoldChangedDelegateHandle;

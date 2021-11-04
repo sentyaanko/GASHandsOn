@@ -39,11 +39,11 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 	GENERATED_BODY()
 
 	FGHOHUDWidgetParameter()
-	: FGHOHUDWidgetParameter(0, 0, 0, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f)
+	: FGHOHUDWidgetParameter(0, 0, 0, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f)
 	{
 	}
 
-	FGHOHUDWidgetParameter(int32 InHeroLevel, int32 InXP, int32 InGold, float InMoveSpeed, float InHealth, float InHealthMax, float InHealthRegenRate, float InMana, float InManaMax, float InManaRegenRate, float InStamina, float InStaminaMax, float InStaminaRegenRate)
+	FGHOHUDWidgetParameter(int32 InHeroLevel, int32 InXP, int32 InGold, float InMoveSpeed, float InHealth, float InHealthMax, float InHealthRegenRate, float InMana, float InManaMax, float InManaRegenRate, float InStamina, float InStaminaMax, float InStaminaRegenRate, float InShield, float InShieldMax, float InShieldRegenRate)
 		: HeroLevel(InHeroLevel)
 		, XP(InXP)
 		, Gold(InGold)
@@ -51,6 +51,7 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 		, Health(InHealth, InHealthMax, InHealthRegenRate)
 		, Mana(InMana, InManaMax, InManaRegenRate)
 		, Stamina(InStamina, InStaminaMax, InStaminaRegenRate)
+		, Shield(InShield, InShieldMax, InShieldRegenRate)
 	{
 	}
 
@@ -75,4 +76,7 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 	UPROPERTY(BlueprintReadWrite, Category = "Stamina")
 	FGHOGaugeWidgetParameter Stamina;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Shield")
+	FGHOGaugeWidgetParameter Shield;
+	
 };

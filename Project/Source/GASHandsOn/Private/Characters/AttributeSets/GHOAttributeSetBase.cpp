@@ -29,6 +29,9 @@ void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimePro
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Stamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, StaminaMax, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, StaminaRegenRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Shield, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, ShieldMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, ShieldRegenRate, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, Armor, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, MoveSpeed, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGHOAttributeSetBase, CharacterLevel, COND_None, REPNOTIFY_Always);
@@ -81,8 +84,19 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute(const struct FGameplayEffec
 		和訳
 			Stamina の変更を扱う。
 		*/
-		// 
 		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetStaminaMax()));
+	}
+	else if (Data.EvaluatedData.Attribute == GetShieldAttribute())
+	{
+		/*
+		by GASDocumentation
+			Handle shield changes.
+		和訳
+			Shield の変更を扱う。
+		*/
+		//UE_LOG(LogTemp, Log, TEXT("%s Shield:Set Shield before;%f / %f"), *FString(__FUNCTION__), GetShield(), GetShieldMax());
+		SetShield(FMath::Clamp(GetShield(), 0.0f, GetShieldMax()));
+		//UE_LOG(LogTemp, Log, TEXT("%s Shield:Set Shield after;%f / %f"), *FString(__FUNCTION__), GetShield(), GetShieldMax());
 	}
 }
 
@@ -186,12 +200,29 @@ void UGHOAttributeSetBase::PostGameplayEffectExecute_Damage(const struct FGamepl
 
 		/*
 		by GASDocumentation
-			Apply the health change and then clamp it
+			Apply the damage to shield first if it exists
 		和訳
-			Health の変化を適用してからクランプする。
+			シールドがある場合、最初にシールドにダメージを適用
 		*/
-		const float NewHealth = GetHealth() - LocalDamageDone;
-		SetHealth(FMath::Clamp(NewHealth, 0.0f, GetHealthMax()));
+		const float OldShield = GetShield();
+		const float DamageAfterShield = LocalDamageDone - OldShield;
+		if (OldShield > 0)
+		{
+			const float NewShield = OldShield - LocalDamageDone;
+			SetShield(FMath::Clamp<float>(NewShield, 0.0f, GetShieldMax()));
+		}
+
+		if (DamageAfterShield > 0)
+		{
+			/*
+			by GASDocumentation
+				Apply the health change and then clamp it
+			和訳
+				Health の変化を適用してからクランプする。
+			*/
+			const float NewHealth = GetHealth() - DamageAfterShield;
+			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetHealthMax()));
+		}
 
 		if (TargetCharacter && WasAlive)
 		{
@@ -282,6 +313,12 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	{
 		AdjustAttributeForMaxChange(Stamina, StaminaMax, NewValue, GetStaminaAttribute());
 	}
+	else if (Attribute == GetShieldMaxAttribute())
+	{
+		//UE_LOG(LogTemp, Log, TEXT("%s Shield;change shield max(%f)before: %f / %f"), *FString(__FUNCTION__), NewValue, GetShield(), GetShieldMax());
+		AdjustAttributeForMaxChange(Shield, ShieldMax, NewValue, GetShieldAttribute());
+		//UE_LOG(LogTemp, Log, TEXT("%s Shield;change shield max(%f)after: %f / %f"), *FString(__FUNCTION__), NewValue, GetShield(), GetShieldMax());
+	}
 	else if (Attribute == GetMoveSpeedAttribute())
 	{
 		/*
@@ -317,6 +354,12 @@ void UGHOAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribut
 	{
 		NewValue = FMath::Clamp<float>(NewValue, 0, GetStaminaMax());
 	}
+	else if (Attribute == GetShieldAttribute())
+	{
+		//UE_LOG(LogTemp, Log, TEXT("%s Shield;change shield(%f)before: %f / %f"), *FString(__FUNCTION__), NewValue, GetShield(), GetShieldMax());
+		NewValue = FMath::Clamp<float>(NewValue, 0, GetShieldMax());
+		//UE_LOG(LogTemp, Log, TEXT("%s Shield;change shield(%f)after: %f / %f"), *FString(__FUNCTION__), NewValue, GetShield(), GetShieldMax());
+	}
 }
 
 void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
@@ -325,6 +368,11 @@ void UGHOAttributeSetBase::InitializeAttributesOnSpawned()
 	SetHealth(GetHealthMax());
 	SetMana(GetManaMax());
 	SetStamina(GetStaminaMax());
+	SetShield(GetShieldMax());
+	//UE_LOG(LogTemp, Log, TEXT("%s Health;%f / %f"), *FString(__FUNCTION__), GetHealth(), GetHealthMax());
+	//UE_LOG(LogTemp, Log, TEXT("%s Mana;%f / %f"), *FString(__FUNCTION__), GetMana(), GetManaMax());
+	//UE_LOG(LogTemp, Log, TEXT("%s Stamina;%f / %f"), *FString(__FUNCTION__), GetStamina(), GetStaminaMax());
+	//UE_LOG(LogTemp, Log, TEXT("%s Shield;%f / %f"), *FString(__FUNCTION__), GetShield(), GetShieldMax());
 }
 
 bool UGHOAttributeSetBase::IsAlive()const
@@ -348,7 +396,10 @@ FGHOHUDWidgetParameter UGHOAttributeSetBase::GetHUDParameter()const
 		GetManaRegenRate(),
 		GetStamina(),
 		GetStaminaMax(),
-		GetStaminaRegenRate()
+		GetStaminaRegenRate(),
+		GetShield(),
+		GetShieldMax(),
+		GetShieldRegenRate()
 	);
 }
 
@@ -424,6 +475,21 @@ void UGHOAttributeSetBase::OnRep_StaminaMax(const FGameplayAttributeData& OldSta
 void UGHOAttributeSetBase::OnRep_StaminaRegenRate(const FGameplayAttributeData& OldStaminaRegenRate)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, StaminaRegenRate, OldStaminaRegenRate);
+}
+
+void UGHOAttributeSetBase::OnRep_Shield(const FGameplayAttributeData& OldShield)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, Shield, OldShield);
+}
+
+void UGHOAttributeSetBase::OnRep_ShieldMax(const FGameplayAttributeData& OldShieldMax)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ShieldMax, OldShieldMax);
+}
+
+void UGHOAttributeSetBase::OnRep_ShieldRegenRate(const FGameplayAttributeData& OldShieldRegenRate)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGHOAttributeSetBase, ShieldRegenRate, OldShieldRegenRate);
 }
 
 void UGHOAttributeSetBase::OnRep_Armor(const FGameplayAttributeData& OldArmor)
