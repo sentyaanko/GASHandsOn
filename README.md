@@ -205,6 +205,9 @@ Gameplay Ability System Hands On Project.
 * v0.1.15
 	* AssetManager の組み込み
 	* 詳細は [./Documents/0.1.15.AssetManager.md](./Documents/0.1.15.AssetManager.md) を参照
+* v0.1.16
+	* 未実装だった Ammo や回復用ピックアップのfix
+	* 詳細は [./Documents/0.1.16.Props.md](./Documents/0.1.16.Props.md) を参照
 
 
 -----
