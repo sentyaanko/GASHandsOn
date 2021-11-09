@@ -129,6 +129,60 @@ float AGHOCharacterBase::GetMaxHealth() const
 	return 1.0f;
 }
 
+float AGHOCharacterBase::GetMana() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetMana();
+	}
+	return 0.0f;
+}
+
+float AGHOCharacterBase::GetMaxMana() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetManaMax();
+	}
+	return 1.0f;
+}
+
+float AGHOCharacterBase::GetStamina() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetStamina();
+	}
+	return 0.0f;
+}
+
+float AGHOCharacterBase::GetMaxStamina() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetStaminaMax();
+	}
+	return 1.0f;
+}
+
+float AGHOCharacterBase::GetShield() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetShield();
+	}
+	return 0.0f;
+}
+
+float AGHOCharacterBase::GetMaxShield() const
+{
+	if (const auto attr = GetAttributeSet())
+	{
+		return attr->GetShieldMax();
+	}
+	return 1.0f;
+}
+
 bool AGHOCharacterBase::IsMovable()const
 {
 	if (const auto attr = GetAttributeSet())

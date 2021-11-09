@@ -75,6 +75,24 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
 	float GetMaxHealth() const;
 
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetMana() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetMaxMana() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetStamina() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetMaxStamina() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetShield() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOCharacter|Attributes")
+	float GetMaxShield() const;
+
 
 	const TArray<TSubclassOf<class UGHOGameplayAbility>>& GetCharacterAbilities()const { return CharacterAbilities; }
 
