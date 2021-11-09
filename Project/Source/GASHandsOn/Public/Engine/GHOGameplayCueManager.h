@@ -25,9 +25,8 @@ protected:
 		デフォルトではマップのロード時に プロジェクト内の *すべての* GameplayCue と、その参照されるすべてのアセットがロードされます。
 		たくさんの GC を使用する大規模のゲームでは、現在のマップで特定の GC が使用されていない場合、数百Mバイト以上の使用されないアセットが RAM にロードされる可能性があります。
 	*/
-	virtual bool ShouldAsyncLoadRuntimeObjectLibraries() const
+	virtual bool ShouldAsyncLoadRuntimeObjectLibraries() const override
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s() XXXXXXXXXX"), *FString(__FUNCTION__));
 		//return true; // Default
 		return false;
 	}
