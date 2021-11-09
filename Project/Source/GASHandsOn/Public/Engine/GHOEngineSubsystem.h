@@ -13,7 +13,8 @@ UCLASS()
 class GASHANDSON_API UGHOEngineSubsystem : public UEngineSubsystem
 {
 	GENERATED_BODY()
-	
+
+#if 0
 	// USubsystem interface
 public:
 	/*
@@ -25,5 +26,5 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
 	// End of USubsystem interface
-
+#endif
 };
