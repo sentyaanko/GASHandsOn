@@ -199,6 +199,9 @@ Gameplay Ability System Hands On Project.
 * v0.1.13
 	* Shield Attribute の組み込み
 	* 詳細は [./Documents/0.1.13.Attribute-Shield.md](./Documents/0.1.13.Attribute-Shield.md) を参照
+* v0.1.14
+	* GameplayCueManager の組み込み
+	* 詳細は [./Documents/0.1.14.GameplayCueManager.md](./Documents/0.1.14.GameplayCueManager.md) を参照
 
 
 -----
