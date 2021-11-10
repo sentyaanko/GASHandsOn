@@ -57,16 +57,28 @@ void AGHOCharacterBase::Die()
 	if (UGHOAbilitySystemComponent* AbilitySystemComponent = Cast<UGHOAbilitySystemComponent>(GetAbilitySystemComponent()))
 	{
 		AbilitySystemComponent->Die();
+
+		//解説
+		//	DeathSound の代わりに Local で GameplayCue を再生するための仕組み。
+		//	ただし、 Minion でしか使用されないメンバを追加する必要があり、独自に追加実装するにしては設計が微妙です。
+		//	仕様次第なので、コメントアウトしておきます。
+		//if (DeathSoundTag.IsValid())
+		//{
+		//	FGameplayCueParameters GCParameters;
+		//	GCParameters.Location = GetActorLocation();
+		//	AbilitySystemComponent->ExecuteGameplayCueLocal(DeathSoundTag, GCParameters);
+		//}
 	}
 
-	//TODO: DeathSound
 	////TODO replace with a locally executed GameplayCue
+	//解説
+	//	この Die() 関数は前述のとおり、 Minion でしか呼び出されていません。
+	//	Hero 側の実装ではすでに ローカル GameplayCue を利用しています。
 	//if (DeathSound)
 	//{
 	//	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 	//}
 
-	//TODO: We need to complete this function when we implement DeathMontage.
 	if (DeathMontage)
 	{
 		PlayAnimMontage(DeathMontage);

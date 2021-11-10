@@ -145,14 +145,14 @@ protected:
 
 
 protected:
-	//TODO: Implement Death Animation.
 	// Death Animation
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Animation")
 	UAnimMontage* DeathMontage;
 
-	//TODO: Implement Death Sound.
 	//UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Audio")
 	//class USoundCue* DeathSound;
+	//UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|Sound")
+	//FGameplayTag DeathSoundTag;
 
 	/*
 	by GASDocumentation
