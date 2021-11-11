@@ -146,12 +146,12 @@ protected:
 
 protected:
 	// Death Animation
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Animation")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|GHOCharacter|Animation")
 	UAnimMontage* DeathMontage;
 
-	//UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Audio")
+	//UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOCharacter|Audio")
 	//class USoundCue* DeathSound;
-	//UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|Sound")
+	//UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOCharacter|Audio")
 	//FGameplayTag DeathSoundTag;
 
 	/*
@@ -162,7 +162,7 @@ protected:
 		スポーン/リスポーン の際に初期化されるキャラクターのデフォルトアトリビュートです。
 		これはインスタント GameplayEffect で、スポーン/リスポーン の際にリセットされるアトリビュートの値を上書きします。
 	*/
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOCharacter|Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributes;
 
 	/*
@@ -171,7 +171,7 @@ protected:
 	和訳
 		これらの効果は起動維持に一度だけ適用されます。
 	*/
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOCharacter|Abilities")
 	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
 
 	/*
@@ -182,7 +182,7 @@ protected:
 		キャラクターのデフォルトアトリビュートです。
 		これはキャラクターが死亡した際に削除され、リスポーンした際に再付与されます。
 	*/
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Abilities")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOCharacter|Abilities")
 	TArray<TSubclassOf<class UGHOGameplayAbility>> CharacterAbilities;
 
 	UPROPERTY(BlueprintAssignable, Category = "GASHandsOn|GHOCharacter")

@@ -47,7 +47,7 @@ public:
 	和訳
 		ターゲティングの方法を設定する。
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GameplayEffectContainer)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GameplayEffectContainer")
 	TSubclassOf<UGHOTargetType> TargetType;
 
 	/*
@@ -56,7 +56,7 @@ public:
 	和訳
 		ターゲットの適用する GameplayEffect のリスト。
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GameplayEffectContainer)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GameplayEffectContainer")
 	TArray<TSubclassOf<UGameplayEffect>> TargetGameplayEffectClasses;
 };
 
@@ -80,7 +80,7 @@ public:
 	和訳
 		計算されたターゲットデータ。
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GameplayEffectContainer)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GameplayEffectContainer")
 	FGameplayAbilityTargetDataHandle TargetData;
 
 	/*
@@ -89,7 +89,7 @@ public:
 	和訳
 		ターゲットに適用する GameplayEffect のリスト。
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GameplayEffectContainer)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GameplayEffectContainer")
 	TArray<FGameplayEffectSpecHandle> TargetGameplayEffectSpecs;
 
 	/*

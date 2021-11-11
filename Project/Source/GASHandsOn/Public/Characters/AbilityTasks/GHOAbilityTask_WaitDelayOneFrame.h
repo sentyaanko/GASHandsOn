@@ -21,7 +21,7 @@ class GASHANDSON_API UGHOAbilityTask_WaitDelayOneFrame : public UAbilityTask
 
 public:
 	// Wait one frame.
-	UFUNCTION(BlueprintCallable, Category = "Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
 	static UGHOAbilityTask_WaitDelayOneFrame* WaitDelayOneFrame(UGameplayAbility* OwningAbility);
 
 	// UGameplayTask interface

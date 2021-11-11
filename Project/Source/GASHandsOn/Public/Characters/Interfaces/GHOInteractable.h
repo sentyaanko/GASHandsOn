@@ -37,7 +37,7 @@ public:
 
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	bool IsAvailableForInteraction(UPrimitiveComponent* InteractionComponent) const;
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const;
 
@@ -51,7 +51,7 @@ public:
 
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	float GetInteractionDuration(UPrimitiveComponent* InteractionComponent) const;
 	virtual float GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const;
 
@@ -81,7 +81,7 @@ public:
 
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	void GetPreInteractSyncType(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const;
 	virtual void GetPreInteractSyncType_Implementation(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const;
 
@@ -109,7 +109,7 @@ public:
 
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	void GetPostInteractSyncType(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const;
 	void GetPostInteractSyncType_Implementation(bool& bShouldSync, EAbilityTaskNetSyncType& Type, UPrimitiveComponent* InteractionComponent) const;
 
@@ -145,7 +145,7 @@ public:
 		@param InteractingActor このアクターとインタラクトするアクター。これは GameplayAbility の AvatarActor になります。
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	void PreInteract(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent);
 	virtual void PreInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) {};
 
@@ -175,7 +175,7 @@ public:
 		@param InteractingActor このアクターとインタラクトするアクター。これは GameplayAbility の AvatarActor になります。
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	void PostInteract(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent);
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) {};
 
@@ -191,7 +191,7 @@ public:
 
 		@param InteractionComponent UPrimitiveComponent はアクターが複数の独立したインタラクト可能なエリアを持っている場合に使用します。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable")
 	void CancelInteraction(UPrimitiveComponent* InteractionComponent);
 	virtual void CancelInteraction_Implementation(UPrimitiveComponent* InteractionComponent) {};
 
@@ -217,7 +217,7 @@ public:
 		この Interactable がインタラクトを早期にキャンセルしたい場合（例えば蘇生中のプレイヤーが蘇生中に死亡した場合）に GameplayEvent を送るために使用します。
 		overriden することはできません。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable|Do Not Override")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable|Do Not Override")
 	void RegisterInteracter(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor);
 	void RegisterInteracter_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor);
 
@@ -229,7 +229,7 @@ public:
 		この Interactable とインタラクトするアクターの登録を解除する。
 		overriden することはできません。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable|Do Not Override")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable|Do Not Override")
 	void UnregisterInteracter(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor);
 	void UnregisterInteracter_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor);
 
@@ -241,7 +241,7 @@ public:
 		Interactable （または Interacter ではない外部のアクター）がインタラクトをキャンセルしたい場合（例えば蘇生中のプレイヤーが蘇生中に死亡した場合）に使用します。
 		overriden することはできません。
 	*/
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable|Do Not Override")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Interactable|Do Not Override")
 	void InteractableCancelInteraction(UPrimitiveComponent* InteractionComponent);
 	void InteractableCancelInteraction_Implementation(UPrimitiveComponent* InteractionComponent);
 

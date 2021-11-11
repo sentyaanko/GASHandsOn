@@ -92,9 +92,9 @@ public:
 	*/
 //	UFUNCTION(Client, Reliable, WithValidation)
 	UFUNCTION(Client, Reliable)
-	void SetRespawnCountdown(float RespawnTimeRemaining);
-	void SetRespawnCountdown_Implementation(float RespawnTimeRemaining);
-//	bool SetRespawnCountdown_Validate(float RespawnTimeRemaining);
+	void RPCClientSetRespawnCountdown(float RespawnTimeRemaining);
+	void RPCClientSetRespawnCountdown_Implementation(float RespawnTimeRemaining);
+//	bool RPCClientSetRespawnCountdown_Validate(float RespawnTimeRemaining);
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|UI")

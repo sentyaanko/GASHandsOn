@@ -31,28 +31,28 @@ public:
 	//	Base targeting spread (degrees)
 	//和訳
 	//	基本となる散らばり具合（角度）
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	float BaseSpread;
 
 	//by GASShooter
 	//	Aiming spread modifier
 	//和訳
 	//	エイム時の散らばり具合の変化値
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	float AimingSpreadMod;
 
 	//by GASShooter
 	//	Continuous targeting: spread increment
 	//和訳
 	//	連射時 : 散らばり具合の加算値
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	float TargetingSpreadIncrement;
 
 	//by GASShooter
 	//	Continuous targeting: max increment
 	//和訳
 	//	連射時 : 最大の加算値
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	float TargetingSpreadMax;
 
 	//by GASShooter
@@ -61,33 +61,33 @@ public:
 	//	連射による現在の散らばり具合
 	float CurrentTargetingSpread;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	bool bUseAimingSpreadMod;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	FGameplayTag AimingTag;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Accuracy")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Accuracy")
 	FGameplayTag AimingRemovalTag;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	float MaxRange;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, config, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, config, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	FCollisionProfileName TraceProfile;
 
 	//by GASShooter
 	//	Does the trace affect the aiming pitch
 	//和訳
 	//	トレースがエイミングピッチに影響するか
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	bool bTraceAffectsAimPitch;
 
 	//by GASShooter
 	//	Maximum hit results to return per trace. 0 just returns the trace end point.
 	//和訳
 	//	トレース毎に返すヒット結果の最大値。 0 はトレースの終点を返すだけです。
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	int32 MaxHitResultsPerTrace;
 
 	//by GASShooter
@@ -96,23 +96,23 @@ public:
 	//和訳
 	//	一度に実行するトレースの数。ライフルのように単弾の武器は一度のトレースしか行いません。
 	// ショットガンのような多弾頭の武器は複数のトレースを行うことができます。 PersistentHits と一緒に使うことはできません。
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	int32 NumberOfTraces;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	bool bIgnoreBlockingHits;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	bool bTraceFromPlayerViewPoint;
 
 	//by GASShooter
 	//	HitResults will persist until Confirmation/Cancellation or until a new HitResult takes its place
 	//和訳
 	//	（true の場合、） HitResults が、 Confirmation/Cancellation が行われるか、新しい HitResult が作成されるまで存続します。
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Trace")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "GASHandsOn|Trace")
 	bool bUsePersistentHitResults;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	virtual void ResetSpread();
 
 	virtual float GetCurrentSpread() const;
@@ -121,21 +121,21 @@ public:
 	//	Expose to Blueprint
 	//和訳
 	//	Blueprint に公開します。
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	void SetStartLocation(const FGameplayAbilityTargetingLocationInfo& InStartLocation);
 
 	//by GASShooter
 	//	Expose to Blueprint
 	//和訳
 	//	Blueprint に公開します。
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	virtual void SetShouldProduceTargetDataOnServer(bool bInShouldProduceTargetDataOnServer);
 
 	//by GASShooter
 	//	Expose to Blueprint
 	//和訳
 	//	Blueprint に公開します。
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	void SetDestroyOnConfirmation(bool bInDestroyOnConfirmation = false);
 
 	virtual void StartTargeting(UGameplayAbility* Ability) override;

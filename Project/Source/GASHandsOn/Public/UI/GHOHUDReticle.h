@@ -24,6 +24,6 @@ public:
 	和訳
 		基本的には、 Blueprint の全ての子クラスで実装しなければならないインターフェイスです。
 	 */
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn")
 	void SetColor(FLinearColor Color);
 };

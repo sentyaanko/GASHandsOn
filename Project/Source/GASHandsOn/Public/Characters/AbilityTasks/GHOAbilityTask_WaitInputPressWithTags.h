@@ -45,7 +45,7 @@ public:
 		@param RequiredTags アビリティオーナーがこれらのタグのすべてを持たなければならず、さもなくば入力は無視されます。
 		@param IgnoredTags アビリティオーナーはこれらのタグのいずれかも持ってはならず、さもなくば入力は無視されます。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
 	static UGHOAbilityTask_WaitInputPressWithTags* WaitInputPressWithTags(UGameplayAbility* OwningAbility, FGameplayTagContainer RequiredTags, FGameplayTagContainer IgnoredTags, bool bTestAlreadyPressed = false);
 
 	// UGameplayTask interface

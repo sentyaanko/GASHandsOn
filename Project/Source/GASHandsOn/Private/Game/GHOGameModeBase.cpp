@@ -61,7 +61,7 @@ void AGHOGameModeBase::HeroDied(AController* Controller)
 
 	if (AGHOPlayerController* PC = Cast<AGHOPlayerController>(Controller))
 	{
-		PC->SetRespawnCountdown(RespawnDelay);
+		PC->RPCClientSetRespawnCountdown(RespawnDelay);
 	}
 }
 

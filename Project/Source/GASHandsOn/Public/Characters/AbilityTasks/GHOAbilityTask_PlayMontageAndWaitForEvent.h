@@ -139,7 +139,7 @@ public:
 		@param bStopWhenAbilityEnds もし ture なら、愛リティが正常に終了した場合、このモンタージュは中止される。アビリティが明示的にキャンセルされた場合は、常に停止される。
 		@param AnimRootMotionTranslationScale ルートモーションのサイズを変更するか 0 にして完全にブロックする。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
 	static UGHOAbilityTask_PlayMontageAndWaitForEvent* PlayMontageAndWaitForEvent(
 			UGameplayAbility* OwningAbility,
 			FName TaskInstanceName,

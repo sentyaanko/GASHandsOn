@@ -92,7 +92,7 @@ public:
 				PersistentHitsResults と一緒に使用することはできません。 PersistentHitResults を使用する場合、 NumberOfTraces は 1 にハードコードされます。
 				あなたが必要ならば、あなたのプロジェクトで、これのサポートを追加する必要があります。
 	*/
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	void Configure(
 		UPARAM(DisplayName = "Start Location") const FGameplayAbilityTargetingLocationInfo& InStartLocation,
 		UPARAM(DisplayName = "Aiming Tag") FGameplayTag InAimingTag,

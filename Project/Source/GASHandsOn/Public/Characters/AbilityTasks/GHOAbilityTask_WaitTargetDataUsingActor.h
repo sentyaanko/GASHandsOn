@@ -50,7 +50,7 @@ public:
 			false の場合、常に新しい scoped prediction key （スコープ付き予測キー）を作成します。
 			バッチ処理されたアビリティのアビリティのアクティベーションキーのように、有効な scoped prediction key （スコープ付き予測キー）が存在する可能性がある場合にはこれを true に設定します。
 	*/
-	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true", HideSpawnParms = "Instigator"), Category = "Ability|Tasks")
+	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true", HideSpawnParms = "Instigator"), Category = "GASHandsOn|Ability|Tasks")
 	static UGHOAbilityTask_WaitTargetDataUsingActor* WaitTargetDataWithReusableActor(
 		UGameplayAbility* OwningAbility,
 		FName TaskInstanceName,
@@ -117,16 +117,16 @@ protected:
 
 private:
 	UFUNCTION()
-	virtual void OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& Data, FGameplayTag ActivationTag);
+	void OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& Data, FGameplayTag ActivationTag);
 
 	UFUNCTION()
-	virtual void OnTargetDataReplicatedCancelledCallback();
+	void OnTargetDataReplicatedCancelledCallback();
 
 	UFUNCTION()
-	virtual void OnTargetDataReadyCallback(const FGameplayAbilityTargetDataHandle& Data);
+	void OnTargetDataReadyCallback(const FGameplayAbilityTargetDataHandle& Data);
 
 	UFUNCTION()
-	virtual void OnTargetDataCancelledCallback(const FGameplayAbilityTargetDataHandle& Data);
+	void OnTargetDataCancelledCallback(const FGameplayAbilityTargetDataHandle& Data);
 
 private:
 	void Initialize(AGameplayAbilityTargetActor* InTargetActor, TEnumAsByte<EGameplayTargetingConfirmation::Type> InConfirmationType, bool bInCreateKeyIfNotValidForMorePredicting = false );

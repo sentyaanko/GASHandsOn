@@ -167,15 +167,15 @@ public:
 
 protected:
 	// Sprint
-	UFUNCTION(BlueprintCallable, Category = "Sprint")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Sprint")
 	void StartSprinting();
-	UFUNCTION(BlueprintCallable, Category = "Sprint")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Sprint")
 	void StopSprinting();
 
 	// Aim Down Sights
-	UFUNCTION(BlueprintCallable, Category = "Aim Down Sights")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Aim Down Sights")
 	void StartAimDownSights();
-	UFUNCTION(BlueprintCallable, Category = "Aim Down Sights")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Aim Down Sights")
 	void StopAimDownSights();
 
 private:
@@ -188,13 +188,13 @@ private:
 	float GetSpeedMultiplier()const;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASHandsOn|Speed")
 	float SprintingSpeedMultiplier;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASHandsOn|Speed")
 	float AimDownSightsSpeedMultiplier;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASHandsOn|Speed")
 	float KnockedDownSpeedMultiplier;
 
 private:

@@ -23,13 +23,13 @@ struct GASHANDSON_API FGHOGaugeWidgetParameter
 	{
 	}
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn")
 	float Current;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn")
 	float Max;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn")
 	float RegenRate;
 };
 
@@ -55,28 +55,28 @@ struct GASHANDSON_API FGHOHUDWidgetParameter
 	{
 	}
 
-	UPROPERTY(BlueprintReadWrite, Category = "HeroLevel")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|HeroLevel")
 	int32 HeroLevel;
 
-	UPROPERTY(BlueprintReadWrite, Category = "XP")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|XP")
 	int32 XP;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Gold")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Gold")
 	int32 Gold;
 
-	UPROPERTY(BlueprintReadWrite, Category = "MoveSpeed")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|MoveSpeed")
 	float MoveSpeed;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Health")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Health")
 	FGHOGaugeWidgetParameter Health;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Mana")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Mana")
 	FGHOGaugeWidgetParameter Mana;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Stamina")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Stamina")
 	FGHOGaugeWidgetParameter Stamina;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Shield")
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|Shield")
 	FGHOGaugeWidgetParameter Shield;
 	
 };

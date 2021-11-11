@@ -1128,7 +1128,7 @@ void AGHOHeroCharacterBase::RemoveAllWeaponsFromInventory()
 
 		const float OffsetX = radius * FMath::Cos((i / NumWeapons) * 2.0f * PI);
 		const float OffsetY = radius * FMath::Sin((i / NumWeapons) * 2.0f * PI);
-		Weapon->OnDropped(GetActorLocation() + FVector(OffsetX, OffsetY, 0.0f));
+		Weapon->RPCNetMulticastOnDropped(GetActorLocation() + FVector(OffsetX, OffsetY, 0.0f));
 	}
 }
 

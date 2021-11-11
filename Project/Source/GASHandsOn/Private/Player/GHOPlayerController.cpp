@@ -201,7 +201,7 @@ void AGHOPlayerController::RPCClientShowDamageText_Implementation(float DamageAm
 	}
 }
 
-void AGHOPlayerController::SetRespawnCountdown_Implementation(float RespawnTimeRemaining)
+void AGHOPlayerController::RPCClientSetRespawnCountdown_Implementation(float RespawnTimeRemaining)
 {
 	if (UIHUDWidget)
 	{

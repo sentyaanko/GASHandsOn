@@ -45,25 +45,25 @@ private:
 	void EventReceived(FGameplayTag EventTag, FGameplayEventData EventData);
 
 protected:
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	UAnimMontage* FireHipMontage;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	UAnimMontage* FireIronsightsMontage;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	TSubclassOf<AGHOProjectile> ProjectileClass;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	TSubclassOf<UGameplayEffect> DamageGameplayEffect;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	TArray<TSubclassOf<UGameplayEffect>> AdditionalGameplayEffects;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	float Range;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn")
 	float Damage;
 
 };

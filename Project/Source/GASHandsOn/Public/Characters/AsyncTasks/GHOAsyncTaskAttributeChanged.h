@@ -17,10 +17,10 @@ struct GASHANDSON_API FGHOAttributeChangedParam
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn")
 	FGameplayAttribute Attribute;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn")
 	FOnAttributeChanged OnAttributeChanged;
 
 	FDelegateHandle Handle;
@@ -51,7 +51,7 @@ class GASHANDSON_API UGHOAsyncTaskAttributeChanged : public UBlueprintAsyncActio
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "GASHandsOn")
 	static UGHOAsyncTaskAttributeChanged* ListenForAttributesChange(UAbilitySystemComponent* InAbilitySystemComponent, TArray<FGHOAttributeChangedParam> InAttributeChangedParams);
 
 	/*
@@ -62,7 +62,7 @@ public:
 		ASynkTask を終了させたいときは、この関数を手動で呼び出す必要があります。
 		UMG Widgets の場合は、 Widget の Destruct イベントで呼び出します。
 	*/
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	void EndTask();
 
 private:

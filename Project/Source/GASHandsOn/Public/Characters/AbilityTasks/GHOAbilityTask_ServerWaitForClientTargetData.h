@@ -16,7 +16,7 @@ class GASHANDSON_API UGHOAbilityTask_ServerWaitForClientTargetData : public UAbi
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true", HideSpawnParms = "Instigator"), Category = "Ability|Tasks")
+	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true", HideSpawnParms = "Instigator"), Category = "GASHandsOn|Ability|Tasks")
 	static UGHOAbilityTask_ServerWaitForClientTargetData* ServerWaitForClientTargetData(UGameplayAbility* OwningAbility, FName TaskInstanceName, bool TriggerOnce);
 
 	// UGameplayTask interface

@@ -416,7 +416,7 @@ void AGHOWeapon::ResetWeapon()
 	StatusText = DefaultStatusText;
 }
 
-void AGHOWeapon::OnDropped_Implementation(FVector NewLocation)
+void AGHOWeapon::RPCNetMulticastOnDropped_Implementation(FVector NewLocation)
 {
 	SetOwningCharacter(nullptr);
 	ResetWeapon();
@@ -450,7 +450,7 @@ void AGHOWeapon::OnDropped_Implementation(FVector NewLocation)
 #endif
 }
 
-bool AGHOWeapon::OnDropped_Validate(FVector NewLocation)
+bool AGHOWeapon::RPCNetMulticastOnDropped_Validate(FVector NewLocation)
 {
 	return true;
 }

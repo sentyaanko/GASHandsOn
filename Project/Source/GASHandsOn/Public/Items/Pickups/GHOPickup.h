@@ -58,7 +58,7 @@ protected:
 	和訳
 		ポーンがこのピックアップを使用できるかチェック
 	*/
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, Category = "GASHandsOn")
 	bool CanBePickedUp(AGHOCharacterBase* TestCharacter) const;
 	bool CanBePickedUp_Implementation(AGHOCharacterBase* TestCharacter) const;
 
@@ -68,7 +68,7 @@ protected:
 	和訳
 		ピックアップが消滅したときのエフェクトを表示
 	*/
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, Category = "GASHandsOn")
 	void OnPickedUp();
 	void OnPickedUp_Implementation();
 
@@ -78,14 +78,14 @@ protected:
 	和訳
 		ピックアップが出現したときのエフェクトを表示
 	*/
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, Category = "GASHandsOn")
 	void OnRespawned();
 	void OnRespawned_Implementation();
 
+private:
 	UFUNCTION()
 	void OnRep_IsActive();
 
-private:
 	void PickupOnTouch(AGHOCharacterBase* Pawn);
 	void GivePickupTo(AGHOCharacterBase* Pawn);
 	void RespawnPickup();

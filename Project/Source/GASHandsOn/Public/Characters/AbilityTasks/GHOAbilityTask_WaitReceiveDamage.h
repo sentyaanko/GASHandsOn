@@ -29,7 +29,7 @@ public:
 	和訳
 		アビリティのオーナーがダメージを受けるまで待つ。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Tasks", meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "TRUE"))
 	static UGHOAbilityTask_WaitReceiveDamage* WaitReceiveDamage(UGameplayAbility* OwningAbility, bool bInTriggerOnce);
 
 

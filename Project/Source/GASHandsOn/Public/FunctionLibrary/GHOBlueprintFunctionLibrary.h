@@ -21,25 +21,25 @@ public:
 	/**
 	* FGameplayAbilityTargetDataHandle
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|TargetData")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|TargetData")
 	static void ClearTargetData(UPARAM(ref) FGameplayAbilityTargetDataHandle& TargetData);
 
 	/**
 	* FGameplayAbilitySpecHandle
 	*/
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Ability")
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Ability")
 	static bool IsAbilitySpecHandleValid(FGameplayAbilitySpecHandle Handle);
 
 	/**
 	* GameplayAbility
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	static UGHOGameplayAbility* GetPrimaryAbilityInstanceFromHandle(UAbilitySystemComponent* AbilitySystemComponent, FGameplayAbilitySpecHandle Handle);
 
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	static UGHOGameplayAbility* GetPrimaryAbilityInstanceFromClass(UAbilitySystemComponent* AbilitySystemComponent, TSubclassOf<UGameplayAbility> InAbilityClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	static bool IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystemComponent, FGameplayAbilitySpecHandle Handle);
 
 	/**
@@ -55,7 +55,7 @@ public:
 		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGBlueprintLibrary で作成されている機能を元に
 		GASShooter の GSBlueprintFunctionLibrary で拡張されたものです。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Container", Meta = (AutoCreateRefTerm = "TargetData, HitResults, TargetActors"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Container", Meta = (AutoCreateRefTerm = "TargetData, HitResults, TargetActors"))
 	static void AddTargetsToEffectContainerSpec(UPARAM(ref) FGHOGameplayEffectContainerSpec& ContainerSpec, const TArray<FGameplayAbilityTargetDataHandle>& TargetData, const TArray<FHitResult>& HitResults, const TArray<AActor*>& TargetActors);
 
 	/*
@@ -68,7 +68,7 @@ public:
 		GASShooter の GSBlueprintFunctionLibrary で拡張されたものです。
 		実装内容は同じです。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Container")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Container")
 	static TArray<FActiveGameplayEffectHandle> ApplyExternalEffectContainerSpec(const FGHOGameplayEffectContainerSpec& ContainerSpec);
 
 	/**
@@ -76,11 +76,11 @@ public:
 	*/
 
 	// Returns TargetData
-	UFUNCTION(BlueprintCallable, Category = "Ability|EffectContext", Meta = (DisplayName = "GetTargetData"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|EffectContext", Meta = (DisplayName = "GetTargetData"))
 	static FGameplayAbilityTargetDataHandle EffectContextGetTargetData(FGameplayEffectContextHandle EffectContext);
 
 	// Adds TargetData
-	UFUNCTION(BlueprintCallable, Category = "Ability|EffectContext", Meta = (DisplayName = "AddTargetData"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|EffectContext", Meta = (DisplayName = "AddTargetData"))
 	static void EffectContextAddTargetData(FGameplayEffectContextHandle EffectContextHandle, const FGameplayAbilityTargetDataHandle& TargetData);
 
 
