@@ -33,7 +33,7 @@ Gameplay Ability System Hands On Project.
 	* GameInstance/GameMode/GameState/PlayerState/PlayerController などの基本的なクラスの追加
 	* Player 操作用の Character 基底クラスの用意、テンプレートから移動などの最低限の操作用コードの複製
 	* 作業用のマップをテンプレートから複製
-	* BluePrint のファイル群のフォルダ分け
+	* Blueprint のファイル群のフォルダ分け
 * v0.0.3
 	* AbilitySystemComponent のソース追加
 	* AttributeSet のソース追加

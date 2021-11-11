@@ -62,7 +62,7 @@ public:
 		inside of K2Node_LatentAbilityCall as stated in the AbilityTask.h. 
 		Ability logic written in C++ probably needs to call Activate() itself manually.
 	和訳
-		このタスクの BluePrint ノードである PlayMontageForMeshAndWaitForEvent には、 AbilityTask.h で記載されているように、 
+		このタスクの Blueprint ノードである PlayMontageForMeshAndWaitForEvent には、 AbilityTask.h で記載されているように、 
 		K2Node_LatentAbilityCall の内部で Activate() を自動的に呼び出すプラグインによる黒魔法があります。
 		C++ で書かれたアビリティロジックではおそらく手動で Activate() を呼び出す必要があります。
 	解説
