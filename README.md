@@ -225,6 +225,8 @@ Gameplay Ability System Hands On Project.
 	* v0.1.16
 		* 未実装だった Ammo や回復用ピックアップのfix
 		* 詳細は [./Documents/0.1.16.Props.md](./Documents/0.1.16.Props.md) を参照
+	* v0.1.17
+		* コードのクリーンアップ
 
 
 -----
