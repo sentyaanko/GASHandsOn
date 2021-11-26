@@ -88,8 +88,8 @@ void UGHOAbilityTask_WaitInputPressWithTags::OnPressCallback()
 	//解説
 	//	TODO タグクエリを拡張してこれをサポートし、これをそこに移す。
 	//		GA_InteractPassive のためのハードコードで、すでにインタラクトしている場合は入力を無視する。
-	if (AbilitySystemComponent->GetTagCount(FGameplayTag::RequestGameplayTag(TAG_State_Interacting))
-		> AbilitySystemComponent->GetTagCount(FGameplayTag::RequestGameplayTag(TAG_State_Interacting_Removal)))
+	if (AbilitySystemComponent->GetTagCount(TAG_State_Interacting)
+		> AbilitySystemComponent->GetTagCount(TAG_State_Interacting_Removal))
 	{
 		Reset();
 		return;

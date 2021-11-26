@@ -23,13 +23,13 @@ static TAutoConsoleVariable<float> CVarReplayMontageErrorThreshold(
 UGHOAbilitySystemComponent::UGHOAbilitySystemComponent()
 {
 	// Cache tags
-	DeadTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_Dead));
-	KnockedDownTag = FGameplayTag::RequestGameplayTag(TAG_State_KnockedDown);
-	StunTag = FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun));
-	InteractingTag = FGameplayTag::RequestGameplayTag(TAG_State_Interacting);
-	InteractingRemovalTag = FGameplayTag::RequestGameplayTag(TAG_State_Interacting_Removal);
-	ReviveTag = FGameplayTag::RequestGameplayTag(TAG_Ability_Revive);
-	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName(TAG_Effect_RemoveOnDeath));
+	DeadTag = TAG_State_Dead;
+	KnockedDownTag = TAG_State_KnockedDown;
+	StunTag = TAG_State_CrowdControl_Stun;
+	InteractingTag = TAG_State_Interacting;
+	InteractingRemovalTag = TAG_State_Interacting_Removal;
+	ReviveTag = TAG_Ability_Revive;
+	EffectRemoveOnDeathTag = TAG_Effect_RemoveOnDeath;
 }
 
 #if 0 //for multiple USkeletalMeshComponents on the AvatarActor
@@ -318,9 +318,9 @@ bool UGHOAbilitySystemComponent::IsStun() const
 
 void UGHOAbilitySystemComponent::CancelAbilitiesByStun()
 {
-	FGameplayTagContainer AbilityTagsToCancel(FGameplayTag::RequestGameplayTag(FName(TAG_Ability)));
+	FGameplayTagContainer AbilityTagsToCancel(TAG_Ability);
 
-	FGameplayTagContainer AbilityTagsToIgnore(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_NotCanceledByStun)));
+	FGameplayTagContainer AbilityTagsToIgnore(TAG_Ability_NotCanceledByStun);
 
 	CancelAbilities(&AbilityTagsToCancel, &AbilityTagsToIgnore);
 }

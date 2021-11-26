@@ -38,8 +38,8 @@ AGHOWeapon::AGHOWeapon()
 	SecondaryClipAmmo = 0;
 	MaxSecondaryClipAmmo = 0;
 	bInfiniteAmmo = false;
-	PrimaryAmmoType = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.None"));
-	SecondaryAmmoType = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.None"));
+	PrimaryAmmoType = TAG_Weapon_Ammo_None;
+	SecondaryAmmoType = TAG_Weapon_Ammo_None;
 
 	CollisionComp = CreateDefaultSubobject<UCapsuleComponent>(FName("CollisionComponent"));
 	CollisionComp->InitCapsuleSize(40.0f, 50.0f);
@@ -85,16 +85,16 @@ AGHOWeapon::AGHOWeapon()
 	WeaponMesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPose;
 #endif
 
-	WeaponPrimaryInstantAbilityTag = FGameplayTag::RequestGameplayTag("Ability.Weapon.Primary.Instant");
-	WeaponSecondaryInstantAbilityTag = FGameplayTag::RequestGameplayTag("Ability.Weapon.Secondary.Instant");
-	WeaponAlternateInstantAbilityTag = FGameplayTag::RequestGameplayTag("Ability.Weapon.Alternate.Instant");
-	WeaponIsFiringTag = FGameplayTag::RequestGameplayTag("Weapon.IsFiring");
+	WeaponPrimaryInstantAbilityTag = TAG_Ability_Weapon_Primary_Instant;
+	WeaponSecondaryInstantAbilityTag = TAG_Ability_Weapon_Secondary_Instant;
+	WeaponAlternateInstantAbilityTag = TAG_Ability_Weapon_Alternate_Instant;
+	WeaponIsFiringTag = TAG_Weapon_IsFiring;
 
-	FireMode = FGameplayTag::RequestGameplayTag("Weapon.FireMode.None");
+	FireMode = TAG_Weapon_FireMode_None;
 	StatusText = DefaultStatusText;
 
-	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag("State.Dead"));
-	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag("State.KnockedDown"));
+	RestrictedPickupTags.AddTag(TAG_State_Dead);
+	RestrictedPickupTags.AddTag(TAG_State_KnockedDown);
 }
 
 /*

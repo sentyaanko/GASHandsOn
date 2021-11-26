@@ -105,7 +105,7 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	和訳
 		SetByCaller ダメージがあれば加算します。
 	*/
-	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName(TAG_Data_Damage)), false, -1.0f), 0.0f);
+	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(TAG_Data_Damage, false, -1.0f), 0.0f);
 
 	/*
 	by GASDocumentation
@@ -127,11 +127,11 @@ void UGHOGEEC_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 		ここではキャラクターのメッシュは一つしかありませんが、 Character クラスに頭の骨の名前を返す関数を指定しておくと良いでしょう。
 	*/
 	const FHitResult* Hit = Spec.GetContext().GetHitResult();
-	if (AssetTags.HasTagExact(FGameplayTag::RequestGameplayTag(FName(TAG_Effect_Damage_CanHeadShot))) && Hit && Hit->BoneName == "head")
+	if (AssetTags.HasTagExact(TAG_Effect_Damage_CanHeadShot) && Hit && Hit->BoneName == "head")
 	{
 		UnmitigatedDamage *= HeadShotMultiplier;
 		FGameplayEffectSpec* MutableSpec = ExecutionParams.GetOwningSpecForPreExecuteMod();
-		MutableSpec->DynamicAssetTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Effect_Damage_HeadShot)));
+		MutableSpec->DynamicAssetTags.AddTag(TAG_Effect_Damage_HeadShot);
 	}
 
 	const float MitigatedDamage = (UnmitigatedDamage) * (100 / (100 + Armor));
