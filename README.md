@@ -227,6 +227,10 @@ Gameplay Ability System Hands On Project.
 		* 詳細は [./Documents/0.1.16.Props.md](./Documents/0.1.16.Props.md) を参照
 	* v0.1.17
 		* コードのクリーンアップ
+* v0.2
+	* v0.2.0
+		* エンジンを 4.27 に変更
+		* GameplayTag の定義を FNativeGameplayTag を使用するように変更
 
 
 -----
