@@ -222,7 +222,7 @@ public:
 	和訳
 		AddLooseGameplayTag をブループリントに公開します。このタグは複製*されません*。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Abilities", Meta = (DisplayName = "AddLooseGameplayTag"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities", Meta = (DisplayName = "AddLooseGameplayTag"))
 	void K2_AddLooseGameplayTag(const FGameplayTag& GameplayTag, int32 Count = 1);
 
 	/**
@@ -231,7 +231,7 @@ public:
 	和訳
 		AddLooseGameplayTags をブループリントに公開します。このタグは複製*されません*。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Abilities", Meta = (DisplayName = "AddLooseGameplayTags"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities", Meta = (DisplayName = "AddLooseGameplayTags"))
 	void K2_AddLooseGameplayTags(const FGameplayTagContainer& GameplayTags, int32 Count = 1);
 
 	/**
@@ -240,7 +240,7 @@ public:
 	和訳
 		RemoveLooseGameplayTag をブループリントに公開します。このタグは複製*されません*。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Abilities", Meta = (DisplayName = "RemoveLooseGameplayTag"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities", Meta = (DisplayName = "RemoveLooseGameplayTag"))
 	void K2_RemoveLooseGameplayTag(const FGameplayTag& GameplayTag, int32 Count = 1);
 
 	/**
@@ -249,7 +249,7 @@ public:
 	和訳
 		RemoveLooseGameplayTags をブループリントに公開します。このタグは複製*されません*。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Abilities", Meta = (DisplayName = "RemoveLooseGameplayTags"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities", Meta = (DisplayName = "RemoveLooseGameplayTags"))
 	void K2_RemoveLooseGameplayTags(const FGameplayTagContainer& GameplayTags, int32 Count = 1);
 
 	/*
@@ -259,13 +259,13 @@ public:
 		同期されないため、利用する際はサウンドやパーティクルなど装飾用のものに制限すること。
 		詳しくは [「GASDocumentation」の「4.8.3 Local Gameplay Cues」](https://github.com/tranek/GASDocumentation#concepts-gc-local) [（和訳）](https://github.com/sentyaanko/GASDocumentation/blob/lang-ja/README.jp.md#concepts-gc-local) を参照。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
 	void ExecuteGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
 
-	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
 	void AddGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
 
-	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
 	void RemoveGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
 
 	/**
@@ -280,7 +280,7 @@ public:
 	解説
 		この関数の定義/実装方法は UAbilitySystemComponent::BP_ApplyGameplayEffectToSelf() のコピーをもとにしています。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "GameplayEffects", Meta = (DisplayName = "ApplyGameplayEffectToSelfWithPrediction"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GameplayEffects", Meta = (DisplayName = "ApplyGameplayEffectToSelfWithPrediction"))
 	FActiveGameplayEffectHandle BP_ApplyGameplayEffectToSelfWithPrediction(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level, FGameplayEffectContextHandle EffectContext);
 
 	/**
@@ -295,7 +295,7 @@ public:
 	解説
 		この関数の定義/実装方法は UAbilitySystemComponent::BP_ApplyGameplayEffectToTarget() のコピーをもとにしています。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "GameplayEffects", Meta = (DisplayName = "ApplyGameplayEffectToTargetWithPrediction"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GameplayEffects", Meta = (DisplayName = "ApplyGameplayEffectToTargetWithPrediction"))
 	FActiveGameplayEffectHandle BP_ApplyGameplayEffectToTargetWithPrediction(TSubclassOf<UGameplayEffect> GameplayEffectClass, UAbilitySystemComponent* Target, float Level, FGameplayEffectContextHandle Context);
 
 	/*
@@ -306,15 +306,15 @@ public:
 	解説
 		GASShooter では ScriptName も指定していますが、ドキュメントを見る限り ScriptName は列挙型用のメタデータ指定子なので、外しています。
 		//オリジナル
-		//UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Abilities", Meta = (DisplayName = "GetTagCount", ScriptName = "GetTagCount"))
+		//UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Abilities", Meta = (DisplayName = "GetTagCount", ScriptName = "GetTagCount"))
 	*/
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Abilities", Meta = (DisplayName = "GetTagCount"))
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Abilities", Meta = (DisplayName = "GetTagCount"))
 	int32 K2_GetTagCount(FGameplayTag TagToCheck) const;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Abilities")
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Abilities")
 	bool IsInteractingBeforeRemoval() const;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Abilities")
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Abilities")
 	FGameplayAbilitySpecHandle FindAbilitySpecHandleForClass(TSubclassOf<UGameplayAbility> AbilityClass, UObject* OptionalSourceObject=nullptr);
 
 	/**
@@ -340,7 +340,7 @@ public:
 		撃ち終わったら、最後に EndAbility 用の RPC を 1 つ送ります。
 
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Abilities")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities")
 	/*virtual*/ bool BatchRPCTryActivateAbility(FGameplayAbilitySpecHandle InAbilityHandle, bool EndAbilityImmediately);
 #if 0 //for multiple USkeletalMeshComponents on the AvatarActor
 	// ----------------------------------------------------------------------------------------------------------------
@@ -569,7 +569,7 @@ protected:
 	void AnimMontage_UpdateForcedPlayFlagsForMesh(FGameplayAbilityRepAnimMontageForMesh& OutRepAnimMontageInfo);
 
 	UFUNCTION()
-	virtual void OnRep_ReplicatedAnimMontageForMesh();
+	/*virtual*/ void OnRep_ReplicatedAnimMontageForMesh();
 
 	/**
 	by Epic

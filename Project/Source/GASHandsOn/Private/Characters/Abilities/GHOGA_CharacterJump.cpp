@@ -11,10 +11,10 @@
 UGHOGA_CharacterJump::UGHOGA_CharacterJump()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::NonInstanced;
-	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Jump)));
+	AbilityTags.AddTag(TAG_Ability_Jump);
 	//解説
 	//	ジャンプアビリティはインタラクト操作を阻害しないようにする。
-	ActivationOwnedTags.RemoveTag(FGameplayTag::RequestGameplayTag(FName(TAG_Ability_BlocksInteraction)));
+	ActivationOwnedTags.RemoveTag(TAG_Ability_BlocksInteraction);
 
 	AbilityInputID = EGHOAbilityInputID::Jump;
 }

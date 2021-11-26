@@ -14,7 +14,7 @@ by GASShooter
 和訳
 	instigator と、座標やターゲットのような関連データを格納するデータ構造体。
 	ゲームはこの構造体をサブクラス化し、ゲーム固有の情報を追加することができます。
-	エフェクトの実行中に渡されるので、実行に関する一時的な兵法を追跡するのに適しています。
+	エフェクトの実行中に渡されるので、実行に関する一時的な情報を追跡するのに適しています。
 */
 USTRUCT()
 struct GASHANDSON_API FGHOGameplayEffectContext : public FGameplayEffectContext

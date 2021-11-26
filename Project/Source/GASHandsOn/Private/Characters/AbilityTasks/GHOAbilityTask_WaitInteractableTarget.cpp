@@ -309,6 +309,9 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 		//	有効で利用可能なインタラクト可能なアクターがありません。
 
 		ReturnHitResult.Location = TraceEnd;
+#if 0
+		//解説
+		//	GASShooter オリジナルコード
 		if (TargetData.Num() > 0 && TargetData.Get(0)->GetHitResult()->Actor.Get())
 		{
 			//by GASShooter
@@ -319,6 +322,30 @@ void UGHOAbilityTask_WaitInteractableTarget::PerformTrace()
 			//	最後の有効なターゲットをブロードキャストします。
 			LostInteractableTarget.Broadcast(TargetData);
 		}
+#else
+		//解説
+		//	GASHandsOn 拡張部分
+		//	ターゲットを注視中にターゲットがデスポーンした場合、アクターが Get() できなくなります。
+		//	例えば、倒れた Hero を注視中（インタラクトプロンプト表示中）に Health が 0 になりデスポーンすると、プロンプトが出っぱなしになります。
+		//	それを避けるため、 TargetData.Get(0)->GetHitResult()->Actor.Get() のチェックに加えて
+		//	IsStale() を追加することで、 Actor が存在しなくなっている場合もデリゲートに処理を渡すように変更します。
+		//	デリゲート側で 該当の Actor を使用する場合はデリゲート側で IsValid チェックする想定にします。
+		//	(ただし、現状のデリゲートの実装は渡された TargetData を参照していません。)
+		if (TargetData.Num() > 0)
+		{
+			auto TargetActor = TargetData.Get(0)->GetHitResult()->Actor;
+			if ((TargetActor.Get() != nullptr) || TargetActor.IsStale())
+			{
+				//by GASShooter
+				//	Previous trace had a valid Interactable Actor, now we don't have one
+				//	Broadcast last valid target
+				//和訳
+				//	以前のトレースには有効なインタラクト可能なアクターがありましたが、現在ではいません。
+				//	最後の有効なターゲットをブロードキャストします。
+				LostInteractableTarget.Broadcast(TargetData);
+			}
+		}
+#endif
 
 		TargetData = MakeTargetData(ReturnHitResult);
 	}

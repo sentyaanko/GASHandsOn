@@ -16,10 +16,10 @@ struct GASHANDSON_API FAbilityMeshMontage
 
 public:
 	UPROPERTY()
-		class USkeletalMeshComponent* Mesh;
+	class USkeletalMeshComponent* Mesh;
 
 	UPROPERTY()
-		class UAnimMontage* Montage;
+	class UAnimMontage* Montage;
 
 	FAbilityMeshMontage() : Mesh(nullptr), Montage(nullptr)
 	{
@@ -112,7 +112,7 @@ protected:
 		このアビリティに関連する SourceObject を取得します。
 		non instanced abilities で呼び出し可能です。
 	*/
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Ability", meta = (DisplayName = "Get Source Object"))
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Ability", meta = (DisplayName = "Get Source Object"))
 	UObject* K2_GetSourceObject(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const;
 
 	/*
@@ -121,7 +121,7 @@ protected:
 	和訳
 		プレイヤーの入力は現在押されているか？アビリティが入力にバインドされている場合のみ動作します。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	/*virtual*/ bool IsInputPressed() const;
 
 	/*
@@ -134,7 +134,7 @@ protected:
 		これは、 1 フレーム内に発生する全ての RPC を一括して処理します。
 		最良のシナリオでは、 ActivateAility, SendTargetData, EndAbility を 3 つの RPC ではなく 1 つの RPC にまとめます。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	/*virtual*/ bool BatchRPCTryActivateAbility(FGameplayAbilitySpecHandle InAbilityHandle, bool EndAbilityImmediately);
 
 	/*
@@ -146,15 +146,15 @@ protected:
 		BlueprintImplementableEvent を使用すると、ブループリントでオーバーライドしない場合、戻り値が false として扱われる。
 		C++ の実装は無いが、、 BlueprintImplementableEvent ではなく、 BlueprintNativeEvent を使用する。
 	*/
-	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ability")
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
+	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Ability")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Ability")
 	bool GHOCheckCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const;
 	virtual bool GHOCheckCost_Implementation(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo) const;
 
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	virtual void SetHUDReticle(TSubclassOf<class UGHOHUDReticle> ReticleClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	virtual void ResetHUDReticle();
 
 	TSubclassOf<class UGHOHUDReticle> GetCurrentWeaponHUDReticle();
@@ -167,8 +167,8 @@ protected:
 	解説
 		BlueprintNativeEvent / BlueprintImplementableEvent については前述のとおり。
 	*/
-	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Ability")
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Ability")
+	//UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GASHandsOn|Ability")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn|Ability")
 	void GHOApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const;
 	virtual void GHOApplyCost_Implementation(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo& ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const;
 
@@ -181,7 +181,7 @@ protected:
 		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGGameplayAbility で作成されている機能を元に
 		GASShooter の GSGameplayAbility で拡張されたものです。
 	*/
-	UFUNCTION(BlueprintCallable, Category = Ability, meta = (AutoCreateRefTerm = "EventData"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability", meta = (AutoCreateRefTerm = "EventData"))
 	/*virtual*/ FGHOGameplayEffectContainerSpec MakeEffectContainerSpec(FGameplayTag ContainerTag, const FGameplayEventData& EventData, int32 OverrideGameplayLevel = -1);
 
 	/*
@@ -193,7 +193,7 @@ protected:
 		この関数は Epic のサンプルプロジェクトである ActionRPG の RPGGameplayAbility で作成されている機能を元に
 		GASShooter の GSGameplayAbility で拡張されたものです。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	/*virtual*/ TArray<FActiveGameplayEffectHandle> ApplyEffectContainerSpec(const FGHOGameplayEffectContainerSpec& ContainerSpec);
 
 private:
@@ -207,7 +207,7 @@ private:
 		GASShooter の GSGameplayAbility で拡張されたものです。
 		GASShooter では Blueprint に公開していましたが、使用されていないため、 GASHandsOn では公開せず、 private に変更しています。
 	*/
-	//UFUNCTION(BlueprintCallable, Category = Ability, meta = (AutoCreateRefTerm = "EventData"))
+	//UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability", meta = (AutoCreateRefTerm = "EventData"))
 	/*virtual*/ FGHOGameplayEffectContainerSpec MakeEffectContainerSpecFromContainer(const FGHOGameplayEffectContainer& Container, const FGameplayEventData& EventData, int32 OverrideGameplayLevel = -1);
 
 public:
@@ -217,7 +217,7 @@ public:
 	和訳
 		このセットのアビリティは入力が押されると自動的にアクティブになります。
 	*/
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Ability")
 	EGHOAbilityInputID AbilityInputID = EGHOAbilityInputID::None;
 
 	/*
@@ -228,7 +228,7 @@ public:
 		アビリティを自動的にアクティブ化された入力に結び付けずに関連付ける値。
 		パッシブアビリティは入力に関連付けられないため、アビリティをスロットに一般的に関連付ける方法が必要です。
 	*/
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Ability")
 	EGHOAbilityInputID AbilityID = EGHOAbilityInputID::None;
 
 protected:
@@ -240,7 +240,7 @@ protected:
 		アビリティが付与されたときにすぐに発動するようにします。
 		パッシブアビリティや他の人に強制するアビリティに使用します。
 	*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Ability")
 	bool bActivateAbilityOnGranted = false;
 
 	/*
@@ -251,7 +251,7 @@ protected:
 		true の場合、このアビリティはバインドされた入力が押された時に起動します。
 		入力にアビリティを割り当てたいが、押されても起動しないようにしたい場合は無効にします。
 	*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Ability")
 	bool bActivateOnInput;
 
 	/*
@@ -260,7 +260,7 @@ protected:
 	和訳
 		true の場合、 GA_Interact を介して何かとインタラクトしていない場合にのみ、このアビリティを起動します。
 	*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Ability")
 	bool bCannotActivateWhileInteracting;
 
 	/*
@@ -269,7 +269,7 @@ protected:
 	和訳
 		true の場合、 このアビリティを付与した武器が現在装備されているものである場合のみこのアビリティを発動します。
 	*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|Ability")
 	bool bSourceObjectMustEqualCurrentWeaponToActivate;
 
 	/*
@@ -278,7 +278,7 @@ protected:
 	和訳
 		GameplayTag から GameplayEffectContainer へのマップ
 	*/
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GameplayEffects")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GASHandsOn|GameplayEffects")
 	TMap<FGameplayTag, FGHOGameplayEffectContainer> EffectContainerMap;
 
 #if 0 //for multiple USkeletalMeshComponents on the AvatarActor
@@ -302,7 +302,7 @@ public:
 	和訳
 		このアビリティで現在再生されているモンタージュがあれば、それを返す。
 	*/
-	UFUNCTION(BlueprintCallable, Category = Animation)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Animation")
 	UAnimMontage* GetCurrentMontageForMesh(USkeletalMeshComponent* InMesh);
 
 	/**
@@ -331,7 +331,7 @@ protected:
 	和訳
 		アクティブなモンタージュをすぐにセクションにジャンプさせる
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Animation")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Animation")
 	void MontageJumpToSectionForMesh(USkeletalMeshComponent* InMesh, FName SectionName);
 
 	/**
@@ -340,7 +340,7 @@ protected:
 	和訳
 		アクティブなモンタージュで保留中のセクションを設定
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Animation")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Animation")
 	void MontageSetNextSectionNameForMesh(USkeletalMeshComponent* InMesh, FName FromSectionName, FName ToSectionName);
 
 	/**
@@ -351,7 +351,7 @@ protected:
 		現在のアニメーションモンタージュを停止します。
 		@param OverrideBlendOutTime 0 より大きい場合、 AnimMontage インスタンスの BlendOutTime パラメータを上書きします。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Animation", Meta = (AdvancedDisplay = "OverrideBlendOutTime"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Animation", Meta = (AdvancedDisplay = "OverrideBlendOutTime"))
 	void MontageStopForMesh(USkeletalMeshComponent* InMesh, float OverrideBlendOutTime = -1.0f);
 
 	/**
@@ -362,7 +362,7 @@ protected:
 		現在のアニメーションモンタージュを全て停止します。
 		@param OverrideBlendOutTime 0 より大きい場合、 AnimMontage インスタンスの BlendOutTime パラメータを上書きします。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Ability|Animation", Meta = (AdvancedDisplay = "OverrideBlendOutTime"))
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability|Animation", Meta = (AdvancedDisplay = "OverrideBlendOutTime"))
 	void MontageStopForAllMeshes(float OverrideBlendOutTime = -1.0f);
 
 	// End of `Animation Support for multiple USkeletalMeshComponents on the AvatarActor`

@@ -66,7 +66,7 @@ void IGHOInteractable::InteractableCancelInteraction_Implementation(UPrimitiveCo
 	if (Interacters.Contains(InteractionComponent))
 	{
 		FGameplayTagContainer InteractAbilityTagContainer;
-		InteractAbilityTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Ability.Interaction"));
+		InteractAbilityTagContainer.AddTag(TAG_Ability_Interaction);
 
 		TArray<AActor*>& InteractingActors = Interacters[InteractionComponent];
 		for (AActor* InteractingActor : InteractingActors)

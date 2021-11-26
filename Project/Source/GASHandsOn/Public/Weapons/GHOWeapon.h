@@ -152,9 +152,9 @@ public:
 	virtual void ResetWeapon();
 
 	UFUNCTION(NetMulticast, Reliable)
-	void OnDropped(FVector NewLocation);
-	virtual void OnDropped_Implementation(FVector NewLocation);
-	virtual bool OnDropped_Validate(FVector NewLocation);
+	void RPCNetMulticastOnDropped(FVector NewLocation);
+	virtual void RPCNetMulticastOnDropped_Implementation(FVector NewLocation);
+	virtual bool RPCNetMulticastOnDropped_Validate(FVector NewLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOWeapon")
 	virtual int32 GetPrimaryClipAmmo() const;
@@ -245,19 +245,19 @@ private:
 	和訳
 		プレイヤーがこの武器を手に入れた時に呼び出される。
 	*/
-	virtual void PickUpOnTouch(AGHOHeroCharacterBase* InCharacter);
+	void PickUpOnTouch(AGHOHeroCharacterBase* InCharacter);
 
 	UFUNCTION()
-	virtual void OnRep_PrimaryClipAmmo(int32 OldPrimaryClipAmmo);
+	void OnRep_PrimaryClipAmmo(int32 OldPrimaryClipAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_MaxPrimaryClipAmmo(int32 OldMaxPrimaryClipAmmo);
+	void OnRep_MaxPrimaryClipAmmo(int32 OldMaxPrimaryClipAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_SecondaryClipAmmo(int32 OldSecondaryClipAmmo);
+	void OnRep_SecondaryClipAmmo(int32 OldSecondaryClipAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_MaxSecondaryClipAmmo(int32 OldMaxSecondaryClipAmmo);
+	void OnRep_MaxSecondaryClipAmmo(int32 OldMaxSecondaryClipAmmo);
 
 public:
 	/**
@@ -325,7 +325,7 @@ protected:
 		この武器をコリジョンを有効にしてスポーンするかどうか（ピックアップモード）。
 		プレイヤーのインベントリに直接スポーンする場合は false に、ピックアップモードでワールドにスポーンする場合は true に設定されます。
 	*/
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|GHOWeapon")
 	bool bSpawnWithCollision;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOWeapon")

@@ -87,7 +87,7 @@ public:
 		ポジティブな変更は直接使用することが出来ます。
 		ネガティブな変更は Damage メタ Attribute を使用するべきです。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_Health)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Health", ReplicatedUsing = OnRep_Health)
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Health)
 
@@ -97,7 +97,7 @@ public:
 	和訳
 		HealthMax は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_HealthMax)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Health", ReplicatedUsing = OnRep_HealthMax)
 	FGameplayAttributeData HealthMax;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, HealthMax)
 
@@ -107,7 +107,7 @@ public:
 	和訳
 		HealthRegenRate は毎秒パッシブに Health を増加します。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing = OnRep_HealthRegenRate)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Health", ReplicatedUsing = OnRep_HealthRegenRate)
 	FGameplayAttributeData HealthRegenRate;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, HealthRegenRate)
 
@@ -117,7 +117,7 @@ public:
 	和訳
 		現在の Mana で、特別なアビリティを実行する際に使用します。 ManaMax が上限です。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_Mana)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Mana", ReplicatedUsing = OnRep_Mana)
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Mana)
 
@@ -127,7 +127,7 @@ public:
 	和訳
 		ManaMax は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_ManaMax)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Mana", ReplicatedUsing = OnRep_ManaMax)
 	FGameplayAttributeData ManaMax;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ManaMax)
 
@@ -137,7 +137,7 @@ public:
 	和訳
 		ManaRegenRate は毎秒パッシブに Mana を増加します。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Mana", ReplicatedUsing = OnRep_ManaRegenRate)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Mana", ReplicatedUsing = OnRep_ManaRegenRate)
 	FGameplayAttributeData ManaRegenRate;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ManaRegenRate)
 
@@ -147,7 +147,7 @@ public:
 	和訳
 		現在の Stamina で、特別なアビリティを実行する際に使用します。 StaminaMax が上限です。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Stamina", ReplicatedUsing = OnRep_Stamina)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Stamina", ReplicatedUsing = OnRep_Stamina)
 	FGameplayAttributeData Stamina;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Stamina)
 
@@ -157,7 +157,7 @@ public:
 	和訳
 		StaminaMax は GameplayEffects が変更する可能性があるため、独自のアトリビュートです。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Stamina", ReplicatedUsing = OnRep_StaminaMax)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Stamina", ReplicatedUsing = OnRep_StaminaMax)
 	FGameplayAttributeData StaminaMax;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, StaminaMax)
 
@@ -167,7 +167,7 @@ public:
 	和訳
 		StaminaRegenRate は毎秒パッシブに Stamina を増加します。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Stamina", ReplicatedUsing = OnRep_StaminaRegenRate)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Stamina", ReplicatedUsing = OnRep_StaminaRegenRate)
 	FGameplayAttributeData StaminaRegenRate;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, StaminaRegenRate)
 
@@ -179,7 +179,7 @@ public:
 		現在のシールド値で、一時的な Health のような働きをする。
 		枯渇すると、ダメージによって通常の Health を消耗する。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Shield", ReplicatedUsing = OnRep_Shield)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Shield", ReplicatedUsing = OnRep_Shield)
 	FGameplayAttributeData Shield;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Shield)
 
@@ -189,7 +189,7 @@ public:
 	和訳
 		蓄えられるシールドの最大値。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Shield", ReplicatedUsing = OnRep_ShieldMax)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Shield", ReplicatedUsing = OnRep_ShieldMax)
 	FGameplayAttributeData ShieldMax;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ShieldMax)
 
@@ -199,7 +199,7 @@ public:
 	和訳
 		ShieldRegenRate は毎秒パッシブに Shield を増加します。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Shield", ReplicatedUsing = OnRep_ShieldRegenRate)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Shield", ReplicatedUsing = OnRep_ShieldRegenRate)
 	FGameplayAttributeData ShieldRegenRate;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, ShieldRegenRate)
 
@@ -209,7 +209,7 @@ public:
 	和訳
 		Armor は攻撃者から受けるダメージを軽減する。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Armor", ReplicatedUsing = OnRep_Armor)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Armor", ReplicatedUsing = OnRep_Armor)
 	FGameplayAttributeData Armor;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Armor)
 
@@ -221,7 +221,7 @@ public:
 		Damage は DamageExecution が最終的なダメージを計算するために使用するメタ・アトリビュートで、それが -Health に変わります。
 		サーバーのみに存在する一時的な値です。レプリケーションされません。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Damage")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Damage")
 	FGameplayAttributeData Damage;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Damage)
 
@@ -231,11 +231,11 @@ public:
 	和訳
 		MoveSpeed は キャラクターの移動速度に影響を与えます。
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "MoveSpeed", ReplicatedUsing = OnRep_MoveSpeed)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|MoveSpeed", ReplicatedUsing = OnRep_MoveSpeed)
 	FGameplayAttributeData MoveSpeed;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, MoveSpeed)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Character Level", ReplicatedUsing = OnRep_CharacterLevel)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Character Level", ReplicatedUsing = OnRep_CharacterLevel)
 	FGameplayAttributeData CharacterLevel;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, CharacterLevel)
 
@@ -245,7 +245,7 @@ public:
 	和訳
 		経験値。敵を倒すと得られる。レベルアップに使用します。（本プロジェクトでは未実装）
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "XP", ReplicatedUsing = OnRep_XP)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|XP", ReplicatedUsing = OnRep_XP)
 	FGameplayAttributeData XP;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, XP)
 
@@ -255,7 +255,7 @@ public:
 	和訳
 		キャラクターを倒したものに与えられる経験値。レベルアップに使用します。（本プロジェクトでは未実装）
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "XP", ReplicatedUsing = OnRep_XPBounty)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|XP", ReplicatedUsing = OnRep_XPBounty)
 	FGameplayAttributeData XPBounty;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, XPBounty)
 
@@ -265,7 +265,7 @@ public:
 	和訳
 		ゴールド。敵を倒すと得られる。アイテムの購入に使用します。（本プロジェクトでは未実装）
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Gold", ReplicatedUsing = OnRep_Gold)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Gold", ReplicatedUsing = OnRep_Gold)
 	FGameplayAttributeData Gold;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, Gold)
 
@@ -275,7 +275,7 @@ public:
 	和訳
 		キャラクターを倒したものに与えられるゴールド。アイテムの購入に使用します。（本プロジェクトでは未実装）
 	*/
-	UPROPERTY(BlueprintReadOnly, Category = "Gold", ReplicatedUsing = OnRep_GoldBounty)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Gold", ReplicatedUsing = OnRep_GoldBounty)
 	FGameplayAttributeData GoldBounty;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetBase, GoldBounty)
 
@@ -297,6 +297,7 @@ protected:
 	*/
 	void AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty);
 
+private:
 	/*
 	by GASDocumentation
 		These OnRep functions exist to make sure that the ability system internal representations are synchronized properly during replication
@@ -361,7 +362,6 @@ protected:
 	UFUNCTION()
 	void OnRep_GoldBounty(const FGameplayAttributeData& OldGoldBounty);
 
-private:
 	void PostGameplayEffectExecute_Damage(const struct FGameplayEffectModCallbackData& Data);
 
 private:

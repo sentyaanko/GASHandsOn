@@ -76,27 +76,27 @@ public:
 	// End of UAttributeSet interface
 
 public:
-	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_RifleReserveAmmo)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Ammo|Bullet", ReplicatedUsing = OnRep_RifleReserveAmmo)
 	FGameplayAttributeData RifleReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, RifleReserveAmmo)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_MaxRifleReserveAmmo)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Ammo|Bullet", ReplicatedUsing = OnRep_MaxRifleReserveAmmo)
 	FGameplayAttributeData MaxRifleReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, MaxRifleReserveAmmo)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_RocketReserveAmmo)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Ammo|Rocket", ReplicatedUsing = OnRep_RocketReserveAmmo)
 	FGameplayAttributeData RocketReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, RocketReserveAmmo)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_MaxRocketReserveAmmo)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Ammo|Rocket", ReplicatedUsing = OnRep_MaxRocketReserveAmmo)
 	FGameplayAttributeData MaxRocketReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, MaxRocketReserveAmmo)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_ShotgunReserveAmmo)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Ammo|Shotshell", ReplicatedUsing = OnRep_ShotgunReserveAmmo)
 	FGameplayAttributeData ShotgunReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, ShotgunReserveAmmo)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_MaxShotgunReserveAmmo)
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Ammo|Shotshell", ReplicatedUsing = OnRep_MaxShotgunReserveAmmo)
 	FGameplayAttributeData MaxShotgunReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UGHOAttributeSetAmmo, MaxShotgunReserveAmmo)
 
@@ -111,9 +111,12 @@ protected:
 	//和訳
 	//	関連する最大属性が変更されたときに、属性の値を比例的に調整するヘルパー関数です。
 	//	（例： HealthMax が増加すると、 Health は以前と同じ割合を維持する量だけ増加します。）
+	//解説
+	//	使用されていないのでコメントアウトしています。
 	//*/
 	//void AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty);
 
+private:
 	/*
 	by GASShooter
 		These OnRep functions exist to make sure that the ability system internal representations are synchronized properly during replication
@@ -122,22 +125,22 @@ protected:
 	*/
 	
 	UFUNCTION()
-	virtual void OnRep_RifleReserveAmmo(const FGameplayAttributeData& OldRifleReserveAmmo);
+	void OnRep_RifleReserveAmmo(const FGameplayAttributeData& OldRifleReserveAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_MaxRifleReserveAmmo(const FGameplayAttributeData& OldMaxRifleReserveAmmo);
+	void OnRep_MaxRifleReserveAmmo(const FGameplayAttributeData& OldMaxRifleReserveAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_RocketReserveAmmo(const FGameplayAttributeData& OldRocketReserveAmmo);
+	void OnRep_RocketReserveAmmo(const FGameplayAttributeData& OldRocketReserveAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_MaxRocketReserveAmmo(const FGameplayAttributeData& OldMaxRocketReserveAmmo);
+	void OnRep_MaxRocketReserveAmmo(const FGameplayAttributeData& OldMaxRocketReserveAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_ShotgunReserveAmmo(const FGameplayAttributeData& OldShotgunReserveAmmo);
+	void OnRep_ShotgunReserveAmmo(const FGameplayAttributeData& OldShotgunReserveAmmo);
 
 	UFUNCTION()
-	virtual void OnRep_MaxShotgunReserveAmmo(const FGameplayAttributeData& OldMaxShotgunReserveAmmo);
+	void OnRep_MaxShotgunReserveAmmo(const FGameplayAttributeData& OldMaxShotgunReserveAmmo);
 
 //private:
 //	// Cache tags

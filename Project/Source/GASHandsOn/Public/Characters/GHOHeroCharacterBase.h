@@ -272,39 +272,39 @@ private:
 
 private:
 	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera", meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera", meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|UI", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|UI", meta = (AllowPrivateAccess = "true"))
 	class UWidgetComponent* UIFloatingStatusBarComponent;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|UI", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|GHOHeroCharacterBase|UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UGHOFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera")
 	float BaseTurnRate;
 
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera")
 	float BaseLookUpRate;
 
 	UPROPERTY()
 	class UGHOFloatingStatusBarWidget* UIFloatingStatusBar;
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Camera")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera")
 	float StartingCameraBoomTargetArmLength;
 
-	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Camera")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera")
 	FVector StartingCameraBoomRelativeLocation;
 
-	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|Camera")
+	UPROPERTY(BlueprintReadOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Camera")
 	float DefaultFOV;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase")
@@ -316,7 +316,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase")
 	TSubclassOf<UGameplayEffect> DeathEffect;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|Abilities")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Abilities")
 	float ReviveDuration;
 
 private:
@@ -352,13 +352,13 @@ private:
 
 
 //public:
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	AGHOWeapon* GetCurrentWeapon() const{return nullptr;};
 //
 //	FName GetWeaponAttachPoint() { return FName(); };
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	AGHOWeapon* GetCurrentWeapon() const;
 
 	FName GetWeaponAttachPoint() const;
@@ -371,7 +371,7 @@ public:
 		新しい武器をインベントリに追加します。
 		インベントリに既にその武器がある場合は false を、新しい武器の場合は true を返します。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	bool AddWeaponToInventory(AGHOWeapon* NewWeapon, bool bEquipWeapon = false);
 
 private:
@@ -450,36 +450,36 @@ private:
 		インベントリから武器を削除します。
 		武器が存在し、削除された場合は true を返します。 武器がインベントリに存在していない場合は fakse を返します。
 	*/
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	bool RemoveWeaponFromInventory(AGHOWeapon* WeaponToRemove);
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	void RemoveAllWeaponsFromInventory();
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	void EquipWeapon(AGHOWeapon* NewWeapon);
 
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	virtual void NextWeapon();
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	virtual void PreviousWeapon();
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	virtual void SwitchWeapon(bool bPrevious);
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	int32 GetPrimaryClipAmmo() const;
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	int32 GetMaxPrimaryClipAmmo() const;
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	int32 GetPrimaryReserveAmmo() const;
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	int32 GetSecondaryReserveAmmo() const;
 
-	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	int32 GetNumWeapons() const;
 
 	UFUNCTION()
@@ -501,10 +501,10 @@ private:
 	bool DoesWeaponExistInInventory(AGHOWeapon* InWeapon);
 
 protected:
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOHeroCharacter")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOHeroCharacterBase")
 	FName WeaponAttachPoint;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|Inventory")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 	TArray<TSubclassOf<AGHOWeapon>> DefaultInventoryWeaponClasses;
 
 private:
@@ -543,50 +543,50 @@ private:
 	FDelegateHandle WeaponChangingDelayReplicationTagChangedDelegateHandle;
 
 	//protected:
-//	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|Inventory")
+//	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	TArray<TSubclassOf<AGHOWeapon>> DefaultInventoryWeaponClasses;
 //
 //	// Adds a new weapon to the inventory.
 //	// Returns false if the weapon already exists in the inventory, true if it's a new weapon.
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	bool AddWeaponToInventory(AGHOWeapon* NewWeapon, bool bEquipWeapon = false);
 //
 //	// Removes a weapon from the inventory.
 //	// Returns true if the weapon exists and was removed. False if the weapon didn't exist in the inventory.
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	bool RemoveWeaponFromInventory(AGHOWeapon* WeaponToRemove);
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	void RemoveAllWeaponsFromInventory();
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	void EquipWeapon(AGHOWeapon* NewWeapon);
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	virtual void NextWeapon();
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	virtual void PreviousWeapon();
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetPrimaryClipAmmo() const;
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetMaxPrimaryClipAmmo() const;
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetPrimaryReserveAmmo() const;
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetSecondaryClipAmmo() const;
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetMaxSecondaryClipAmmo() const;
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetSecondaryReserveAmmo() const;
 //
-//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Inventory")
+//	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|GHOHeroCharacterBase|Inventory")
 //	int32 GetNumWeapons() const;
 //
 //private:

@@ -34,7 +34,7 @@ public:
 		bUseServerCooldown は、ローカルで予測された cooldown に加えて、サーバーの cooldown を返すかどうかを決定します。
 		ServerCooldown を使用する場合、 TimeRemaining と Duration は -1 を返し、ローカルで予測された cooldown が始まったことを知らせます。
 	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "GASHandsOn")
 	static UGHOAsyncTaskCooldownChanged* ListenForCooldownChange(UAbilitySystemComponent* InAbilitySystemComponent, FGameplayTagContainer InCooldownTags, bool bInUseServerCooldown);
 
 	/*
@@ -45,7 +45,7 @@ public:
 		AsyncTask を終了させたいときは、この関数を手動で呼び出す必要があります。
 		UMG Widgets の場合は、 Widget の Destruct イベントで呼び出します。
 	*/
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	void EndTask();
 
 private:

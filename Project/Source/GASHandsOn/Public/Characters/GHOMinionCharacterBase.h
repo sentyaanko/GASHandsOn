@@ -68,13 +68,13 @@ private:
 	void StunTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
 
 protected:
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|Character")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASHandsOn|GHOMinionCharacterBase")
 	FText CharacterName;
 
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "GASHandsOn|UI")
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "GASHandsOn|GHOMinionCharacterBase|UI")
 	class UWidgetComponent* UIFloatingStatusBarComponent;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|UI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|GHOMinionCharacterBase|UI")
 	TSubclassOf<class UGHOFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
 private:

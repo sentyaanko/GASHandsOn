@@ -113,7 +113,7 @@ void AGHOMinionCharacterBase::BeginPlay()
 		和訳
 			タグの変更コールバック
 		*/
-		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOMinionCharacterBase::StunTagChanged);
+		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(TAG_State_CrowdControl_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOMinionCharacterBase::StunTagChanged);
 	}
 }
 

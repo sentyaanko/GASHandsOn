@@ -49,7 +49,7 @@ public:
 		UGHOTargetType::GetTargets_Implementation() の実装は空だが、派生クラスでオーバーライドし拡張する。
 		そのため、 BlueprintImplementableEvent を使用しないのが正しい。
 	*/
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, Category = "GASHandsOn")
 	void GetTargets(AGHOCharacterBase* TargetingCharacter, AActor* TargetingActor, FGameplayEventData EventData, TArray<FGameplayAbilityTargetDataHandle>& OutTargetData, TArray<FHitResult>& OutHitResults, TArray<AActor*>& OutActors) const;
 	virtual void GetTargets_Implementation(AGHOCharacterBase* TargetingCharacter, AActor* TargetingActor, FGameplayEventData EventData, TArray<FGameplayAbilityTargetDataHandle>& OutTargetData, TArray<FHitResult>& OutHitResults, TArray<AActor*>& OutActors) const;
 };

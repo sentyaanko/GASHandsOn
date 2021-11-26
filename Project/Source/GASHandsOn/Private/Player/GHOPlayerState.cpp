@@ -86,10 +86,10 @@ void AGHOPlayerState::BeginPlay()
 		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGHOPlayerState::CharacterLevelChanged);
 
 		// Tag change callbacks
-		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_CrowdControl_Stun)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
+		StunChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(TAG_State_CrowdControl_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::StunTagChanged);
 
 		// Tag change callbacks
-		KnockedDownChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName(TAG_State_KnockedDown)), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::KnockDownTagChanged);
+		KnockedDownChangedDelegateHandle = AbilitySystemComponent->RegisterGameplayTagEvent(TAG_State_KnockedDown, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGHOPlayerState::KnockDownTagChanged);
 	}
 }
 

@@ -22,15 +22,15 @@ public:
 	void SetAdditionalEffectSpecHandles(const TArray<FGameplayEffectSpecHandle>& inAdditionalEffectSpecHandles) { AdditionalEffectSpecHandles = inAdditionalEffectSpecHandles; }
 
 protected:
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "GASHandsOn|GHOProjectile")
 	class UProjectileMovementComponent* ProjectileMovement;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Meta = (ExposeOnSpawn = true))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASHandsOn|GHOProjectile", Meta = (ExposeOnSpawn = true))
 	float Range;
 
-	UPROPERTY(BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|GHOProjectile", Meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
 
-	UPROPERTY(BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	UPROPERTY(BlueprintReadWrite, Category = "GASHandsOn|GHOProjectile", Meta = (ExposeOnSpawn = true))
 	TArray<FGameplayEffectSpecHandle> AdditionalEffectSpecHandles;
 };

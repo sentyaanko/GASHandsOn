@@ -26,7 +26,7 @@ class GASHANDSON_API UGHOAsyncTaskGameplayTagAddedRemoved : public UBlueprintAsy
 	
 public:
 	// Listens for FGameplayTags added and removed.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "GASHandsOn")
 	static UGHOAsyncTaskGameplayTagAddedRemoved* ListenForGameplayTagAddedOrRemoved(UAbilitySystemComponent* AbilitySystemComponent, FGameplayTagContainer InTags);
 
 	/*
@@ -37,7 +37,7 @@ public:
 		ASynkTask を終了させたいときは、この関数を手動で呼び出す必要があります。
 		UMG Widgets の場合は、 Widget の Destruct イベントで呼び出します。
 	*/
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn")
 	void EndTask();
 
 private:

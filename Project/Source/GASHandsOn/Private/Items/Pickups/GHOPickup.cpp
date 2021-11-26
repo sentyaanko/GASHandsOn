@@ -99,8 +99,8 @@ AGHOPickup::AGHOPickup()
 	CollisionComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	RootComponent = CollisionComp;
 
-	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag(TAG_State_Dead));
-	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag(TAG_State_KnockedDown));
+	RestrictedPickupTags.AddTag(TAG_State_Dead);
+	RestrictedPickupTags.AddTag(TAG_State_KnockedDown);
 	//UE_LOG(LogTemp, Error, TEXT("%s Role is %s"), *FString(__FUNCTION__), *UEnum::GetDisplayValueAsText(GetLocalRole()).ToString());
 }
 

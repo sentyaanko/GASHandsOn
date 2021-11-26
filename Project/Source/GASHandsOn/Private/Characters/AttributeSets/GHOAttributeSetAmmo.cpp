@@ -10,9 +10,9 @@
 
 UGHOAttributeSetAmmo::UGHOAttributeSetAmmo()
 {
-	//RifleAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rifle));
-	//RocketAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rocket));
-	//ShotgunAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Shotgun));
+	//RifleAmmoTag = TAG_Weapon_Ammo_Rifle;
+	//RocketAmmoTag = TAG_Weapon_Ammo_Rocket;
+	//ShotgunAmmoTag = TAG_Weapon_Ammo_Shotgun;
 }
 
 void UGHOAttributeSetAmmo::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -55,9 +55,9 @@ void UGHOAttributeSetAmmo::PostGameplayEffectExecute(const FGameplayEffectModCal
 
 FGameplayAttribute UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(const FGameplayTag& PrimaryAmmoTag)
 {
-	static FGameplayTag RifleAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rifle));
-	static FGameplayTag RocketAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rocket));
-	static FGameplayTag ShotgunAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Shotgun));
+	static FGameplayTag RifleAmmoTag = TAG_Weapon_Ammo_Rifle;
+	static FGameplayTag RocketAmmoTag = TAG_Weapon_Ammo_Rocket;
+	static FGameplayTag ShotgunAmmoTag = TAG_Weapon_Ammo_Shotgun;
 	if (PrimaryAmmoTag == RifleAmmoTag)
 	{
 		return GetRifleReserveAmmoAttribute();
@@ -76,9 +76,9 @@ FGameplayAttribute UGHOAttributeSetAmmo::GetReserveAmmoAttributeFromTag(const FG
 
 FGameplayAttribute UGHOAttributeSetAmmo::GetMaxReserveAmmoAttributeFromTag(const FGameplayTag& PrimaryAmmoTag)
 {
-	static FGameplayTag RifleAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rifle));
-	static FGameplayTag RocketAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Rocket));
-	static FGameplayTag ShotgunAmmoTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_Shotgun));
+	static FGameplayTag RifleAmmoTag = TAG_Weapon_Ammo_Rifle;
+	static FGameplayTag RocketAmmoTag = TAG_Weapon_Ammo_Rocket;
+	static FGameplayTag ShotgunAmmoTag = TAG_Weapon_Ammo_Shotgun;
 	if (PrimaryAmmoTag == RifleAmmoTag)
 	{
 		return GetMaxRifleReserveAmmoAttribute();

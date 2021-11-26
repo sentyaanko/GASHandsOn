@@ -4,6 +4,7 @@
 `Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/GameplayPrediction.h`
 の冒頭に記載されたドキュメントを和訳したものです。
 バージョンは 4.26.2 のものです。
+4.27.1 でも変更はありません。
 
 ## 和訳
 

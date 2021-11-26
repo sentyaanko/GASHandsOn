@@ -13,7 +13,7 @@
 UGHOAttributeSetBase::UGHOAttributeSetBase()
 {
 	// Cache tags
-	HeadShotTag = FGameplayTag::RequestGameplayTag(TAG_Effect_Damage_HeadShot);
+	HeadShotTag = TAG_Effect_Damage_HeadShot;
 }
 
 void UGHOAttributeSetBase::GetLifetimeReplicatedProps(TArray< class FLifetimeProperty > & OutLifetimeProps) const

@@ -110,10 +110,10 @@ AGHOHeroCharacterBase::AGHOHeroCharacterBase(const FObjectInitializer& ObjectIni
 	ReviveDuration = 4.0f;
 
 
-	NoWeaponTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Equipped_None));
-	WeaponChangingDelayReplicationTag = FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Weapon_IsChangingDelayReplication));
-	WeaponAmmoTypeNoneTag = FGameplayTag::RequestGameplayTag(FName(TAG_Weapon_Ammo_None));
-	WeaponAbilityTag = FGameplayTag::RequestGameplayTag(FName(TAG_Ability_Weapon));
+	NoWeaponTag = TAG_Weapon_Equipped_None;
+	WeaponChangingDelayReplicationTag = TAG_Ability_Weapon_IsChangingDelayReplication;
+	WeaponAmmoTypeNoneTag = TAG_Weapon_Ammo_None;
+	WeaponAbilityTag = TAG_Ability_Weapon;
 
 	CurrentWeaponTag = NoWeaponTag;
 	Inventory = FGHOHeroInventory();
@@ -633,7 +633,7 @@ void AGHOHeroCharacterBase::PlayKnockDownEffects()
 	{
 		FGameplayCueParameters GCParameters;
 		GCParameters.Location = GetActorLocation();
-		AbilitySystemComponent->ExecuteGameplayCueLocal(FGameplayTag::RequestGameplayTag(TAG_GameplayCue_Hero_KnockedDown), GCParameters);
+		AbilitySystemComponent->ExecuteGameplayCueLocal(TAG_GameplayCue_Hero_KnockedDown, GCParameters);
 	}
 }
 
@@ -656,7 +656,7 @@ void AGHOHeroCharacterBase::PlayReviveEffects()
 	{
 		FGameplayCueParameters GCParameters;
 		GCParameters.Location = GetActorLocation();
-		AbilitySystemComponent->ExecuteGameplayCueLocal(FGameplayTag::RequestGameplayTag(TAG_GameplayCue_Hero_Revived), GCParameters);
+		AbilitySystemComponent->ExecuteGameplayCueLocal(TAG_GameplayCue_Hero_Revived, GCParameters);
 	}
 }
 
@@ -1128,7 +1128,7 @@ void AGHOHeroCharacterBase::RemoveAllWeaponsFromInventory()
 
 		const float OffsetX = radius * FMath::Cos((i / NumWeapons) * 2.0f * PI);
 		const float OffsetY = radius * FMath::Sin((i / NumWeapons) * 2.0f * PI);
-		Weapon->OnDropped(GetActorLocation() + FVector(OffsetX, OffsetY, 0.0f));
+		Weapon->RPCNetMulticastOnDropped(GetActorLocation() + FVector(OffsetX, OffsetY, 0.0f));
 	}
 }
 
