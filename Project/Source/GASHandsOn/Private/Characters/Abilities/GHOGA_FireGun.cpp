@@ -77,7 +77,7 @@ void UGHOGA_FireGun::EventReceived(FGameplayTag EventTag, FGameplayEventData Eve
 		Montage told us to end the ability before the montage finished playing.
 		Montage was set to continue playing animation even after ability ends so this is okay.
 	和訳
-		モンタージュはモンタージュの再生が終わる前にアビリティの終了を支持しました。
+		モンタージュはモンタージュの再生が終わる前にアビリティの終了を指示しました。
 		モンタージュはアビリティ終了後もアニメーションを流し続けるように設定されていたので、これは問題ないです。
 	*/
 	if (EventTag == TAG_Event_Montage_EndAbility)
