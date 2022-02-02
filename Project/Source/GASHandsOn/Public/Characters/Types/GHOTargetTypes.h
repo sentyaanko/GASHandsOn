@@ -101,3 +101,22 @@ public:
 	*/
 	virtual void GetTargets_Implementation(AGHOCharacterBase* TargetingCharacter, AActor* TargetingActor, FGameplayEventData EventData, TArray<FGameplayAbilityTargetDataHandle>& OutTargetData, TArray<FHitResult>& OutHitResults, TArray<AActor*>& OutActors) const override;
 };
+
+/*
+	SphereTrace などで取得した HitResults をフィルターを行う基底クラス
+*/
+UCLASS(Blueprintable)
+class GASHANDSON_API UGHOHitResultFilterType : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	// Constructor and overrides
+	UGHOHitResultFilterType() {}
+
+	/*
+	*/
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GASHandsOn")
+	void FilterHitResults(TArray<FHitResult>& OutHitResults, UPARAM(ref) TArray<FHitResult>& InHitResults) const;
+	virtual void FilterHitResults_Implementation(TArray<FHitResult>& OutHitResults, UPARAM(ref) TArray<FHitResult>& InHitResults) const;
+};

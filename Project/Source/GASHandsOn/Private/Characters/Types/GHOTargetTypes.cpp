@@ -24,3 +24,8 @@ void UGHOTargetType_UseEventData::GetTargets_Implementation(AGHOCharacterBase* T
 		OutActors.Add(const_cast<AActor*>(EventData.Target));
 	}
 }
+
+void UGHOHitResultFilterType::FilterHitResults_Implementation(TArray<FHitResult>& OutHitResults, TArray<FHitResult>& InHitResults)const
+{
+	return;
+}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/PlayerController.h"
 #include "UI/GHOFloatingDamageTextComponent.h"
 #include "GHOPlayerController.generated.h"
