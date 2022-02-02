@@ -37,7 +37,7 @@ public:
 	static UGHOGameplayAbility* GetPrimaryAbilityInstanceFromHandle(UAbilitySystemComponent* AbilitySystemComponent, FGameplayAbilitySpecHandle Handle);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
-	static UGHOGameplayAbility* GetPrimaryAbilityInstanceFromClass(UAbilitySystemComponent* AbilitySystemComponent, TSubclassOf<UGameplayAbility> InAbilityClass);
+	static UGHOGameplayAbility* GetPrimaryAbilityInstanceFromClass(UAbilitySystemComponent* AbilitySystemComponent, TSubclassOf<UGameplayAbility> InAbilityClass, bool bAllowInheritedType);
 
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Ability")
 	static bool IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystemComponent, FGameplayAbilitySpecHandle Handle);
@@ -84,5 +84,16 @@ public:
 	static void EffectContextAddTargetData(FGameplayEffectContextHandle EffectContextHandle, const FGameplayAbilityTargetDataHandle& TargetData);
 
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Ability|TargetData")
+	static FGameplayAbilityTargetDataHandle	AbilityTargetDataFromInt32(int32 Value);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Ability|TargetData")
+	static FGameplayAbilityTargetDataHandle	AbilityTargetDataFromName(FName Value);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Ability|TargetData")
+	static int32 GetInt32FromTargetData(const FGameplayAbilityTargetDataHandle& TargetData, int32 Index);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASHandsOn|Ability|TargetData")
+	static FName GetNameFromTargetData(const FGameplayAbilityTargetDataHandle& TargetData, int32 Index);
 
 };

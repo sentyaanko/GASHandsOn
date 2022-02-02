@@ -2,6 +2,7 @@
 
 
 #include "Characters/Components/GHOAbilitySystemComponent.h"
+#include <functional>
 #include "AbilitySystemGlobals.h"
 #include "GameplayCueManager.h"
 #if 0 //for multiple USkeletalMeshComponents on the AvatarActor
@@ -478,6 +479,27 @@ bool UGHOAbilitySystemComponent::BatchRPCTryActivateAbility(FGameplayAbilitySpec
 	}
 
 	return AbilityActivated;
+}
+
+void UGHOAbilitySystemComponent::K2_CurrentMontageJumpToSection(FName SectionName)
+{
+	CurrentMontageJumpToSection(SectionName);
+}
+
+FGameplayAbilitySpec* UGHOAbilitySystemComponent::FindAbilitySpecFromClassWithAllowInheritedTypeFlag(TSubclassOf<UGameplayAbility> InAbilityClass, bool bAllowInheritedType)
+{
+	auto l = bAllowInheritedType ?
+		std::function<bool(UGameplayAbility*)>{ [&InAbilityClass](UGameplayAbility* a) {return a->IsA(InAbilityClass); }} :
+		std::function<bool(UGameplayAbility*)>{ [&InAbilityClass](UGameplayAbility* a) {return a->GetClass() == InAbilityClass; } };
+	for (FGameplayAbilitySpec& Spec : ActivatableAbilities.Items)
+	{
+		if (l(Spec.Ability))
+		{
+			return &Spec;
+		}
+	}
+
+	return nullptr;
 }
 
 #if 0 //for multiple USkeletalMeshComponents on the AvatarActor

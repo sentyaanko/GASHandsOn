@@ -342,6 +342,13 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities")
 	/*virtual*/ bool BatchRPCTryActivateAbility(FGameplayAbilitySpecHandle InAbilityHandle, bool EndAbilityImmediately);
+
+
+	UFUNCTION(BlueprintCallable, Category = "GASHandsOn|Abilities", meta = (DisplayName = "CurrentMontageJumpToSection"))
+	void K2_CurrentMontageJumpToSection(FName SectionName);
+
+	FGameplayAbilitySpec* FindAbilitySpecFromClassWithAllowInheritedTypeFlag(TSubclassOf<UGameplayAbility> InAbilityClass, bool bAllowInheritedType);
+
 #if 0 //for multiple USkeletalMeshComponents on the AvatarActor
 	// ----------------------------------------------------------------------------------------------------------------
 	/**

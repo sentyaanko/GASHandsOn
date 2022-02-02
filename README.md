@@ -231,6 +231,9 @@ Gameplay Ability System Hands On Project.
 	* v0.2.0
 		* エンジンを 4.27 に変更
 		* GameplayTag の定義を FNativeGameplayTag を使用するように変更
+	* v0.2.1
+		* 近接攻撃の組み込み
+		* 詳細は [./Documents/0.2.1.System-MeleeAttack.md](./Documents/0.2.1.System-MeleeAttack.md) を参照
 
 
 -----
