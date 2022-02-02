@@ -234,6 +234,8 @@ Gameplay Ability System Hands On Project.
 	* v0.2.1
 		* 近接攻撃の組み込み
 		* 詳細は [./Documents/0.2.1.System-MeleeAttack.md](./Documents/0.2.1.System-MeleeAttack.md) を参照
+	* v0.2.2
+		* [./Documents/0.1.7.System-Weapon.md](./Documents/0.1.7.System-Weapon.md) で puml の url が存在しない feature ブランチだったので main ブランチを指すように修正。
 
 
 -----
