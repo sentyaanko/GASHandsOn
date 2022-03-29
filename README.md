@@ -236,6 +236,9 @@ Gameplay Ability System Hands On Project.
 		* 詳細は [./Documents/0.2.1.System-MeleeAttack.md](./Documents/0.2.1.System-MeleeAttack.md) を参照
 	* v0.2.2
 		* [./Documents/0.1.7.System-Weapon.md](./Documents/0.1.7.System-Weapon.md) で puml の url が存在しない feature ブランチだったので main ブランチを指すように修正。
+	* v0.2.3
+		* MovementMode 監視アビリティがインタラクトアビリティの有効化を阻害していた不具合を修正。
+		* [./Documents/A_Guided_Tour_of_Gameplay_Abilities.md](./Documents/A_Guided_Tour_of_Gameplay_Abilities.md) の追加。
 
 
 -----
