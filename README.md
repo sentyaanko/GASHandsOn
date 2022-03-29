@@ -239,6 +239,8 @@ Gameplay Ability System Hands On Project.
 	* v0.2.3
 		* MovementMode 監視アビリティがインタラクトアビリティの有効化を阻害していた不具合を修正。
 		* [./Documents/A_Guided_Tour_of_Gameplay_Abilities.md](./Documents/A_Guided_Tour_of_Gameplay_Abilities.md) の追加。
+	* v0.2.4
+		* [./Documents/A_Guided_Tour_of_Gameplay_Abilities.md](./Documents/A_Guided_Tour_of_Gameplay_Abilities.md) が読みにくいので Fenced Code Blocks の追記。
 
 
 -----
